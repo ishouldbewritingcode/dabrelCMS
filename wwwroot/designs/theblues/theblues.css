@@ -1,0 +1,28 @@
+﻿@import url(/global/styles/global.css);
+
+* {
+	/* Color scheme */
+	--bgcolor: #ace;
+	--textcolor: #061539;
+	--highlight: #162955;
+	--highlightbg: #8ac;
+	--navbg: #8ac;
+	--navitembg: transparent;
+	--navitemhlbg: #000;
+	--navitemcolor: #061539;
+	--navitemhlcolor: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+	* {
+		--bgcolor: linear-gradient(to bottom, #161d72 0%,#526799 100%);
+		--textcolor: #dadada;
+		--highlight: #ddddff;
+		--highlightbg: #161d72;
+		--navbg: #161d72;
+		--navitembg: transparent;
+		--navitemhlbg: #000;
+		--navitemcolor: #fff;
+		--navitemhlcolor: #fff;
+	}
+}

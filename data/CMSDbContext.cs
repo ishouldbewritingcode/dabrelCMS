@@ -1,50 +1,89 @@
 ﻿using dabrelCMS.models;
-using Microsoft.EntityFrameworkCore;
 using System.Runtime.ExceptionServices;
 
 namespace dabrelCMS.data
 {
-	public class CMSDbContext:DbContext
+	public class CMSDbContext : DbContext
 	{
 		public DbSet<CMSUser> CMSUsers { get; set; }
+		public DbSet<CMSSite> CMSSites { get; set; }
+		public DbSet<CMSSiteUrl> CMSSiteUrls { get; set; }
+		public DbSet<CMSPage> CMSPages { get; set; }
+		public DbSet<CMSItem> CMSItems { get; set; }
 
-		public CMSDbContext(DbContextOptions<CMSDbContext> options) : base(options) 
-		{ 
+		public CMSDbContext() : base()
+		{
 		}
+
+		protected override void OnConfiguring(DbContextOptionsBuilder options)
+		=> options.UseSqlite(CMSConfig.ConStr);
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<CMSUser>( entity =>
-			{
-				entity.HasKey(e => e.UserId);
-				entity.Property(e => e.UserId);
-				entity.Property(e => e.Provider).HasMaxLength(250);
-				entity.Property(e => e.NameIdentifier).HasMaxLength(500);
-				entity.Property(e => e.UserName).HasMaxLength(250);
-				entity.Property(e => e.Password).HasMaxLength(250);
-				entity.Property(e => e.Email).HasMaxLength(250);
-				entity.Property(e => e.EmailConfirmed).HasMaxLength(250);
-				entity.Property(e => e.FirstName).HasMaxLength(250);
-				entity.Property(e => e.LastName).HasMaxLength(250);
-				entity.Property(e => e.Mobile).HasMaxLength(250);
-				entity.Property(e => e.Roles).HasMaxLength(1000);
+			modelBuilder.Entity<CMSSite>().HasData(
+				new CMSSite
+				{
+					SiteId = 1,
+					Name = "test",
+					Design = "theblues",
+					Title = "title",
+					SubTitle = "subtitle",
+					Footer1 = "footer 1",
+					Footer2 = "footer 2",
+					Footer3 = "footer 3",
+					Footer4 = "footer 4",
+					MetaDescription = "Description",
+					MetaImagePath = "",
+					OnAllPages = "",
+					BodyTop = "",
+					BodyBottom = "",
+					ImageFileName = "",
+					Created = DateTime.Now,
+					FaviconUrl = ""
+				});
 
-				entity.HasData(new CMSUser
+			modelBuilder.Entity<CMSSiteUrl>().HasData(
+				new CMSSiteUrl
+				{
+					SiteUrlId = 1,
+					SiteId = 1,
+					Url = "localhost",
+					Primary = true
+				});
+
+			modelBuilder.Entity<CMSUser>().HasData(
+				new CMSUser
 				{
 					Provider = "Cookies",
 					NameIdentifier = "",
 					UserId = 1,
-					Email = "junk@dabrel.com",
+					SiteId = 1,
+					Email = "test@dabrel.com",
 					EmailConfirmed = "confirmed",
-					UserName = "junk@dabrel.com",
-					Password = "junk",
-					FirstName = "junk",
+					UserName = "test@dabrel.com",
+					Password = "test",
+					FirstName = "test",
 					LastName = "user",
 					Mobile = "",
 					Roles = "admin"
 				});
-			});
-		}
 
+			modelBuilder.Entity<CMSPage>().HasData(
+				new CMSPage
+				{
+					PageId = 1,
+					ParentId = 0,
+					Sort = 1,
+					SiteId = 1,
+					isOn = true,
+					isPrivate = false,
+					isHidden = false,
+					Shortcut = "",
+					Tags = "home",
+					Title = "Page Title",
+					Summary = "Page summary goes here",
+					HeroImage = ""
+				});
+		}
 	}
 }

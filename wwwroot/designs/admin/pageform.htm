@@ -1,0 +1,30 @@
+﻿<form id="adminpageform" hx-post="/admin/pageform" hx-target="#pagecontent">
+	<input type="hidden" id="pageid" name="pageid" value="{{pageid}}" />
+	<div><label for="dpageid">Page Id</label><input disabled="true" type="number" id="dpageid" name="dpageid" value="{{pageid}}" /></div>
+	<div><label for="parentid">Parent Id</label><input type="number" id="parentid" name="parentid" value="{{parentid}}" /></div>
+	<div><label for="pagetitle">Page Title</label><input type="text" id="pagetitle" name="pagetitle" value="{{pagetitle}}" /></div>
+	<div><label for="pageshortcut">Shortcut</label><input type="text" id="pageshortcut" name="pageshortcut" value="{{pageshortcut}}" /></div>
+	<div><label for="pagesort">Sort</label><input type="number" id="pagesort" name="pagesort" value="{{pagesort}}" min="1" max="100" /></div>
+	<div>
+		<label for="pageison">Status</label><select id="pageison" name="pageison" value="{{pageison}}">
+			<option value="true">On</option>
+			<option value="false">Off</option>
+		</select>
+	</div>
+	<div>
+		<label for="pageisprivate">Private</label><select id="pageisprivate" name="pageisprivate" value="{{pageisprivate}}">
+			<option value="true">Yes</option>
+			<option value="false">No</option>
+		</select>
+	</div>
+	<div>
+		<label for="pageishidden">Hidden</label><select id="pageishidden" name="pageishidden" value="{{pageishidden}}">
+			<option value="true">Yes</option>
+			<option value="false">No</option>
+		</select>
+	</div>
+	<div><label for="pagetags">Tags</label><input type="text" id="pagetags" name="pagetags" value="{{pagetags}}" /></div>
+	<div><label for="pagehero">Hero Image Url</label><input type="text" id="pagehero" name="pagehero" value="{{pagehero}}" /></div>
+	<div><label for="content">Content</label><textarea id="adminpagecontent" name="content">{{content}}</textarea></div>
+	<div class="buttonright"><button type="submit" id="adminpagesave"><i class="fa-regular fa-floppy-disk"></i></button></div>
+</form>

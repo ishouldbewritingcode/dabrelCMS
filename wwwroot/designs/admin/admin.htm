@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<meta name="description" content="{{description}}" />
+	<meta property="og:title" content="{{sitetitle}}" />
+	<meta property="og:description" content="{{description}}" />
+	<link href="/global/fontawesome/css/fontawesome.css" rel="stylesheet">
+	<link href="/global/fontawesome/css/solid.css" rel="stylesheet">
+	<link rel="stylesheet" href="/designs/admin/admin.css" />
+	<script src="/global/scripts/htmx.min.js"></script>
+	<script src="/global/scripts/global.js" defer></script>
+	<script src="/designs/admin/admin.js" defer></script>
+
+	<title>{{sitetitle}} {{pagetitle}}</title>
+</head>
+<body>
+	<div id="overlay">
+		<div id="overlaybox">
+			<div id="overlayclose"><i class="fa-regular fa-circle-xmark"></i></div>
+			<div id="overlayadminsite">
+				<form id="adminsiteform" hx-post="/admin/siteform" hx-target="#adminsiteform">
+					<h2>{{sitename}}</h2>
+					<h3>{{created}}</h3>
+					<!--<div><label for="sitename">Site Name</label><input type="text" id="sitename" name="sitename" value="{{sitename}}" /></div>-->
+					<!--<div><label for="created">Create Date/Time</label><input type="date" id="created" name="created" value="{{created}}" /></div>-->
+					<div class="field"><label for="design">Design</label><input type="text" id="design" name="design" value="{{design}}" /></div>
+					<div class="field"><label for="faviconurl">Favicon URL</label><input type="text" id="faviconurl" name="faviconurl" value="{{faviconurl}}" /></div>
+					<div class="field"><label for="sitetitle">Site Title</label><input type="text" id="sitetitle" name="sitetitle" value="{{sitetitle}}" /></div>
+					<div class="field"><label for="subtitle">Sub Title</label><input type="text" id="subtitle" name="subtitle" value="{{subtitle}}" /></div>
+					<div class="field"><label for="metadescription">Meta Description</label><input type="text" id="metadescription" name="metadescription" value="{{description}}" /></div>
+					<div class="field"><label for="metaimagepath">Meta Image Path</label><input type="text" id="metaimagepath" name="metaimagepath" value="{{metaimagepath}}" /></div>
+					<div class="field"><label for="onallpages">HTML or Script for All Pages</label><input type="text" id="onallpages" name="onallpages" value="{{onallpages}}" /></div>
+					<div class="field"><label for="bodytop">Body Top</label><input type="text" id="bodytop" name="bodytop" value="{{bodytop}}" /></div>
+					<div class="field"><label for="bodybottom">Body Bottom</label><input type="text" id="bodybottom" name="bodybottom" value="{{bodybottom}}" /></div>
+					<div class="field"><label for="footer1">Footer 1</label><input type="text" id="footer1" name="footer1" value="{{footer1}}" /></div>
+					<div class="field"><label for="footer2">Footer 2</label><input type="text" id="footer2" name="footer2" value="{{footer2}}" /></div>
+					<div class="field"><label for="footer3">Footer 3</label><input type="text" id="footer3" name="footer3" value="{{footer3}}" /></div>
+					<div class="field"><label for="footer4">Footer 4</label><input type="text" id="footer4" name="footer4" value="{{footer4}}" /></div>
+					<div class="buttonright"><span><button type="submit" id="adminsitesave"><i class="fa-regular fa-floppy-disk"></i></button></span></div>
+				</form>
+			</div>
+		</div>
+	</div>
+	{{bodytop}}
+	<header>
+		<div id="sitetitle">
+			<a href="/">{{titleimage}}{{headersitetitle}}</a>
+			<div class="buttonright"><span id="adminsitecontrol"><i class="fa-solid fa-gear"></i></span></div>
+		</div>
+		<div id="sitesubtitle">{{subtitle}}</div>
+		<input type="checkbox" id="search-toggle" /><label for="search-toggle" class="searchbutton"><i class="fa-solid fa-magnifying-glass"></i></label>
+		<input type="checkbox" id="nav-toggle" /><label for="nav-toggle" class="navbutton"><span class="navicon">&nbsp;</span></label>
+		<!--<div id="searchbox">
+			<input id="search" name="search" type="text" placeholder="search phrase" /><i class="fa-solid fa-magnifying-glass"></i>
+		</div>-->
+		<div id="nav">
+			<nav>{{navigation}}</nav>
+		</div>
+	</header>
+	{{hero}}
+	<main class="content">
+		<div class="widthcontainer">
+			<div id="pagecontent">
+				<section>
+					<div class="buttonright" hx-post="/admin/getpageform/{{pageid}}" hx-target="#pagecontent"><i class="fa-regular fa-pen-to-square"></i></div>
+					<h1 id="pagetitle" contenteditable="true">{{pagetitle}}</h1>
+					<div id="content" class="body" contenteditable="true">{{content}}</div>
+				</section>
+			</div>
+		</div>
+	</main>
+	<footer>
+		<div class="widthcontainer">
+			<div>{{footer1}}</div>
+			<div>{{footer2}}</div>
+			<div>{{footer3}}</div>
+			<div>{{footer4}}</div>
+		</div>
+	</footer>
+	{{bodybottom}}
+</body>
+</html>

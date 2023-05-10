@@ -1,0 +1,28 @@
+﻿@import url(/global/styles/global.css);
+
+* {
+	/* Color scheme */
+	--bgcolor: #ebfc8d;
+	--textcolor: #333;
+	--highlight: #000;
+	--highlightbg: #ebfc8d;
+	--navbg: #ebfc8d;
+	--navitembg: transparent;
+	--navitemhlbg: #000;
+	--navitemcolor: #061539;
+	--navitemhlcolor: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+	* {
+		--bgcolor: #000;
+		--textcolor: #ffee55;
+		--highlight: #ffcc33;
+		--highlightbg: #000;
+		--navbg: #000;
+		--navitembg: transparent;
+		--navitemhlbg: #000;
+		--navitemcolor: #fff;
+		--navitemhlcolor: #fff;
+	}
+}

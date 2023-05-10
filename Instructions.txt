@@ -1,0 +1,14 @@
+﻿
+
+To generate database
+	https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs=vs
+	In the Package Manager Console
+		first time
+			Add-Migration InitialCreate   
+			Update-Database
+		changes (date and note)
+			Add-Migration 20230509_changed_field
+			Update-Database
+
+
+

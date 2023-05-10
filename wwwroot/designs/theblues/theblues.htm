@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="{{description}}" />
+    <meta property="og:title" content="{{sitetitle}}" />
+    <meta property="og:description" content="{{description}}" />
+    <link href="/global/fontawesome/css/fontawesome.css" rel="stylesheet">
+    <link href="/global/fontawesome/css/solid.css" rel="stylesheet">
+    <link rel="stylesheet" href="/designs/theblues/theblues.css" />
+    <script src="/global/scripts/htmx.min.js"></script>
+    <script src="/global/scripts/global.js" defer></script>
+
+    <title>{{sitetitle}} {{pagetitle}}</title>
+</head>
+<body>
+    {{bodytop}}
+    <header>
+        <div id="sitetitle"><a href="/">{{titleimage}}{{headersitetitle}}</a></div>
+        <div id="sitesubtitle">{{subtitle}}</div>
+        <input type="checkbox" id="search-toggle" /><label for="search-toggle" class="searchbutton"><i class="fa-solid fa-magnifying-glass"></i></label>
+        <input type="checkbox" id="nav-toggle" /><label for="nav-toggle" class="navbutton"><span class="navicon">&nbsp;</span></label>
+        <div id="searchbox">
+            <input id="search" name="search" type="text" placeholder="search phrase" /><i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div id="nav">
+            <nav>{{navigation}}</nav>
+        </div>
+    </header>
+    {{hero}}
+    <main class="content">
+        <div class="widthcontainer">
+            <div id="pagecontent">
+                <section>
+                    <h1>{{pagetitle}}</h1>
+                    <div class="body">{{content}}</div>
+                </section>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="widthcontainer">
+            <div>{{footer1}}</div>
+            <div>{{footer2}}</div>
+            <div>{{footer3}}</div>
+            <div>{{footer4}}</div>
+        </div>
+    </footer>
+    {{bodybottom}}
+</body>
+</html>
