@@ -135,8 +135,11 @@ namespace dabrelCMS.code
 				html = Common.GetFileText(designPath);
 
 				// do content replacements
-				if (site.ImageFileName != null)
+				if (site.ImageFileName != null && site.ImageFileName != string.Empty)
+				{
 					html = html.Replace("{{titleimage}}", $"<img class=\"titleimage\" src=\"{site.ImageFileName}\" alt=\"{site.Title}\" />");
+					html = html.Replace("{{headersitetitle}}", string.Empty);
+				}
 				else
 				{
 					html = html.Replace("{{titleimage}}", string.Empty);
