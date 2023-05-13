@@ -15,6 +15,7 @@ namespace dabrelCMS.models
 		public bool isHidden { get; set; }
 		public string? Shortcut { get; set; }
 		public string? Tags { get; set; }
+		public string? NavTitle { get; set; }
 		public string? Title { get; set; }
 		public string? Summary { get; set; }
 		public string? HeroImage { get; set; }

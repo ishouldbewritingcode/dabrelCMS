@@ -80,7 +80,8 @@ namespace dabrelCMS.data
 					isHidden = false,
 					Shortcut = "",
 					Tags = "home",
-					Title = "Page Title",
+					NavTitle = "Home",
+					Title = "Welcome",
 					Summary = "Page summary goes here",
 					HeroImage = ""
 				});

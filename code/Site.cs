@@ -187,7 +187,7 @@ namespace dabrelCMS.code
 				else
 				{ c.Append($"<li id=\"{page.PageId}\">"); }
 
-				c.Append($"<a href=\"/{page.Shortcut}\" hx-get=\"/{page.Shortcut}\" hx-target=\"#pagecontent\" hx-swap=\"innerHTML\" hx-push-url=\"true\">{page.Title}");
+				c.Append($"<a href=\"/{page.Shortcut}\" hx-get=\"/{page.Shortcut}\" hx-target=\"#pagecontent\" hx-swap=\"innerHTML\" hx-push-url=\"true\">{page.NavTitle}");
 				c.Append($"</a>");
 				if (gotkids)
 				{
