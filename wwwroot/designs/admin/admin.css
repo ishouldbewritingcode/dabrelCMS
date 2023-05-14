@@ -40,25 +40,23 @@ body {
 	cursor: pointer;
 }
 
-#overlay {
-	display: none;
-	position: absolute;
-	inset: 0 0 0 0;
-	background: rgba(0,0,0,0.8);
-	align-items: center;
-	justify-content: center;
-	/*display: flex;*/
-	z-index: 30;
+.modal {
+	background: white;
+	border-radius: 10px;
+	border: 2px solid #333;
+	margin: auto;
+	padding: auto;
 }
 
 #overlaybox {
-	width: 800px;
+	/*	width: 800px;
 	max-width: 100%;
 	position: relative;
 	padding: 50px;
 	background: #eee;
 	color: #333;
 	border-radius: 20px;
+*/
 }
 
 #overlayclose {
@@ -66,10 +64,6 @@ body {
 	top: 15px;
 	right: 15px;
 	color: #061539;
-}
-
-#overlayadminsite, #overlayadminpage {
-	display: none;
 }
 
 #overlaysave {
