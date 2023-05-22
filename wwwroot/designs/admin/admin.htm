@@ -46,7 +46,9 @@
 	<header>
 		<div id="sitetitle">
 			<a href="/">{{titleimage}}{{headersitetitle}}</a>
-			<div class="buttonright"><span id="adminsitecontrol"><i class="fa-solid fa-gear"></i></span></div>
+			<div class="buttonright">
+				<span id="admineditpagecontrol"><i class="fa-solid fa-gear"></i></span>
+			</div>
 		</div>
 		<div id="sitesubtitle">{{subtitle}}</div>
 		<input type="checkbox" id="search-toggle" /><label for="search-toggle" class="searchbutton"><i class="fa-solid fa-magnifying-glass"></i></label>
@@ -63,7 +65,10 @@
 		<div class="widthcontainer">
 			<div id="pagecontent">
 				<section>
-					<div class="buttonright" hx-post="/admin/getpageform/{{pageid}}" hx-target="#pagecontent"><i class="fa-regular fa-pen-to-square"></i></div>
+					<div class="buttonright">
+						<span id="admineditpage" hx-post="/admin/getpageform/{{pageid}}" hx-target="#pagecontent"><i class="fa-regular fa-pen-to-square"></i></span>
+						<span id="adminaddpagecontrol" hx-post="/admin/addpageform" hx-target="#pagecontent"><i class="fa-solid fa-plus"></i></span>
+					</div>
 					<h1 id="pagetitle" contenteditable="true">{{pagetitle}}</h1>
 					<div id="content" class="body" contenteditable="true">{{content}}</div>
 				</section>

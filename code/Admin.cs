@@ -1,6 +1,7 @@
 ﻿using dabrelCMS.models;
 using Htmx;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Text;
 
 namespace dabrelCMS.code
@@ -85,6 +86,11 @@ namespace dabrelCMS.code
 							html = html.Replace("{{pagehero}}", page.HeroImage);
 							break;
 
+						case "addpageform":
+							string addpageformPath = $"{_webRootPath}\\designs\\{design}\\pageform.htm";
+							html = Common.GetFileText(addpageformPath);
+							break;
+
 						case "pageform":
 							// save page here
 							int id = int.Parse(context.Request.Form["pageid"].ToString().Trim());
@@ -120,7 +126,11 @@ namespace dabrelCMS.code
 				else
 				{
 					sb.Append($"<section>");
-					sb.Append($"<div class=\"buttonright\" hx-post=\"/admin/getpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-pen-to-square\"></i></div>");
+					//sb.Append($"<div class=\"buttonright\" hx-post=\"/admin/getpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-pen-to-square\"></i></div>");
+					sb.Append($"<div class=\"buttonright\">");
+					sb.Append($"<span id=\"admineditpage\" hx-post=\"/admin/getpageform/{{pageid}}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-pen-to-square\"></i></span>");
+					sb.Append($"<span id=\"adminaddpage\" hx-post=\"/admin/addpageform\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-plus\"></i></span>");
+					sb.Append($"</div>");
 					sb.Append($"<h1 id=\"pagetitle\">{page.Title}</h1>");
 					sb.Append($"<div id=\"content\" class=\"body\">{page.Summary}</div>");
 					sb.Append($"</section>");
