@@ -22,7 +22,6 @@
 			<form id="adminsiteform" hx-post="/admin/siteform" hx-target="#adminsiteform">
 				<h2>{{sitename}}</h2>
 				<h3>{{created}}</h3>
-
 				<!--<div><label for="sitename">Site Name</label><input type="text" id="sitename" name="sitename" value="{{sitename}}" /></div>-->
 				<!--<div><label for="created">Create Date/Time</label><input type="date" id="created" name="created" value="{{created}}" /></div>-->
 				<div class="field"><label for="design">Design</label><input type="text" id="design" name="design" value="{{design}}" /></div>
@@ -48,6 +47,7 @@
 			<a href="/">{{titleimage}}{{headersitetitle}}</a>
 			<div class="buttonright">
 				<span id="admineditpagecontrol"><i class="fa-solid fa-gear"></i></span>
+				<span id="admineditusercontrol"><i class="fa-solid fa-user"></i></span>
 			</div>
 		</div>
 		<div id="sitesubtitle">{{subtitle}}</div>
@@ -67,7 +67,7 @@
 				<section>
 					<div class="buttonright">
 						<span id="admineditpage" hx-post="/admin/getpageform/{{pageid}}" hx-target="#pagecontent"><i class="fa-regular fa-pen-to-square"></i></span>
-						<span id="adminaddpagecontrol" hx-post="/admin/addpageform" hx-target="#pagecontent"><i class="fa-solid fa-plus"></i></span>
+						<span id="adminaddpagecontrol" hx-post="/admin/getaddpageform/{{pageid}}" hx-target="#pagecontent"><i class="fa-solid fa-plus"></i></span>
 					</div>
 					<h1 id="pagetitle" contenteditable="true">{{pagetitle}}</h1>
 					<div id="content" class="body" contenteditable="true">{{content}}</div>

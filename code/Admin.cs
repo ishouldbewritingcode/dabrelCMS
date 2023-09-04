@@ -3,6 +3,8 @@ using Htmx;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Web;
 
 namespace dabrelCMS.code
 {
@@ -82,44 +84,78 @@ namespace dabrelCMS.code
 							html = html.Replace("{{pageishidden}}", page.isHidden.ToString());
 							html = html.Replace("{{pagetags}}", page.Tags);
 							html = html.Replace("{{pagetitle}}", page.Title);
+							html = html.Replace("{{navtitle}}", page.NavTitle);
 							html = html.Replace("{{content}}", page.Summary);
 							html = html.Replace("{{pagehero}}", page.HeroImage);
 							break;
 
-						case "addpageform":
-							string addpageformPath = $"{_webRootPath}\\designs\\{design}\\pageform.htm";
+						case "getaddpageform":
+							string addpageformPath = $"{_webRootPath}\\designs\\{design}\\addpageform.htm";
 							html = Common.GetFileText(addpageformPath);
+							if (pathsegments.Length > 2)
+								if (pathsegments[2] != string.Empty)
+								{
+									int p = 0;
+									int.TryParse(pathsegments[2], out p);
+									html = html.Replace("{{parentid}}", p.ToString());
+								}
+							break;
+
+						case "addpageform":
+							page = new CMSPage();
+							dbcontext.CMSPages.Add(page);
+							page.Title = context.Request.Form["pagetitle"].ToString();
+							page.SiteId = site.SiteId;
+							page.NavTitle = page.Title;
+							page.Shortcut = HttpUtility.UrlEncode(page.Title.ToLower().Replace(" ", String.Empty));
+							page.ParentId = int.Parse(context.Request.Form["parentid"].ToString());
+							page.Sort = 1;
+							page.isOn = true;
+							page.isPrivate = false;
+							page.isHidden = false;
+							page.Tags = page.Title.ToLower();
+							page.HeroImage = string.Empty;
+							page.Summary = context.Request.Form["content"].ToString();
+							dbcontext.SaveChanges();
+							context.Response.Headers["HX-Redirect"] = $"/admin/{page.Shortcut}";
+							//context.Response.Redirect($"/admin/{page.Shortcut}");
 							break;
 
 						case "pageform":
 							// save page here
-							int id = int.Parse(context.Request.Form["pageid"].ToString().Trim());
-							if (id > 0)
-							{
+							int id = 0;
+							string sid = context.Request.Form["pageid"].ToString().Trim();
+							bool isEdit = int.TryParse(sid, out id);
+							if (isEdit)
 								page = dbcontext.CMSPages.Where(p => p.PageId == id).FirstOrDefault();
-								if (page != null)
-								{
-									page.Title = context.Request.Form["pagetitle"].ToString();
-									page.Shortcut = context.Request.Form["pageshortcut"].ToString();
-									page.ParentId = int.Parse(context.Request.Form["parentid"].ToString());
-									page.Sort = int.Parse(context.Request.Form["pagesort"].ToString());
-									page.isOn = bool.Parse(context.Request.Form["pageison"].ToString());
-									page.isPrivate = bool.Parse(context.Request.Form["pageisprivate"].ToString());
-									page.isHidden = bool.Parse(context.Request.Form["pageishidden"].ToString());
-									page.Tags = context.Request.Form["pagetags"].ToString();
-									page.HeroImage = context.Request.Form["pagehero"].ToString();
-									page.Summary = context.Request.Form["content"].ToString();
-									dbcontext.SaveChanges();
-									context.Response.Redirect($"/admin/{page.Shortcut}");
-								}
-
-								//sb.Append($"<section>");
-								//sb.Append($"<div class=\"buttonright\" hx-post=\"/admin/getpageform/{page.cmsPageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-pen-to-square\"></i></div>");
-								//sb.Append($"<h1 id=\"pagetitle\" contenteditable=\"true\">{page.Title}</h1>");
-								//sb.Append($"<div id=\"content\" class=\"body\" contenteditable=\"true\">{page.Summary}</div>");
-								//sb.Append($"</section>");
-								//html = sb.ToString();
+							else
+							{
+								page = new CMSPage();
+								dbcontext.CMSPages.Add(page);
+								// page.PageId = 0;
 							}
+							page.Title = context.Request.Form["pagetitle"].ToString();
+							page.NavTitle = context.Request.Form["navtitle"].ToString();
+							page.Shortcut = context.Request.Form["pageshortcut"].ToString();
+							page.ParentId = int.Parse(context.Request.Form["parentid"].ToString());
+							page.Sort = int.Parse(context.Request.Form["pagesort"].ToString());
+							page.isOn = bool.Parse(context.Request.Form["pageison"].ToString());
+							page.isPrivate = bool.Parse(context.Request.Form["pageisprivate"].ToString());
+							page.isHidden = bool.Parse(context.Request.Form["pageishidden"].ToString());
+							page.Tags = context.Request.Form["pagetags"].ToString();
+							page.HeroImage = context.Request.Form["pagehero"].ToString();
+							page.Summary = context.Request.Form["content"].ToString();
+							dbcontext.SaveChanges();
+							context.Response.Headers["HX-Redirect"] = $"/admin/{page.Shortcut}";
+
+							//context.Response.Redirect($"/admin/{page.Shortcut}");
+
+							//sb.Append($"<section>");
+							//sb.Append($"<div class=\"buttonright\" hx-post=\"/admin/getpageform/{page.cmsPageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-pen-to-square\"></i></div>");
+							//sb.Append($"<h1 id=\"pagetitle\" contenteditable=\"true\">{page.Title}</h1>");
+							//sb.Append($"<div id=\"content\" class=\"body\" contenteditable=\"true\">{page.Summary}</div>");
+							//sb.Append($"</section>");
+							//html = sb.ToString();
 							break;
 					}
 				}
@@ -128,8 +164,8 @@ namespace dabrelCMS.code
 					sb.Append($"<section>");
 					//sb.Append($"<div class=\"buttonright\" hx-post=\"/admin/getpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-pen-to-square\"></i></div>");
 					sb.Append($"<div class=\"buttonright\">");
-					sb.Append($"<span id=\"admineditpage\" hx-post=\"/admin/getpageform/{{pageid}}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-pen-to-square\"></i></span>");
-					sb.Append($"<span id=\"adminaddpage\" hx-post=\"/admin/addpageform\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-plus\"></i></span>");
+					sb.Append($"<span id=\"admineditpage\" hx-post=\"/admin/getpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-pen-to-square\"></i></span>");
+					sb.Append($"<span id=\"adminaddpage\" hx-post=\"/admin/getaddpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-plus\"></i></span>");
 					sb.Append($"</div>");
 					sb.Append($"<h1 id=\"pagetitle\">{page.Title}</h1>");
 					sb.Append($"<div id=\"content\" class=\"body\">{page.Summary}</div>");
@@ -184,6 +220,9 @@ namespace dabrelCMS.code
 			}
 			context.Response.Headers["Content-Type"] = "text/html";
 			context.Response.StatusCode = StatusCodes.Status200OK;
+
+			Regex r = new Regex(@"\{\{.*\}\}");
+			html = r.Replace(html, String.Empty);
 			return html;
 		}
 

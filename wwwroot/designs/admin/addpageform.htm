@@ -1,0 +1,7 @@
+﻿<form id="addpageform" hx-post="/admin/addpageform" hx-target="#pagecontent">
+	<input type="hidden" id="pageid" name="pageid" value="" />
+	<input type="hidden" id="parentid" name="parentid" value="{{parentid}}" />
+	<div><label for="pagetitle">Page Title</label><input type="text" id="pagetitle" name="pagetitle" value="" /></div>
+	<div><label for="content">Content</label><textarea id="adminpagecontent" name="content"></textarea></div>
+	<div class="buttonright"><button type="submit" id="adminaddpagesave"><i class="fa-regular fa-floppy-disk"></i></button></div>
+</form>
