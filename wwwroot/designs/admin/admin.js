@@ -3,7 +3,7 @@
 }
 
 function addEvents() {
-	document.getElementById('adminsitecontrol').addEventListener('click', function (e) {
+	document.getElementById('admineditsitecontrol').addEventListener('click', function (e) {
 		document.getElementById('overlaybox').showModal();
 	}, false);
 	document.getElementById('adminsitesave').addEventListener('click', function (e) {

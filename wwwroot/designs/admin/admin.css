@@ -119,7 +119,8 @@ div.buttonright {
 	padding: 10px;
 }
 
-#adminpageform label {
+#adminpageform label,
+#addpageform label {
 	display: inline-block;
 	width: 150px;
 	text-align: right;
@@ -127,17 +128,21 @@ div.buttonright {
 	vertical-align: top;
 }
 
-#adminpageform input {
-	width: 250px;
+#adminpageform input,
+#addpageform input {
+	width: 400px;
+	max-width: 100%;
 }
 
-#adminpageform textarea {
+#adminpageform textarea, 
+#addpageform textarea {
 	display: inline-block;
 	width: calc(100% - 250px);
 	height: 400px;
 	white-space: normal;
 }
 
-#adminpageform .buttonright i {
+#adminpageform .buttonright i,
+#addpageform .buttonright i {
 	color: var(--highlight);
 }

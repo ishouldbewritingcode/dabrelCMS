@@ -66,6 +66,7 @@ namespace dabrelCMS.code
 								site.Footer3 = context.Request.Form["footer3"].ToString();
 								site.Footer4 = context.Request.Form["footer4"].ToString();
 								dbcontext.SaveChanges();
+								context.Response.Headers["HX-Redirect"] = $"/admin/";
 								return "<h2>Success<h2>";
 							}
 							else
