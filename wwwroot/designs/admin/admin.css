@@ -142,7 +142,7 @@ div.buttonright {
 	white-space: normal;
 }
 
-#adminpageform .buttonright i,
-#addpageform .buttonright i {
+.buttonright i {
+	cursor: pointer;
 	color: var(--highlight);
 }

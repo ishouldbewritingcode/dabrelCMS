@@ -68,6 +68,7 @@
 					<div class="buttonright">
 						<span id="admineditpage" hx-post="/admin/getpageform/{{pageid}}" hx-target="#pagecontent"><i class="fa-regular fa-pen-to-square"></i></span>
 						<span id="adminaddpagecontrol" hx-post="/admin/getaddpageform/{{pageid}}" hx-target="#pagecontent"><i class="fa-solid fa-plus"></i></span>
+						<span id="admindeletepagecontrol" hx-post="/admin/deletepage/{{pageid}}" hx-confirm="Are you absolutely sure you wish to delete this page?" hx-target="#pagecontent"><i class="fa-solid fa-trash"></i></span>
 					</div>
 					<h1 id="pagetitle" contenteditable="true">{{pagetitle}}</h1>
 					<div id="content" class="body" contenteditable="true">{{content}}</div>
