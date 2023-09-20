@@ -167,6 +167,7 @@ namespace dabrelCMS.code
 					sb.Append($"<div class=\"buttonright\">");
 					sb.Append($"<span id=\"admineditpage\" hx-post=\"/admin/getpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-pen-to-square\"></i></span>");
 					sb.Append($"<span id=\"adminaddpage\" hx-post=\"/admin/getaddpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-plus\"></i></span>");
+					sb.Append($"<span id=\"admindeletepage\" hx-post=\"/admin/deletepage/{page.PageId}\" hx-confirm=\"Are you absolutely sure you wish to delete this page?\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-trash\"></i></span>");
 					sb.Append($"</div>");
 					sb.Append($"<h1 id=\"pagetitle\">{page.Title}</h1>");
 					sb.Append($"<div id=\"content\" class=\"body\">{page.Summary}</div>");
