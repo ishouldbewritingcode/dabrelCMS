@@ -159,13 +159,18 @@ namespace dabrelCMS.code
 									int delId = 0;
 									int.TryParse(pathsegments[2], out delId);
 									page = dbcontext.CMSPages.Where(p => p.PageId == delId).FirstOrDefault();
-									if (page != null)
+									// don't let them delete the home page.
+									if (page != null && page.Shortcut != string.Empty)
 									{
-										int pid = page.ParentId;
-										CMSPage parent = dbcontext.CMSPages.Where(p => p.PageId == pid).FirstOrDefault();
+										int redirectid = page.ParentId;
+										CMSPage redirect;
+										if (redirectid == 0)
+											redirect = dbcontext.CMSPages.Where(p => p.Shortcut == string.Empty).FirstOrDefault();
+										else
+											redirect = dbcontext.CMSPages.Where(p => p.PageId == redirectid).FirstOrDefault();
 										dbcontext.CMSPages.Remove(page);
 										dbcontext.SaveChanges();
-										context.Response.Headers["HX-Redirect"] = $"/admin/{parent.Shortcut}";
+										context.Response.Headers["HX-Redirect"] = $"/admin/{redirect.Shortcut}";
 									}
 								}
 							}
