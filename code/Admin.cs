@@ -2,6 +2,7 @@
 using Htmx;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.ComponentModel;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -148,15 +149,26 @@ namespace dabrelCMS.code
 							page.Summary = context.Request.Form["content"].ToString();
 							dbcontext.SaveChanges();
 							context.Response.Headers["HX-Redirect"] = $"/admin/{page.Shortcut}";
+							break;
 
-							//context.Response.Redirect($"/admin/{page.Shortcut}");
-
-							//sb.Append($"<section>");
-							//sb.Append($"<div class=\"buttonright\" hx-post=\"/admin/getpageform/{page.cmsPageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-pen-to-square\"></i></div>");
-							//sb.Append($"<h1 id=\"pagetitle\" contenteditable=\"true\">{page.Title}</h1>");
-							//sb.Append($"<div id=\"content\" class=\"body\" contenteditable=\"true\">{page.Summary}</div>");
-							//sb.Append($"</section>");
-							//html = sb.ToString();
+						case "deletepage":
+							if (pathsegments.Length > 2)
+							{
+								if (pathsegments[2] != string.Empty)
+								{
+									int delId = 0;
+									int.TryParse(pathsegments[2], out delId);
+									page = dbcontext.CMSPages.Where(p => p.PageId == delId).FirstOrDefault();
+									if (page != null)
+									{
+										int pid = page.ParentId;
+										CMSPage parent = dbcontext.CMSPages.Where(p => p.PageId == pid).FirstOrDefault();
+										dbcontext.CMSPages.Remove(page);
+										dbcontext.SaveChanges();
+										context.Response.Headers["HX-Redirect"] = $"/admin/{parent.Shortcut}";
+									}
+								}
+							}
 							break;
 					}
 				}
