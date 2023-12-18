@@ -59,7 +59,6 @@ namespace dabrelCMS.data
 					UserId = 1,
 					SiteId = 1,
 					Email = "test@dabrel.com",
-					UserName = "test@dabrel.com",
 					Password = "test",
 					FirstName = "test",
 					LastName = "user",

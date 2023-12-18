@@ -175,6 +175,11 @@ namespace dabrelCMS.code
 								}
 							}
 							break;
+
+						case "getadduserform":
+							string adduserformPath = $"{_webRootPath}\\designs\\{design}\\adduserform.htm";
+							html = Common.GetFileText(adduserformPath);
+							break;
 					}
 				}
 				else

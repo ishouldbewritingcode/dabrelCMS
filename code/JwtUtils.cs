@@ -28,7 +28,6 @@ namespace dabrelCMS.code
 			{
 				Subject = new ClaimsIdentity(new[] {
 					new Claim("id", user.UserId.ToString()),
-					new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
 					new Claim(JwtRegisteredClaimNames.Email, user.Email),
 					new Claim(JwtRegisteredClaimNames.Jti,
 					Guid.NewGuid().ToString())
