@@ -17,28 +17,8 @@
 </head>
 <body>
 	<dialog id="overlaybox" class="modal">
-		<div id="overlayclose"><i class="fa-regular fa-circle-xmark"></i></div>
-		<div id="overlayadminsite">
-			<form id="adminsiteform" hx-post="/admin/siteform" hx-target="#adminsiteform">
-				<h2>{{sitename}}</h2>
-				<h3>{{created}}</h3>
-				<!--<div><label for="sitename">Site Name</label><input type="text" id="sitename" name="sitename" value="{{sitename}}" /></div>-->
-				<!--<div><label for="created">Create Date/Time</label><input type="date" id="created" name="created" value="{{created}}" /></div>-->
-				<div class="field"><label for="design">Design</label><input type="text" id="design" name="design" value="{{design}}" /></div>
-				<div class="field"><label for="faviconurl">Favicon URL</label><input type="text" id="faviconurl" name="faviconurl" value="{{faviconurl}}" /></div>
-				<div class="field"><label for="sitetitle">Site Title</label><input type="text" id="sitetitle" name="sitetitle" value="{{sitetitle}}" /></div>
-				<div class="field"><label for="subtitle">Sub Title</label><input type="text" id="subtitle" name="subtitle" value="{{subtitle}}" /></div>
-				<div class="field"><label for="metadescription">Meta Description</label><input type="text" id="metadescription" name="metadescription" value="{{description}}" /></div>
-				<div class="field"><label for="metaimagepath">Meta Image Path</label><input type="text" id="metaimagepath" name="metaimagepath" value="{{metaimagepath}}" /></div>
-				<div class="field"><label for="onallpages">HTML or Script for All Pages</label><input type="text" id="onallpages" name="onallpages" value="{{onallpages}}" /></div>
-				<div class="field"><label for="bodytop">Body Top</label><input type="text" id="bodytop" name="bodytop" value="{{bodytop}}" /></div>
-				<div class="field"><label for="bodybottom">Body Bottom</label><input type="text" id="bodybottom" name="bodybottom" value="{{bodybottom}}" /></div>
-				<div class="field"><label for="footer1">Footer 1</label><input type="text" id="footer1" name="footer1" value="{{footer1}}" /></div>
-				<div class="field"><label for="footer2">Footer 2</label><input type="text" id="footer2" name="footer2" value="{{footer2}}" /></div>
-				<div class="field"><label for="footer3">Footer 3</label><input type="text" id="footer3" name="footer3" value="{{footer3}}" /></div>
-				<div class="field"><label for="footer4">Footer 4</label><input type="text" id="footer4" name="footer4" value="{{footer4}}" /></div>
-				<div class="buttonright"><span><button type="submit" id="adminsitesave"><i class="fa-regular fa-floppy-disk"></i></button></span></div>
-			</form>
+		<div class="buttonright" id="overlayclose" onclick="document.getElementById('overlaybox').close();"><i class="fa-regular fa-circle-xmark"></i></div>
+		<div id="overlayform">
 		</div>
 	</dialog>
 	{{bodytop}}
@@ -46,8 +26,8 @@
 		<div id="sitetitle">
 			<a href="/">{{titleimage}}{{headersitetitle}}</a>
 			<div class="buttonright">
-				<span id="admineditsitecontrol"><i class="fa-solid fa-gear"></i></span>
-				<span id="admineditusercontrol"><i class="fa-solid fa-user"></i></span>
+				<span id="admineditsitecontrol" hx-get="/admin/getsiteform" hx-target="#overlayform" onclick="document.getElementById('overlaybox').showModal();"><i class="fa-solid fa-gear"></i></span>
+				<span id="admineditusercontrol" hx-get="/admin/getuserform" hx-target="#overlayform" onclick="document.getElementById('overlaybox').showModal();"><i class="fa-solid fa-user"></i></span>
 			</div>
 		</div>
 		<div id="sitesubtitle">{{subtitle}}</div>

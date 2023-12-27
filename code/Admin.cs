@@ -11,7 +11,7 @@ namespace dabrelCMS.code
 {
 	public class Admin
 	{
-		public string GetPage(HttpContext context)
+		public string GetPage(HttpContext context, CMSUser authUser)
 		{
 			string _domain = string.Empty;
 			string _path = string.Empty;
@@ -50,7 +50,7 @@ namespace dabrelCMS.code
 				{
 					switch (pathsegments[1])
 					{
-						case "siteform":
+						case "savesiteform":
 							if (context.Request.Form["design"] != string.Empty)
 							{
 								site.Title = context.Request.Form["sitetitle"].ToString();
@@ -72,6 +72,7 @@ namespace dabrelCMS.code
 							}
 							else
 								return "<h2>You need a design</h2>";
+							break;
 
 						case "getpageform":
 							page = dbcontext.CMSPages.Where(p => p.PageId == int.Parse(pathsegments[2])).FirstOrDefault();
@@ -176,25 +177,66 @@ namespace dabrelCMS.code
 							}
 							break;
 
-						case "getadduserform":
-							string adduserformPath = $"{_webRootPath}\\designs\\{design}\\adduserform.htm";
-							html = Common.GetFileText(adduserformPath);
+						case "saveuserform":
+
 							break;
 					}
 				}
 				else
 				{
-					sb.Append($"<section>");
-					//sb.Append($"<div class=\"buttonright\" hx-post=\"/admin/getpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-pen-to-square\"></i></div>");
-					sb.Append($"<div class=\"buttonright\">");
-					sb.Append($"<span id=\"admineditpage\" hx-post=\"/admin/getpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-pen-to-square\"></i></span>");
-					sb.Append($"<span id=\"adminaddpage\" hx-post=\"/admin/getaddpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-plus\"></i></span>");
-					sb.Append($"<span id=\"admindeletepage\" hx-post=\"/admin/deletepage/{page.PageId}\" hx-confirm=\"Are you absolutely sure you wish to delete this page?\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-trash\"></i></span>");
-					sb.Append($"</div>");
-					sb.Append($"<h1 id=\"pagetitle\">{page.Title}</h1>");
-					sb.Append($"<div id=\"content\" class=\"body\">{page.Summary}</div>");
-					sb.Append($"</section>");
-					html = sb.ToString();
+					// get request
+					switch (pathsegments[1])
+					{
+						case "getsiteform":
+							string siteformPath = $"{_webRootPath}\\designs\\{design}\\dialogsite.htm";
+							html = Common.GetFileText(siteformPath);
+							html = html.Replace("{{sitename}}", site.Name.ToString());
+							html = html.Replace("{{created}}", site.Created.ToString());
+							html = html.Replace("{{design}}", site.Design.ToString());
+							html = html.Replace("{{faviconurl}}", site.FaviconUrl.ToString());
+							html = html.Replace("{{sitetitle}}", site.Title.ToString());
+							html = html.Replace("{{subtitle}}", site.SubTitle.ToString());
+							html = html.Replace("{{description}}", site.MetaDescription.ToString());
+							html = html.Replace("{{metaimagepath}}", site.MetaImagePath.ToString());
+							html = html.Replace("{{onallpages}}", site.OnAllPages.ToString());
+							html = html.Replace("{{bodytop}}", site.BodyTop.ToString());
+							html = html.Replace("{{bodybottom}}", site.BodyBottom.ToString());
+							html = html.Replace("{{footer1}}", site.Footer1.ToString());
+							html = html.Replace("{{footer2}}", site.Footer2.ToString());
+							html = html.Replace("{{footer3}}", site.Footer3.ToString());
+							html = html.Replace("{{footer4}}", site.Footer4.ToString());
+							context.Response.Headers["Content-Type"] = "text/html";
+							context.Response.StatusCode = StatusCodes.Status200OK;
+							return html;
+
+						case "getuserform":
+							string userformPath = $"{_webRootPath}\\designs\\{design}\\dialoguser.htm";
+							html = Common.GetFileText(userformPath);
+							html = html.Replace("{{userid}}", authUser.UserId.ToString());
+							html = html.Replace("{{siteid}}", authUser.SiteId.ToString());
+							html = html.Replace("{{email}}", authUser.Email.ToString());
+							html = html.Replace("{{firstname}}", authUser.FirstName.ToString());
+							html = html.Replace("{{lastname}}", authUser.LastName.ToString());
+							html = html.Replace("{{mobile}}", authUser.Mobile.ToString());
+							html = html.Replace("{{roles}}", authUser.Roles.ToString());
+							context.Response.Headers["Content-Type"] = "text/html";
+							context.Response.StatusCode = StatusCodes.Status200OK;
+							return html;
+
+						default:
+							sb.Append($"<section>");
+							//sb.Append($"<div class=\"buttonright\" hx-post=\"/admin/getpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-pen-to-square\"></i></div>");
+							sb.Append($"<div class=\"buttonright\">");
+							sb.Append($"<span id=\"admineditpage\" hx-post=\"/admin/getpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-pen-to-square\"></i></span>");
+							sb.Append($"<span id=\"adminaddpage\" hx-post=\"/admin/getaddpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-plus\"></i></span>");
+							sb.Append($"<span id=\"admindeletepage\" hx-post=\"/admin/deletepage/{page.PageId}\" hx-confirm=\"Are you absolutely sure you wish to delete this page?\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-trash\"></i></span>");
+							sb.Append($"</div>");
+							sb.Append($"<h1 id=\"pagetitle\">{page.Title}</h1>");
+							sb.Append($"<div id=\"content\" class=\"body\">{page.Summary}</div>");
+							sb.Append($"</section>");
+							html = sb.ToString();
+							break;
+					}
 				}
 			}
 			else

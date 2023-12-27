@@ -89,7 +89,7 @@ namespace dabrelCMS.code
 						if (authUser != null)
 						{
 							Admin a = new Admin();
-							return a.GetPage(context);
+							return a.GetPage(context, authUser);
 						}
 						else
 							return Common.GetLoginPage(context, _path, "Please Login");

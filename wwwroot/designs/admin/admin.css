@@ -49,28 +49,17 @@ body {
 }
 
 #overlaybox {
-	/*	width: 800px;
+	width: 800px;
 	max-width: 100%;
 	position: relative;
-	padding: 50px;
+	padding: 30px;
 	background: #eee;
 	color: #333;
 	border-radius: 20px;
-*/
 }
 
 #overlayclose {
-	position: absolute;
-	top: 15px;
-	right: 15px;
-	color: #061539;
-}
-
-#overlaysave {
-	position: absolute;
-	bottom: 15px;
-	right: 15px;
-	color: #061539;
+	font-size: 30px;
 }
 
 #overlaybox form div.field {
@@ -119,6 +108,15 @@ div.buttonright {
 	padding: 10px;
 }
 
+.buttonright i {
+	cursor: pointer;
+	color: var(--highlight);
+}
+
+dialog .buttonright i {
+	color: #333;
+}
+
 #adminpageform label,
 #addpageform label {
 	display: inline-block;
@@ -134,15 +132,10 @@ div.buttonright {
 	max-width: 100%;
 }
 
-#adminpageform textarea, 
+#adminpageform textarea,
 #addpageform textarea {
 	display: inline-block;
 	width: calc(100% - 250px);
 	height: 400px;
 	white-space: normal;
-}
-
-.buttonright i {
-	cursor: pointer;
-	color: var(--highlight);
 }
