@@ -3,6 +3,7 @@ using Htmx;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.ComponentModel;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -178,8 +179,29 @@ namespace dabrelCMS.code
 							break;
 
 						case "saveuserform":
+							// save user here - this is only for changing the currently logged in user.
+							CMSUser tempUser = dbcontext.CMSUsers.Where(u => u.UserId == authUser.UserId).FirstOrDefault();
+							tempUser.Email = context.Request.Form["email"].ToString();
+							tempUser.FirstName = context.Request.Form["firstname"].ToString();
+							tempUser.LastName = context.Request.Form["lastname"].ToString();
+							tempUser.Mobile = context.Request.Form["mobile"].ToString();
 
-							break;
+							if (context.Request.Form["password"].ToString().Length > 0)
+							{
+								if (context.Request.Form["password"].ToString() == context.Request.Form["vpassword"].ToString())
+								{
+									int salt = GetRandomSalt();
+									tempUser.Salt = salt;
+									tempUser.Password = PWHash.ComputePasswordHash(context.Request.Form["password"].ToString(), salt);
+								}
+							}
+
+							dbcontext.SaveChanges();
+							context.Response.Headers["Content-Type"] = "text/html";
+							context.Response.StatusCode = StatusCodes.Status200OK;
+							return "<div>User saved successfully.</div>";
+							//context.Response.Headers["HX-Redirect"] = $"/admin";
+							//break;
 					}
 				}
 				else
@@ -330,6 +352,12 @@ namespace dabrelCMS.code
 				return true;
 			else
 				return false;
+		}
+
+		private int GetRandomSalt()
+		{
+			Random rand = new Random();
+			return rand.Next(10, 99999);
 		}
 	}
 }

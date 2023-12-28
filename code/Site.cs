@@ -1,6 +1,7 @@
 ﻿using dabrelCMS.models;
 using Htmx;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -57,28 +58,46 @@ namespace dabrelCMS.code
 					{
 						if (context.Request.Form["username"].ToString().Length > 0)
 						{
+							bool bAuth = false;
 							authUser = dbcontext.CMSUsers.Where(
 								u => u.Email == context.Request.Form["username"].ToString()
-								&& u.Password == context.Request.Form["password"].ToString()
 								&& u.SiteId == site.SiteId).FirstOrDefault();
 							if (authUser == null)
 								return Common.GetLoginPage(context, "/", "Please Login");
 							else
 							{
-								// authentication successful
-								string newtoken = jwt.GenerateToken(authUser, CMSConfig.JwtKey, _domain);
-								context.Response.Cookies.Append("token", newtoken, new CookieOptions
+								int uSalt = authUser.Salt;
+								string uHash = authUser.Password;
+								if (uSalt > 0)
 								{
-									Secure = true,
-									HttpOnly = true,
-									SameSite = SameSiteMode.Strict
-								});
+									if (PWHash.IsPasswordValid(context.Request.Form["password"].ToString(), uSalt, uHash))
+										bAuth = true;
+								}
+								else
+								{
+									if (uHash == context.Request.Form["password"].ToString())
+										bAuth = true;
+								}
+								if (bAuth)
+								{
+									string newtoken = jwt.GenerateToken(authUser, CMSConfig.JwtKey, _domain);
+									context.Response.Cookies.Append("token", newtoken, new CookieOptions
+									{
+										Secure = true,
+										HttpOnly = true,
+										SameSite = SameSiteMode.Strict
+									});
 
-								if (context.Request.Form["redirect"].ToString().Length > 0)
+									if (context.Request.Form["redirect"].ToString().Length > 0)
+									{
+										context.Response.StatusCode = StatusCodes.Status200OK;
+										context.Response.Redirect(context.Request.Form["redirect"].ToString());
+										return "";
+									}
+								}
+								else
 								{
-									context.Response.StatusCode = StatusCodes.Status200OK;
-									context.Response.Redirect(context.Request.Form["redirect"].ToString());
-									return "";
+									return Common.GetLoginPage(context, "/", "Please Login");
 								}
 							}
 						}
