@@ -81,19 +81,17 @@ header {
 	color: white;
 	z-index: 10;
 	border-bottom: 2px solid var(--navitemhlbg);
-}
 
-header #sitetitle,
-header a,
-header nav a {
-	font-size: 2rem;
-	white-space: nowrap;
-	color: var(--highlight);
-}
+	#sitetitle,	a, nav a {
+		font-size: 2rem;
+		white-space: nowrap;
+		color: var(--highlight);
+	}
 
-header .searchbutton i.fa-solid {
-	font-size: 1.8rem;
-	color: var(--navitemcolor);
+	.searchbutton i.fa-solid {
+		font-size: 1.8rem;
+		color: var(--navitemcolor);
+	}
 }
 
 #sitesubtitle {
@@ -203,6 +201,7 @@ nav span.sub {
 	color: var(--navitemcolor);
 	margin-right: 15px;
 }
+
 nav li li span.sub {
 	float: right;
 }

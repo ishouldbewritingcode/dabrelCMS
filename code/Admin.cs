@@ -245,6 +245,20 @@ namespace dabrelCMS.code
 							context.Response.StatusCode = StatusCodes.Status200OK;
 							return html;
 
+						case "getfilesform":
+							string filesformPath = $"{_webRootPath}\\designs\\{design}\\dialogfiles.htm";
+							html = Common.GetFileText(filesformPath);
+							html = html.Replace("{{userid}}", authUser.UserId.ToString());
+							html = html.Replace("{{siteid}}", authUser.SiteId.ToString());
+							html = html.Replace("{{email}}", authUser.Email.ToString());
+							html = html.Replace("{{firstname}}", authUser.FirstName.ToString());
+							html = html.Replace("{{lastname}}", authUser.LastName.ToString());
+							html = html.Replace("{{mobile}}", authUser.Mobile.ToString());
+							html = html.Replace("{{roles}}", authUser.Roles.ToString());
+							context.Response.Headers["Content-Type"] = "text/html";
+							context.Response.StatusCode = StatusCodes.Status200OK;
+							return html;
+
 						default:
 							sb.Append($"<section>");
 							//sb.Append($"<div class=\"buttonright\" hx-post=\"/admin/getpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-pen-to-square\"></i></div>");

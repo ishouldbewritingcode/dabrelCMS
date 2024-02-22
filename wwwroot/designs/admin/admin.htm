@@ -26,8 +26,9 @@
 		<div id="sitetitle">
 			<a href="/">{{titleimage}}{{headersitetitle}}</a>
 			<div class="buttonright">
-				<span id="admineditsitecontrol" hx-get="/admin/getsiteform" hx-target="#overlayform" onclick="document.getElementById('overlaybox').showModal();"><i class="fa-solid fa-gear"></i></span>
-				<span id="admineditusercontrol" hx-get="/admin/getuserform" hx-target="#overlayform" onclick="document.getElementById('overlaybox').showModal();"><i class="fa-solid fa-user"></i></span>
+				<span title="site files" id="admineditsitecontrol" hx-get="/admin/getfilesform" hx-target="#overlayform" onclick="document.getElementById('overlaybox').showModal();"><i class="fa-solid fa-folder"></i></span>
+				<span title="site settings" id="admineditsitecontrol" hx-get="/admin/getsiteform" hx-target="#overlayform" onclick="document.getElementById('overlaybox').showModal();"><i class="fa-solid fa-gear"></i></span>
+				<span title="site security" id="admineditusercontrol" hx-get="/admin/getuserform" hx-target="#overlayform" onclick="document.getElementById('overlaybox').showModal();"><i class="fa-solid fa-user"></i></span>
 			</div>
 		</div>
 		<div id="sitesubtitle">{{subtitle}}</div>
