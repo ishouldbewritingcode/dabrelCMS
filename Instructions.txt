@@ -1,5 +1,9 @@
 ﻿
 
+Build the Object(s)
+
+Add the List Item to the top of the CMSDbContext in the data folder
+
 To generate database
 	https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs=vs
 	In the Package Manager Console
@@ -9,6 +13,7 @@ To generate database
 		changes (date and note)
 			Add-Migration 20230509_changed_field
 			Update-Database
+
 
 
 

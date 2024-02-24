@@ -10,6 +10,7 @@ namespace dabrelCMS.data
 		public DbSet<CMSSiteUrl> CMSSiteUrls { get; set; }
 		public DbSet<CMSPage> CMSPages { get; set; }
 		public DbSet<CMSItem> CMSItems { get; set; }
+		public DbSet<CMSFile> CMSFiles { get; set; }
 
 		public CMSDbContext() : base()
 		{
