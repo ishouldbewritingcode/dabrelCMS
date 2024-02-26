@@ -81,17 +81,18 @@ header {
 	color: white;
 	z-index: 10;
 	border-bottom: 2px solid var(--navitemhlbg);
+	#sitetitle, a, nav a
 
-	#sitetitle,	a, nav a {
-		font-size: 2rem;
-		white-space: nowrap;
-		color: var(--highlight);
-	}
+{
+	font-size: 2rem;
+	white-space: nowrap;
+	color: var(--highlight);
+}
 
-	.searchbutton i.fa-solid {
-		font-size: 1.8rem;
-		color: var(--navitemcolor);
-	}
+.searchbutton i.fa-solid {
+	font-size: 1.8rem;
+	color: var(--navitemcolor);
+}
 }
 
 #sitesubtitle {
@@ -683,6 +684,14 @@ article time {
 
 #search-toggle:checked ~ #searchbox {
 	display: block;
+}
+
+/* uploads */
+#drop-zone {
+	border: 2px dashed #ccc;
+	padding: 20px;
+	text-align: center;
+	cursor: pointer;
 }
 
 @media (min-width:1000px) {
