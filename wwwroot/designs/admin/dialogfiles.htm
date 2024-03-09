@@ -1,55 +1,10 @@
-﻿<form id="adminfilesform" hx-post="/admin/sitefiles" hx-target="#adminsitefiles">
-	<form method="post" action="/upload" enctype="multipart/form-data">
-		<input type="hidden" id="siteid" name="siteid" value="{{siteid}}" />
-		<div id="drop-zone">
-			<p>Drag and drop your file here or click to select a file:</p>
-			<input type="file" id="file" name="file" style="display: none;">
-		</div>
-		<button type="submit">Upload</button>
-	</form>
-	<script>
-		const dropZone = document.getElementById('drop-zone');
-		const fileInput = document.getElementById('file');
-
-		// Prevent default behavior for drag events
-		dropZone.addEventListener('dragenter', (e) => {
-			e.preventDefault();
-			dropZone.classList.add('highlight');
-		});
-
-		dropZone.addEventListener('dragover', (e) => {
-			e.preventDefault();
-		});
-
-		dropZone.addEventListener('dragleave', () => {
-			dropZone.classList.remove('highlight');
-		});
-
-		// Handle dropped files
-		dropZone.addEventListener('drop', (e) => {
-			e.preventDefault();
-			dropZone.classList.remove('highlight');
-			const file = e.dataTransfer.files[0];
-			fileInput.files = e.dataTransfer.files;
-			console.log('File selected:', file.name);
-			// You can perform additional actions with the selected file here
-		});
-
-		// Clicking on the drop zone triggers the file input
-		dropZone.addEventListener('click', () => {
-			fileInput.click();
-		});
-
-		// When a file is selected using the input, update the drop zone text
-		fileInput.addEventListener('change', () => {
-			const fileName = fileInput.files[0].name;
-			dropZone.innerHTML = `Selected file: ${fileName}`;
-		});
-	</script>
-
-	<div class="filemanager">
-		<div class="folders"></div>
-		<div class="files"></div>
-	</div>
-	<div class="buttonright"><span><button type="submit" id="adminusersave" hx-post="/admin/saveuserform" hx-target="#overlayform" class="overlaysave"><i class="fa-regular fa-floppy-disk"></i></button></span></div>
+﻿<form id="adminfilesform" hx-encoding='multipart/form-data' hx-post='/admin/upload'>
+	<input type="hidden" id="siteid" name="siteid" value="{{siteid}}" />
+	<input type="file" id="uploadfiles" name="uploadfiles" />
+	<button>Submit</button>
+	<!--<div class="buttonright"><span><button type="submit" id="filessave" class="overlaysave"><i class="fa-regular fa-floppy-disk"></i></button></span></div>-->
 </form>
+<div class="filemanager">
+	<div class="folders"></div>
+	<div class="files"></div>
+</div>

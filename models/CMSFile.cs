@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace dabrelCMS.models
 {
@@ -12,5 +13,8 @@ namespace dabrelCMS.models
 		public string? Status { get; set; }
 		public string? Text { get; set; }
 		public string? Tags { get; set; }
+
+		[NotMapped]
+		public string? Temp { get; set; }
 	}
 }

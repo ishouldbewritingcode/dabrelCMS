@@ -4,6 +4,8 @@ global using dabrelCMS.models;
 global using Microsoft.EntityFrameworkCore;
 global using System;
 using dabrelCMS;
+using System.Globalization;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseCMSUploaderMiddleware();
 
 app.UseCMSMiddleware();
 

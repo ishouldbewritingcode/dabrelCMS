@@ -52,5 +52,14 @@ namespace dabrelCMS.code
 			context.Response.StatusCode = StatusCodes.Status200OK;
 			return "";
 		}
+
+		public static string CreateTempfilePath()
+		{
+			string filename = $"{Guid.NewGuid()}.tmp";
+			string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads\\temp");
+			if (!Directory.Exists(directoryPath)) Directory.CreateDirectory(directoryPath);
+
+			return Path.Combine(directoryPath, filename);
+		}
 	}
 }
