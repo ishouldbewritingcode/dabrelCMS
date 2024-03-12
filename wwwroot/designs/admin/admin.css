@@ -139,3 +139,35 @@ dialog .buttonright i {
 	height: 400px;
 	white-space: normal;
 }
+
+#uploads {
+	border: 1px solid #888;
+	;
+	border-radius: 8px;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
+#drop-zone {
+	border: 2px dashed #900;
+	border-radius: 8px;
+	padding: 20px;
+	text-align: center;
+	cursor: pointer;
+	margin-bottom: 10px;
+}
+
+#drop-zone.highlight {
+	background: #ccffcc;
+}
+
+.filemanager {
+	border: 1px solid #888;
+	border-radius: 8px;
+	padding: 20px;
+	margin-bottom: 10px;
+}
+
+.folder, .file {
+	padding-left: 8px;
+}
