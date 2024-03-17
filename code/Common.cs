@@ -61,5 +61,67 @@ namespace dabrelCMS.code
 
 			return Path.Combine(directoryPath, filename);
 		}
+
+		public static string GetFAIcon(string filename)
+		{
+			string ext = Path.GetExtension(filename).ToLower();
+			switch (ext)
+			{
+				case ".cs":
+				case ".css":
+				case ".bat":
+				case ".htm":
+				case ".html":
+				case ".js":
+				case ".ps1":
+				case ".razor":
+				case ".xml":
+				case ".xsl":
+					return "<i class=\"fa-regular fa-file-code\"></i>";
+
+				case ".doc":
+				case ".docx":
+					return "<i class=\"fa-regular fa-file-word\"></i>";
+
+				case ".jpg":
+				case ".png":
+				case ".gif":
+				case ".bmp":
+				case ".tif":
+					return "<i class=\"fa-regular fa-file-image\"></i>";
+
+				case ".mp3":
+				case ".wav":
+				case ".ogg":
+					return "<i class=\"fa-regular fa-file-audio\"></i>";
+
+				case ".pdf":
+					return "<i class=\"fa-regular fa-file-pdf\"></i>";
+
+				case ".ppt":
+				case ".pptx":
+					return "<i class=\"fa-regular fa-file-powerpoint\"></i>";
+
+				case ".log":
+				case ".txt":
+					return "<i class=\"fa-regular fa-file-lines\"></i>";
+
+				case ".avi":
+				case ".mp4":
+					return "<i class=\"fa-regular fa-file-video\"></i>";
+
+				case ".xls":
+				case ".xlsx":
+					return "<i class=\"fa-regular fa-file-excel\"></i>";
+
+				case ".7z":
+				case ".rar":
+				case ".zip":
+					return "<i class=\"fa-regular fa-file-zipper\"></i>";
+
+				default:
+					return "<i class=\"fa-regular fa-file\"></i>";
+			}
+		}
 	}
 }

@@ -182,7 +182,8 @@ progress#progress {
 }
 
 .filemanager li > i {
-	color: #333;
-	background: transparent;
+	font-weight: 400;
+	font-size: 110%;
+	color: #00a;
 	margin-right: 10px;
 }

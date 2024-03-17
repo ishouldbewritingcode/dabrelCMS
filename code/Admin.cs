@@ -405,7 +405,7 @@ namespace dabrelCMS.code
 			sbUploadsFolder.Append("<ul class=\"files\">");
 			foreach (FileInfo file in files)
 			{
-				sbUploadsFolder.Append("<li class=\"file\"><i class=\"fa-regular fa-file\"></i>" + file.Name + "</li>");
+				sbUploadsFolder.Append("<li class=\"file\">" + Common.GetFAIcon(file.Name) + file.Name + "</li>");
 			}
 			sbUploadsFolder.Append("</ul>");
 		}
