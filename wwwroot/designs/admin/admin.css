@@ -142,14 +142,14 @@ dialog .buttonright i {
 
 #uploads {
 	border: 1px solid #888;
-	;
 	border-radius: 8px;
 	padding: 20px;
 	margin-bottom: 20px;
 }
 
-#drop-zone {
-	border: 2px dashed #900;
+form#uploadform {
+	border: 1px solid #900;
+	background: #fff;
 	border-radius: 8px;
 	padding: 20px;
 	text-align: center;
@@ -157,8 +157,12 @@ dialog .buttonright i {
 	margin-bottom: 10px;
 }
 
-#drop-zone.highlight {
-	background: #ccffcc;
+form#uploadform input#uploadfiles {
+	width: 100%;
+}
+
+progress#progress {
+	width: 100%;
 }
 
 .filemanager {
@@ -166,8 +170,19 @@ dialog .buttonright i {
 	border-radius: 8px;
 	padding: 20px;
 	margin-bottom: 10px;
+	font-size: .9rem;
 }
 
-.folder, .file {
+.filemanager ul.folders,
+.filemanager ul.files {
 	padding-left: 8px;
+	display: list-item;
+	list-style: none;
+	list-style-type: none;
+}
+
+.filemanager li > i {
+	color: #333;
+	background: transparent;
+	margin-right: 10px;
 }

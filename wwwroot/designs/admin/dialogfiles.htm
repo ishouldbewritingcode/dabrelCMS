@@ -1,57 +1,41 @@
-﻿<form id="uploads" hx-encoding='multipart/form-data' hx-post='/admin/upload' hx-target="#status">
-	<div id="drop-zone">
-		<p>Drag and drop your file here or click to select a file:</p>
-	</div>
-	<input type="file" id="uploadfiles" name="uploadfiles" multiple="" />
-	<div id="status"></div>
+﻿<form id="uploadform" hx-encoding='multipart/form-data' hx-post='/admin/upload' hx-action="filemanager">
+	<progress id="progress" value="0"></progress>
+	<input type="file" id="uploadfiles" name="uploadfiles" multiple="multiple" />
 	<div class="buttonright"><input type="submit" value="Upload" /></div>
-	<!--<div class="buttonright"><span><button type="submit" id="filessave" class="overlaysave"><i class="fa-regular fa-floppy-disk"></i></button></span></div>-->
+
+	<ul id="selectedfileslist">
+	</ul>
 </form>
+
 <h2>Uploads Folder</h2>
-<div class="filemanager">
-</div>
 <form id="adminfilesaddfolder" hx-post="/admin/addfolder">
 	<input type="hidden" name="path" value="{{currentfolder}}" />
 	<label for="newfolder">Add Folder: </label><input type="text" id="newfolder" name="newfolder" pattern="" />
 	<input type="submit" value="Add Folder" />
 </form>
 
+<button class="buttonright" hxget="/admin/getuploads" hx-target=".filemanager">Refresh</button>
+<div class="filemanager" hx-get="/admin/getuploads" hx-trigger="load">
+</div>
+
 <script>
-	const dropZone = document.getElementById('drop-zone');
-	const fileInput = document.getElementById('uploadfiles');
-
-	// Prevent default behavior for drag events
-	dropZone.addEventListener('dragenter', (e) => {
-		e.preventDefault();
-		dropZone.classList.add('highlight');
+	// retrieve important DOM elements
+	const fileUploadElem = document.querySelector("input#uploadfiles");
+	const formElem = document.querySelector("form#uploadform");
+	const selectedFilesList = document.querySelector("ul#selectedfileslist");
+	// file input change event - create list item for each selected file
+	fileUploadElem.addEventListener("change", (event) => {
+		Array.from(fileUploadElem.files).forEach((file) => {
+			let listItem = document.createElement('li');
+			listItem.innerHTML = file.name + ' - ' + file.type;
+			selectedFilesList.appendChild(listItem);
+		});
 	});
-
-	dropZone.addEventListener('dragover', (e) => {
-		e.preventDefault();
-	});
-
-	dropZone.addEventListener('dragleave', () => {
-		dropZone.classList.remove('highlight');
-	});
-
-	// Handle dropped files
-	dropZone.addEventListener('drop', (e) => {
-		e.preventDefault();
-		dropZone.classList.remove('highlight');
-		const file = e.dataTransfer.files[0];
-		fileInput.files = e.dataTransfer.files;
-		console.log('File selected:', file.name);
-		// You can perform additional actions with the selected file here
-	});
-
-	// Clicking on the drop zone triggers the file input
-	dropZone.addEventListener('click', () => {
-		fileInput.click();
-	});
-
-	// When a file is selected using the input, update the drop zone text
-	fileInput.addEventListener('change', () => {
-		const fileName = fileInput.files[0].name;
-		dropZone.innerHTML = `Selected files: ${fileName}`;
+	htmx.on('#uploadform', 'htmx:xhr:progress', function (evt) {
+		htmx.find('#progress').setAttribute('value', evt.detail.loaded / evt.detail.total * 100)
+		htmx.find('#progress').setAttribute('value', 0);
+		selectedFilesList.querySelectorAll('li').forEach((i) => {
+			selectedFilesList.remove(i);
+		});
 	});
 </script>

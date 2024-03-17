@@ -266,10 +266,6 @@ ul {
 	list-style-type: none;
 }
 
-ul li::marker {
-	content: "\2022   ";
-}
-
 li {
 	margin-bottom: .2em;
 }

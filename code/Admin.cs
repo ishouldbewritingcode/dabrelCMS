@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
@@ -14,6 +15,8 @@ namespace dabrelCMS.code
 {
 	public class Admin
 	{
+		private StringBuilder sbUploadsFolder = new StringBuilder();
+
 		public string GetPage(HttpContext context, CMSUser authUser)
 		{
 			string _domain = string.Empty;
@@ -203,7 +206,7 @@ namespace dabrelCMS.code
 							context.Response.StatusCode = StatusCodes.Status200OK;
 							return "<div>User saved successfully.</div>";
 							//context.Response.Headers["HX-Redirect"] = $"/admin";
-							//break;
+							break;
 					}
 				}
 				else
@@ -260,6 +263,17 @@ namespace dabrelCMS.code
 							context.Response.Headers["Content-Type"] = "text/html";
 							context.Response.StatusCode = StatusCodes.Status200OK;
 							return html;
+
+						case "getuploads":
+							string savePath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+							savePath = Path.Combine(savePath, site.SiteId.ToString());
+							if (!Directory.Exists(savePath))
+								Directory.CreateDirectory(savePath);
+							DirectoryInfo directoryInfo = new DirectoryInfo(savePath);
+							TraverseDirectory(directoryInfo);
+							context.Response.Headers["Content-Type"] = "text/html";
+							context.Response.StatusCode = StatusCodes.Status200OK;
+							return sbUploadsFolder.ToString();
 
 						default:
 							sb.Append($"<section>");
@@ -374,6 +388,26 @@ namespace dabrelCMS.code
 		{
 			Random rand = new Random();
 			return rand.Next(10, 99999);
+		}
+
+		private void TraverseDirectory(DirectoryInfo directoryInfo)
+		{
+			IEnumerable<DirectoryInfo> subdirectories = directoryInfo.EnumerateDirectories();
+			sbUploadsFolder.Append("<ul class=\"folders\">");
+			foreach (DirectoryInfo subdirectory in subdirectories)
+			{
+				sbUploadsFolder.Append("<li class=\"folder\"><i class=\"fa-regular fa-folder\"></i>" + subdirectory.Name + "</li>");
+				TraverseDirectory(subdirectory);
+			}
+			sbUploadsFolder.Append("</ul>");
+
+			IEnumerable<FileInfo> files = directoryInfo.EnumerateFiles();
+			sbUploadsFolder.Append("<ul class=\"files\">");
+			foreach (FileInfo file in files)
+			{
+				sbUploadsFolder.Append("<li class=\"file\"><i class=\"fa-regular fa-file\"></i>" + file.Name + "</li>");
+			}
+			sbUploadsFolder.Append("</ul>");
 		}
 	}
 }
