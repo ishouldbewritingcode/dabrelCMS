@@ -277,11 +277,10 @@ namespace dabrelCMS.code
 
 						default:
 							sb.Append($"<section>");
-							//sb.Append($"<div class=\"buttonright\" hx-post=\"/admin/getpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-pen-to-square\"></i></div>");
 							sb.Append($"<div class=\"buttonright\">");
-							sb.Append($"<span id=\"admineditpage\" hx-post=\"/admin/getpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-pen-to-square\"></i></span>");
-							sb.Append($"<span id=\"adminaddpage\" hx-post=\"/admin/getaddpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-plus\"></i></span>");
-							sb.Append($"<span id=\"admindeletepage\" hx-post=\"/admin/deletepage/{page.PageId}\" hx-confirm=\"Are you absolutely sure you wish to delete this page?\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-trash\"></i></span>");
+							sb.Append($"<button id=\"admineditpage\" hx-post=\"/admin/getpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-pen-to-square\"></i></button>");
+							sb.Append($"<button id=\"adminaddpage\" hx-post=\"/admin/getaddpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-plus\"></i></button>");
+							sb.Append($"<button id=\"admindeletepage\" hx-post=\"/admin/deletepage/{page.PageId}\" hx-confirm=\"Are you absolutely sure you wish to delete this page?\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-trash\"></i></button>");
 							sb.Append($"</div>");
 							sb.Append($"<h1 id=\"pagetitle\">{page.Title}</h1>");
 							sb.Append($"<div id=\"content\" class=\"body\">{page.Summary}</div>");
@@ -366,7 +365,7 @@ namespace dabrelCMS.code
 				c.Append($"</a>");
 				if (gotkids)
 				{
-					c.Append($"<span class=\"sub\"><i class=\"fa-solid fa-plus\"></i></span>");
+					c.Append($"<button class=\"sub\"><i class=\"fa-solid fa-plus\"></i></button>");
 				}
 				c.Append(GetNav(nav, page.PageId, currentId));
 				c.Append($"</li>");

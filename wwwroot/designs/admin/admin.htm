@@ -15,9 +15,9 @@
 	<title>{{sitetitle}} {{pagetitle}}</title>
 </head>
 <body>
-	<dialog id="overlaybox" class="modal">
-		<div class="buttonright" id="overlayclose" onclick="document.getElementById('overlaybox').close();"><i class="fa-regular fa-circle-xmark"></i></div>
-		<div id="overlayform">
+	<dialog id="cmsdialog" class="modal">
+		<div class="buttonright" id="cmsdialogbar"><a id="cmsdialogclose" href="javascript:;"><i class="fa-regular fa-circle-xmark"></i></a></div>
+		<div id="cmsdialogform">
 		</div>
 	</dialog>
 	{{bodytop}}
@@ -25,9 +25,9 @@
 		<div id="sitetitle">
 			<a href="/">{{titleimage}}{{headersitetitle}}</a>
 			<div class="buttonright">
-				<span title="site files" id="admineditsitecontrol" hx-get="/admin/getfilesform" hx-target="#overlayform" onclick="document.getElementById('overlaybox').showModal();"><i class="fa-solid fa-folder"></i></span>
-				<span title="site settings" id="admineditsitecontrol" hx-get="/admin/getsiteform" hx-target="#overlayform" onclick="document.getElementById('overlaybox').showModal();"><i class="fa-solid fa-gear"></i></span>
-				<span title="site security" id="admineditusercontrol" hx-get="/admin/getuserform" hx-target="#overlayform" onclick="document.getElementById('overlaybox').showModal();"><i class="fa-solid fa-user"></i></span>
+				<button title="site files" id="admineditsitecontrol" hx-get="/admin/getfilesform" hx-target="#cmsdialogform" onclick="document.getElementById('cmsdialog').showModal();"><i class="fa-solid fa-folder"></i></button>
+				<button title="site settings" id="admineditsitecontrol" hx-get="/admin/getsiteform" hx-target="#cmsdialogform" onclick="document.getElementById('cmsdialog').showModal();"><i class="fa-solid fa-gear"></i></button>
+				<button title="site security" id="admineditusercontrol" hx-get="/admin/getuserform" hx-target="#cmsdialogform" onclick="document.getElementById('cmsdialog').showModal();"><i class="fa-solid fa-user"></i></button>
 			</div>
 		</div>
 		<div id="sitesubtitle">{{subtitle}}</div>
@@ -46,9 +46,9 @@
 			<div id="pagecontent">
 				<section>
 					<div class="buttonright">
-						<span id="admineditpage" hx-post="/admin/getpageform/{{pageid}}" hx-target="#pagecontent"><i class="fa-regular fa-pen-to-square"></i></span>
-						<span id="adminaddpagecontrol" hx-post="/admin/getaddpageform/{{pageid}}" hx-target="#pagecontent"><i class="fa-solid fa-plus"></i></span>
-						<span id="admindeletepagecontrol" hx-post="/admin/deletepage/{{pageid}}" hx-confirm="Are you absolutely sure you wish to delete this page?" hx-target="#pagecontent"><i class="fa-solid fa-trash"></i></span>
+						<button id="admineditpage" hx-post="/admin/getpageform/{{pageid}}" hx-target="#pagecontent"><i class="fa-regular fa-pen-to-square"></i></button>
+						<button id="adminaddpagecontrol" hx-post="/admin/getaddpageform/{{pageid}}" hx-target="#pagecontent"><i class="fa-solid fa-plus"></i></button>
+						<button id="admindeletepagecontrol" hx-post="/admin/deletepage/{{pageid}}" hx-confirm="Are you absolutely sure you wish to delete this page?" hx-target="#pagecontent"><i class="fa-solid fa-trash"></i></button>
 					</div>
 					<h1 id="pagetitle" contenteditable="true">{{pagetitle}}</h1>
 					<div id="content" class="body" contenteditable="true">{{content}}</div>

@@ -191,27 +191,26 @@ nav a:not(:last-of-type) {
 }
 
 /* glyph */
-nav span.sub {
-	/*float: right;*/
+nav button.sub {
 	display: inline-block;
 	padding: 3px;
 	cursor: pointer;
 	background: rgba(33,33,33,0.3);
 	text-align: center;
-	/*color: inherit;*/
 	color: var(--navitemcolor);
 	margin-right: 15px;
+	border: none;
 }
 
-nav li li span.sub {
+nav li li button.sub {
 	float: right;
 }
 
-nav span.sub i {
+nav button.sub i {
 	transition: all 0.5s;
 }
 
-nav span.sub.open i {
+nav button.sub.open i {
 	transform: rotate(45deg);
 }
 
@@ -799,8 +798,9 @@ article time {
 		display: none;
 	}
 
-	nav ul li.haschildren span.sub {
+	nav ul li.haschildren button.sub {
 		background: transparent;
+		border: none;
 	}
 }
 

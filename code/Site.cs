@@ -210,7 +210,7 @@ namespace dabrelCMS.code
 				c.Append($"</a>");
 				if (gotkids)
 				{
-					c.Append($"<span class=\"sub\"><i class=\"fa-solid fa-plus\"></i></span>");
+					c.Append($"<button class=\"sub\"><i class=\"fa-solid fa-plus\"></i></button>");
 				}
 				c.Append(GetNav(nav, page.PageId, currentId));
 				c.Append($"</li>");

@@ -9,12 +9,12 @@
 
 <h2>Uploads Folder</h2>
 <form id="adminfilesaddfolder" hx-post="/admin/addfolder">
-	<input type="hidden" name="path" value="{{currentfolder}}" />
+	<input type="hidden" id="currentFolder" name="currentFolder" value="{{currentfolder}}" />
 	<label for="newfolder">Add Folder: </label><input type="text" id="newfolder" name="newfolder" pattern="" />
 	<input type="submit" value="Add Folder" />
 </form>
 
-<button class="buttonright" hxget="/admin/getuploads" hx-target=".filemanager">Refresh</button>
+<div class="buttonright"><button hxget="/admin/getuploads" hx-target=".filemanager">Refresh</button></div>
 <div class="filemanager" hx-get="/admin/getuploads" hx-trigger="load">
 </div>
 
