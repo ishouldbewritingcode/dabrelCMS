@@ -12,7 +12,7 @@
     "https": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "https://localhost:7272/admin",
+      "launchUrl": "https://localhost:7272/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

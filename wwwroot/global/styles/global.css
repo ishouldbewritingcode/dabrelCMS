@@ -215,17 +215,9 @@ nav button.sub.open i {
 }
 
 @keyframes growDown {
-	0% {
-		transform: scaleY(0);
-	}
-
-	80% {
-		transform: scaleY(1.1);
-	}
-
-	100% {
-		transform: scaleY(1);
-	}
+	0% { transform: scaleY(0); }
+	80% {	transform: scaleY(1.1);	}
+	100% { transform: scaleY(1); }
 }
 
 .hero {
@@ -784,6 +776,7 @@ article time {
 
 	nav ul li {
 		display: inline-block;
+		padding: 2px 20px;
 	}
 
 	nav ul li li {
