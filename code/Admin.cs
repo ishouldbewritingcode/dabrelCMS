@@ -207,6 +207,27 @@ namespace dabrelCMS.code
 							return "<div>User saved successfully.</div>";
 							//context.Response.Headers["HX-Redirect"] = $"/admin";
 							break;
+
+						case "addfolder":
+							if (context.Request.Form["siteId"].ToString().Length > 0)
+							{
+								if (context.Request.Form["newfolder"].ToString().Length > 0)
+								{
+									if (context.Request.Form["currentdirectory"].ToString().Length > 0)
+									{
+										string savePath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+										savePath = Path.Combine(savePath, site.SiteId.ToString());
+										string newPath = Path.Combine(savePath, context.Request.Form["currentdirectory"].ToString());
+										newPath = Path.Combine(newPath, context.Request.Form["newfolder"].ToString());
+										if (!Directory.Exists(newPath))
+											Directory.CreateDirectory(newPath);
+									}
+								}
+							}
+							context.Response.Headers["Content-Type"] = "text/html";
+							return "<div>New folder saved successfully.</div>";
+							context.Response.StatusCode = StatusCodes.Status200OK;
+							break;
 					}
 				}
 				else

@@ -4,7 +4,6 @@ Array.from(navitems).forEach(function (item) {
 	item.addEventListener('click', navClicked, false);
 });
 
-
 function navClicked(event) {
 	// turn off all paths / opens
 	let paths = nav.querySelectorAll('.path');
@@ -32,9 +31,9 @@ function openChildNav(event) {
 		this.parentNode.classList.remove('open');
 	}
 	else {
-		let paths = nav.querySelectorAll('li.path');
-		Array.from(paths).forEach(function (p) {
-			p.classList.remove('path');
+		let opens = nav.querySelectorAll('.open');
+		Array.from(opens).forEach(function (p) {
+			p.classList.remove('open');
 		});
 		this.classList.add('open');
 		this.parentNode.classList.add('open');
