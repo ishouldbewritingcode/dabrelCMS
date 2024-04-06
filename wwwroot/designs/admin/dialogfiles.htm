@@ -10,7 +10,7 @@
 <h2>Uploads Folder</h2>
 <form id="adminfilesaddfolder" hx-post="/admin/addfolder">
 	<input type="hidden" id="currentFolder" name="currentFolder" value="{{currentfolder}}" />
-	<label for="newfolder">Add Folder: </label><input type="text" id="newfolder" name="newfolder" pattern="" />
+	<label for="newfolder">Add Folder: </label><input type="text" id="newfolder" name="newfolder" placeholder="folder name" />
 	<input type="submit" value="Add Folder" />
 </form>
 
