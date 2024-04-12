@@ -17,10 +17,14 @@
 <body>
 	{{bodytop}}
 	<header>
-		<div id="sitetitle"><a href="/"><img id="titlebee" src="/designs/superbee/images/Bee_transparent_web.png" alt="bee"/>{{headersitetitle}}</a></div>
+		<div id="topbar">
+			<div id="sitetitle"><a href="/"><img id="titleimage" src="/designs/superbee/images/Bee_transparent_web.png" alt="bee" />{{headersitetitle}}</a></div>
+			<div id="mobilenav">
+				<button id="searchicon" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-magnifying-glass"></i></button>
+				<button id="navicon" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+			</div>
+		</div>
 		<div id="sitesubtitle">{{subtitle}}</div>
-		<input type="checkbox" id="search-toggle" /><label for="search-toggle" class="searchbutton"><i class="fa-solid fa-magnifying-glass"></i></label>
-		<input type="checkbox" id="nav-toggle" /><label for="nav-toggle" class="navbutton"><span class="navicon">&nbsp;</span></label>
 		<div id="searchbox">
 			<input id="search" name="search" type="text" placeholder="search phrase" /><i class="fa-solid fa-magnifying-glass"></i>
 		</div>

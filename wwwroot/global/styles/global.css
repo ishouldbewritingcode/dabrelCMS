@@ -73,26 +73,51 @@ header {
 	top: 0;
 	left: 0;
 	right: 0;
-	display: flex;
-	align-content: stretch;
-	justify-content: space-between;
 	padding: 5px 15px;
 	background: var(--highlightbg);
 	color: white;
 	z-index: 10;
 	border-bottom: 2px solid var(--navitemhlbg);
-	#sitetitle, a, nav a
 
-{
-	font-size: 2rem;
-	white-space: nowrap;
-	color: var(--highlight);
+	#sitetitle, a, nav a {
+		font-size: 2rem;
+		white-space: nowrap;
+		color: var(--color);
+	}
+
+	.searchbutton i.fa-solid {
+		font-size: 1.8rem;
+		color: var(--navitemcolor);
+	}
 }
 
-.searchbutton i.fa-solid {
-	font-size: 1.8rem;
-	color: var(--navitemcolor);
+#topbar {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	justify-content: space-between;
 }
+
+#sitetitle { 
+	max-width: 50%;
+	a {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		/*flex-wrap: wrap;*/
+		.titletext {
+			align-self: center;
+			font-size: 5vw;
+			margin-left: 20px;
+			text-shadow: -3px 3px 5px #7d6726;
+		}
+	}
+}
+
+#titleimage {
+	display: inline-block;
+	width: 200px;
+	max-width: 50%;
 }
 
 #sitesubtitle {
@@ -112,6 +137,9 @@ header {
 	color: var(--color);
 	z-index: 12;
 }
+#nav.show { display: block; }
+#searchbox.show { display: block; }
+
 
 header #searchbox input {
 	width: calc(100% - 2.5rem);
@@ -602,53 +630,22 @@ article time {
 	z-index: 4;
 }
 
-/* hamburger nav */
-#nav-toggle, #search-toggle {
-	display: none;
-}
 
-.navbutton, .searchbutton {
-	color: white;
-	font-size: 30px;
+
+
+/* hamburger nav */
+#searchicon, #navicon  {
+	background: transparent;
+	color: white;									/* todo */
+	border: none;
+	font-size: 1.3rem;
 	position: relative;
 	z-index: 888;
 	text-align: center;
 	cursor: pointer;
-	color: transparent;
 	padding: 2px 5px;
 }
-/* styling hamburger icon  */
-.navicon {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-}
 
-.navicon,
-.navicon::before,
-.navicon::after {
-	width: 30px;
-	height: 3px;
-	background-color: white;
-	display: inline-block;
-}
-
-.navicon::before,
-.navicon::after {
-	content: "";
-	position: absolute;
-	left: 0;
-	transition: all 0.2s;
-}
-
-.navicon::before {
-	top: -10px;
-}
-
-.navicon::after {
-	top: 10px;
-}
 /*.navbutton:hover icon:before { top: -1rem; }*/
 /*.navbutton:hover icon::after { top: 1rem; }*/
 #nav-toggle:checked + .navbutton .navicon {
@@ -693,7 +690,7 @@ article time {
 		font-size: 1rem;
 		border-bottom: none;
 	}
-
+	#mobilenav { display: none; }
 	#sitetitle {
 		font-size: 3rem;
 		padding: 20px 50px 20px 0;
@@ -704,9 +701,7 @@ article time {
 		font-size: 3rem;
 	}
 
-	#sitesubtitle {
-		display: block;
-	}
+	#sitesubtitle {	display: block;	}
 
 	header #searchbox {
 		display: inline-block;
@@ -719,10 +714,6 @@ article time {
 
 	header #searchbox input {
 		width: auto;
-	}
-
-	#msearch, #mnav, .button {
-		display: none;
 	}
 
 	header #nav {

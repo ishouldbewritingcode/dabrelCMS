@@ -13,23 +13,6 @@
 	--navitemhlcolor: #fff;
 }
 
-header #sitetitle a {
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	.titletext {
-		align-self: center;
-		font-size: 5rem;
-		margin-left: 20px;
-		text-shadow: -3px 3px 5px #7d6726;
-	}
-}
-#titlebee {
-	display: inline-block;
-	width: 200px;
-	max-width: 90%;
-}
-
 @media (prefers-color-scheme: dark) {
 	* {
 		--bgcolor: #000;

@@ -1,7 +1,24 @@
 ﻿let nav = document.getElementById('nav');
+let sb = document.getElementById('searchbox');
 let navitems = nav.querySelectorAll('a');
 Array.from(navitems).forEach(function (item) {
 	item.addEventListener('click', navClicked, false);
+});
+
+// mobile nav
+document.getElementById('navicon').addEventListener('click', function () {
+	if (nav.classList.contains('show'))
+		nav.classList.remove('show');
+	else
+		nav.classList.add('show');
+});
+
+// mobile search
+document.getElementById('searchicon').addEventListener('click', function () {
+	if (sb.classList.contains('show'))
+		sb.classList.remove('show');
+	else
+		sb.classList.add('show');
 });
 
 function navClicked(event) {
@@ -16,7 +33,7 @@ function navClicked(event) {
 	});
 	// add the correct path
 	this.parentNode.classList.add('path');
-	document.getElementById('nav-toggle').checked = false; //close mobile nav
+	document.getElementById('nav').classList.remove('show');
 }
 
 let subs = nav.getElementsByClassName('sub');
