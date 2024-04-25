@@ -158,6 +158,53 @@ namespace dabrelCMS.code
 							context.Response.Headers["HX-Redirect"] = $"/admin/{page.Shortcut}";
 							break;
 
+						case "pagecontentform":
+							// save page content here
+							id = 0;
+							sid = context.Request.Form["pageid"].ToString().Trim();
+							isEdit = int.TryParse(sid, out id);
+							if (isEdit)
+								page = dbcontext.CMSPages.Where(p => p.PageId == id).FirstOrDefault();
+							else
+							{
+								page = new CMSPage();
+								dbcontext.CMSPages.Add(page);
+								// page.PageId = 0;
+							}
+							page.Title = context.Request.Form["pagetitle"].ToString();
+							page.Summary = context.Request.Form["content"].ToString();
+							dbcontext.SaveChanges();
+							context.Response.Headers["HX-Redirect"] = $"/admin/{page.Shortcut}";
+							break;
+
+
+						case "pageconfigform":
+							// save page config here
+							id = 0;
+							sid = context.Request.Form["pageid"].ToString().Trim();
+							isEdit = int.TryParse(sid, out id);
+							if (isEdit)
+								page = dbcontext.CMSPages.Where(p => p.PageId == id).FirstOrDefault();
+							else
+							{
+								page = new CMSPage();
+								dbcontext.CMSPages.Add(page);
+								// page.PageId = 0;
+							}
+							page.Title = context.Request.Form["pagetitle"].ToString();
+							page.NavTitle = context.Request.Form["navtitle"].ToString();
+							page.Shortcut = context.Request.Form["pageshortcut"].ToString();
+							page.ParentId = int.Parse(context.Request.Form["parentid"].ToString());
+							page.Sort = int.Parse(context.Request.Form["pagesort"].ToString());
+							page.isOn = (context.Request.Form["pageison"].ToString().Length > 0 ? true : false);
+							page.isPrivate = (context.Request.Form["pageisprivate"].ToString().Length > 0 ? true : false);
+							page.isHidden = (context.Request.Form["pageishidden"].ToString().Length > 0 ? true : false);
+							page.Tags = context.Request.Form["pagetags"].ToString();
+							page.HeroImage = context.Request.Form["pagehero"].ToString();
+							dbcontext.SaveChanges();
+							context.Response.Headers["HX-Redirect"] = $"/admin/{page.Shortcut}";
+							break;
+
 						case "deletepage":
 							if (pathsegments.Length > 2)
 							{
@@ -289,6 +336,25 @@ namespace dabrelCMS.code
 							context.Response.Headers["Content-Type"] = "text/html";
 							context.Response.StatusCode = StatusCodes.Status200OK;
 							return sbUploadsFolder.ToString();
+
+						case "getpageconfig":
+							page = dbcontext.CMSPages.Where(p => p.PageId == int.Parse(pathsegments[2])).FirstOrDefault();
+							string pageformPath = $"{_webRootPath}\\designs\\{design}\\dialogpage.htm";
+							html = Common.GetFileText(pageformPath);
+							html = html.Replace("{{pageid}}", page.PageId.ToString());
+							html = html.Replace("{{parentid}}", page.ParentId.ToString());
+							html = html.Replace("{{pageshortcut}}", page.Shortcut);
+							html = html.Replace("{{pagesort}}", page.Sort.ToString());
+							html = html.Replace("{{pageison}}", (page.isOn ? "checked='true'": ""));
+							html = html.Replace("{{pageisprivate}}", (page.isPrivate ? "checked='true'": ""));
+							html = html.Replace("{{pageishidden}}", (page.isHidden ? "checked='true'": ""));
+							html = html.Replace("{{pagetags}}", page.Tags);
+							html = html.Replace("{{pagetitle}}", page.Title);
+							html = html.Replace("{{navtitle}}", page.NavTitle);
+							html = html.Replace("{{pagehero}}", page.HeroImage);
+							context.Response.Headers["Content-Type"] = "text/html";
+							context.Response.StatusCode = StatusCodes.Status200OK;
+							return html;
 
 						default:
 							sb.Append($"<section>");

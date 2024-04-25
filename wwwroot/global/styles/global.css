@@ -694,11 +694,15 @@ article time {
 	#sitetitle {
 		font-size: 3rem;
 		padding: 20px 50px 20px 0;
+		margin-left: 0;
 		color: var(--highlight);
 	}
 
 	#sitetitle a {
 		font-size: 3rem;
+		display: inline-block;
+		padding: 0;
+		.titletext { margin: 0; }
 	}
 
 	#sitesubtitle {	display: block;	}

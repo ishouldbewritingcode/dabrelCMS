@@ -101,6 +101,15 @@ form button {
 	height: 300px;
 }
 
+textarea { margin: 0; }
+
+.editor {
+	background: rgba(255,255,255,0.9);
+	border-radius: 10px;
+	padding: 10px;
+	color: #333;
+}
+
 div.buttonright {
 	display: block;
 	text-align: right;
@@ -132,10 +141,13 @@ dialog .buttonright i {
 	vertical-align: top;
 }
 
-#adminpageform input,
-#addpageform input {
+input {
 	width: 400px;
 	max-width: 100%;
+}
+input[type=checkbox],
+input[type=radio]{ 
+	width: auto; 
 }
 
 #adminpageform textarea,

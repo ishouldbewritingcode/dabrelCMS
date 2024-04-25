@@ -11,7 +11,9 @@
 	<script src="/global/scripts/htmx.min.js"></script>
 	<script src="/global/scripts/global.js" defer></script>
 	<script src="/designs/admin/admin.js" defer></script>
-
+	<script src="/global/scripts/jquery-3.7.1.min.js"></script>
+	<script src="/global/trumbowyg/trumbowyg.min.js"></script>
+	<link rel="stylesheet" href="/global/trumbowyg/ui/trumbowyg.min.css"/>
 	<title>{{sitetitle}} {{pagetitle}}</title>
 </head>
 <body>
@@ -48,12 +50,19 @@
 			<div id="pagecontent">
 				<section>
 					<div class="buttonright">
-						<button id="admineditpage" hx-post="/admin/getpageform/{{pageid}}" hx-target="#pagecontent"><i class="fa-regular fa-pen-to-square"></i></button>
+						<!--<button id="admineditpage" hx-post="/admin/getpageform/{{pageid}}" hx-target="#pagecontent"><i class="fa-regular fa-pen-to-square"></i></button>-->
+						<button id="adminpageconfig" title="page settings" hx-get="/admin/getpageconfig/{{pageid}}" hx-target="#cmsdialogform" onclick="document.getElementById('cmsdialog').showModal();"><i class="fa-solid fa-gear"></i></button>
 						<button id="adminaddpagecontrol" hx-post="/admin/getaddpageform/{{pageid}}" hx-target="#pagecontent"><i class="fa-solid fa-plus"></i></button>
 						<button id="admindeletepagecontrol" hx-post="/admin/deletepage/{{pageid}}" hx-confirm="Are you absolutely sure you wish to delete this page?" hx-target="#pagecontent"><i class="fa-solid fa-trash"></i></button>
 					</div>
-					<h1 id="pagetitle" contenteditable="true">{{pagetitle}}</h1>
-					<div id="content" class="body" contenteditable="true">{{content}}</div>
+					<form name="pagecontentform" id="pagecontentform" hx-post="/admin/pagecontentform">
+						<input type="hidden" id="pageid" name="pageid" value="{{pageid}}"/>
+						<h1 id="ce_pagetitle" contenteditable="true" onblur="javascript: $('#pagetitle').val($('#ce_pagetitle').text());">{{pagetitle}}</h1>
+						<input id="pagetitle" name="pagetitle" type="hidden" value="{{pagetitle}}" />
+						<div id="content" class="body">{{content}}</div>
+						<div><button type="submit" class="savebutton" id="savecontent">Save</button></div>
+						<script>$('#content').trumbowyg();</script>
+					</form>
 				</section>
 			</div>
 		</div>
