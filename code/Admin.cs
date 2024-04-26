@@ -357,17 +357,15 @@ namespace dabrelCMS.code
 							return html;
 
 						default:
-							sb.Append($"<section>");
-							sb.Append($"<div class=\"buttonright\">");
-							sb.Append($"<button id=\"admineditpage\" hx-post=\"/admin/getpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-pen-to-square\"></i></button>");
-							sb.Append($"<button id=\"adminaddpage\" hx-post=\"/admin/getaddpageform/{page.PageId}\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-plus\"></i></button>");
-							sb.Append($"<button id=\"admindeletepage\" hx-post=\"/admin/deletepage/{page.PageId}\" hx-confirm=\"Are you absolutely sure you wish to delete this page?\" hx-target=\"#pagecontent\"><i class=\"fa-regular fa-trash\"></i></button>");
-							sb.Append($"</div>");
-							sb.Append($"<h1 id=\"pagetitle\">{page.Title}</h1>");
-							sb.Append($"<div id=\"content\" class=\"body\">{page.Summary}</div>");
-							sb.Append($"</section>");
-							html = sb.ToString();
-							break;
+							string contentformPath = $"{_webRootPath}\\designs\\{design}\\contentform.htm";
+							html = Common.GetFileText(contentformPath);
+							html = html.Replace("{{pageid}}", page.PageId.ToString());
+							html = html.Replace("{{pagetitle}}", page.Title);
+							html = html.Replace("{{content}}", page.Summary);
+
+							context.Response.Headers["Content-Type"] = "text/html";
+							context.Response.StatusCode = StatusCodes.Status200OK;
+							return html;
 					}
 				}
 			}

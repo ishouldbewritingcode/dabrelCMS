@@ -1,0 +1,16 @@
+﻿<section>
+	<div class="buttonright">
+		<!--<button id="admineditpage" hx-post="/admin/getpageform/{{pageid}}" hx-target="#pagecontent"><i class="fa-regular fa-pen-to-square"></i></button>-->
+		<button id="adminpageconfig" title="page settings" hx-get="/admin/getpageconfig/{{pageid}}" hx-target="#cmsdialogform" onclick="document.getElementById('cmsdialog').showModal();"><i class="fa-solid fa-gear"></i></button>
+		<button id="adminaddpagecontrol" hx-post="/admin/getaddpageform/{{pageid}}" hx-target="#pagecontent"><i class="fa-solid fa-plus"></i></button>
+		<button id="admindeletepagecontrol" hx-post="/admin/deletepage/{{pageid}}" hx-confirm="Are you absolutely sure you wish to delete this page?" hx-target="#pagecontent"><i class="fa-solid fa-trash"></i></button>
+	</div>
+	<form name="pagecontentform" id="pagecontentform" hx-post="/admin/pagecontentform">
+		<input type="hidden" id="pageid" name="pageid" value="{{pageid}}" />
+		<h1 id="ce_pagetitle" contenteditable="true" onblur="javascript: $('#pagetitle').val($('#ce_pagetitle').text());">{{pagetitle}}</h1>
+		<input id="pagetitle" name="pagetitle" type="hidden" value="{{pagetitle}}" />
+		<div id="content" class="body">{{content}}</div>
+		<div><button type="submit" class="savebutton" id="savecontent">Save</button></div>
+		<script>$(document).ready(function () { SetupEvents(); });</script>
+	</form>
+</section>

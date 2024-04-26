@@ -6,14 +6,14 @@
 	<meta name="description" content="{{description}}" />
 	<meta property="og:title" content="{{sitetitle}}" />
 	<meta property="og:description" content="{{description}}" />
-	<link href="/global/fontawesome/css/all.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="/designs/admin/admin.css" />
+	<script src="/global/scripts/jquery-3.7.1.min.js"></script>
+	<script src="/global/trumbowyg/trumbowyg.min.js"></script>
 	<script src="/global/scripts/htmx.min.js"></script>
 	<script src="/global/scripts/global.js" defer></script>
 	<script src="/designs/admin/admin.js" defer></script>
-	<script src="/global/scripts/jquery-3.7.1.min.js"></script>
-	<script src="/global/trumbowyg/trumbowyg.min.js"></script>
-	<link rel="stylesheet" href="/global/trumbowyg/ui/trumbowyg.min.css"/>
+	<link rel="stylesheet" href="/global/trumbowyg/ui/trumbowyg.min.css" />
+	<link href="/global/fontawesome/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/designs/admin/admin.css" />
 	<title>{{sitetitle}} {{pagetitle}}</title>
 </head>
 <body>
@@ -61,7 +61,7 @@
 						<input id="pagetitle" name="pagetitle" type="hidden" value="{{pagetitle}}" />
 						<div id="content" class="body">{{content}}</div>
 						<div><button type="submit" class="savebutton" id="savecontent">Save</button></div>
-						<script>$('#content').trumbowyg();</script>
+						<script> $(document).ready(function () { SetupEvents(); });	</script>
 					</form>
 				</section>
 			</div>
