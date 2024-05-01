@@ -9,6 +9,8 @@ namespace dabrelCMS.code
 {
 	public static class Common
 	{
+		public static string WebRootPath { get; set; }
+
 		public static string GetLoginPage(HttpContext context, string path, string message)
 		{
 			string webRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");

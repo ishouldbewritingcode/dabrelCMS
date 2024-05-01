@@ -25,6 +25,7 @@ namespace dabrelCMS.code
 			string html = string.Empty;
 
 			_webRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+			Common.WebRootPath = _webRootPath;
 			_domain = context.Request.Host.ToString().ToLower().Trim();
 			// strip off any port numbers that may be involved
 			_domain = _domain.Substring(0, _domain.IndexOf(":"));
@@ -283,48 +284,18 @@ namespace dabrelCMS.code
 					switch (pathsegments[1])
 					{
 						case "getsiteform":
-							string siteformPath = $"{_webRootPath}\\designs\\{design}\\dialogsite.htm";
-							html = Common.GetFileText(siteformPath);
-							html = html.Replace("{{sitename}}", site.Name.ToString());
-							html = html.Replace("{{created}}", site.Created.ToString());
-							html = html.Replace("{{design}}", site.Design.ToString());
-							html = html.Replace("{{faviconurl}}", site.FaviconUrl.ToString());
-							html = html.Replace("{{sitetitle}}", site.Title.ToString());
-							html = html.Replace("{{subtitle}}", site.SubTitle.ToString());
-							html = html.Replace("{{description}}", site.MetaDescription.ToString());
-							html = html.Replace("{{metaimagepath}}", site.MetaImagePath.ToString());
-							html = html.Replace("{{onallpages}}", site.OnAllPages.ToString());
-							html = html.Replace("{{bodytop}}", site.BodyTop.ToString());
-							html = html.Replace("{{bodybottom}}", site.BodyBottom.ToString());
-							html = html.Replace("{{footer1}}", site.Footer1.ToString());
-							html = html.Replace("{{footer2}}", site.Footer2.ToString());
-							html = html.Replace("{{footer3}}", site.Footer3.ToString());
-							html = html.Replace("{{footer4}}", site.Footer4.ToString());
-							context.Response.Headers["Content-Type"] = "text/html";
-							context.Response.StatusCode = StatusCodes.Status200OK;
-							return html;
+							html = AdminSite.GetSiteForm(site);
+							break;
 
 						case "getuserform":
-							string userformPath = $"{_webRootPath}\\designs\\{design}\\dialoguser.htm";
-							html = Common.GetFileText(userformPath);
-							html = html.Replace("{{userid}}", authUser.UserId.ToString());
-							html = html.Replace("{{siteid}}", authUser.SiteId.ToString());
-							html = html.Replace("{{email}}", authUser.Email.ToString());
-							html = html.Replace("{{firstname}}", authUser.FirstName.ToString());
-							html = html.Replace("{{lastname}}", authUser.LastName.ToString());
-							html = html.Replace("{{mobile}}", authUser.Mobile.ToString());
-							html = html.Replace("{{roles}}", authUser.Roles.ToString());
-							context.Response.Headers["Content-Type"] = "text/html";
-							context.Response.StatusCode = StatusCodes.Status200OK;
-							return html;
+							html = AdminUser.GetUserForm(authUser);
+							break;
 
 						case "getfilesform":
 							string filesformPath = $"{_webRootPath}\\designs\\{design}\\dialogfiles.htm";
 							html = Common.GetFileText(filesformPath);
 							html = html.Replace("{{currentfolder}}", ".");
-							context.Response.Headers["Content-Type"] = "text/html";
-							context.Response.StatusCode = StatusCodes.Status200OK;
-							return html;
+							break;
 
 						case "getuploads":
 							string savePath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
@@ -333,28 +304,12 @@ namespace dabrelCMS.code
 								Directory.CreateDirectory(savePath);
 							DirectoryInfo directoryInfo = new DirectoryInfo(savePath);
 							TraverseDirectory(directoryInfo);
-							context.Response.Headers["Content-Type"] = "text/html";
-							context.Response.StatusCode = StatusCodes.Status200OK;
-							return sbUploadsFolder.ToString();
+							break;
 
 						case "getpageconfig":
 							page = dbcontext.CMSPages.Where(p => p.PageId == int.Parse(pathsegments[2])).FirstOrDefault();
-							string pageformPath = $"{_webRootPath}\\designs\\{design}\\dialogpage.htm";
-							html = Common.GetFileText(pageformPath);
-							html = html.Replace("{{pageid}}", page.PageId.ToString());
-							html = html.Replace("{{parentid}}", page.ParentId.ToString());
-							html = html.Replace("{{pageshortcut}}", page.Shortcut);
-							html = html.Replace("{{pagesort}}", page.Sort.ToString());
-							html = html.Replace("{{pageison}}", (page.isOn ? "checked='true'": ""));
-							html = html.Replace("{{pageisprivate}}", (page.isPrivate ? "checked='true'": ""));
-							html = html.Replace("{{pageishidden}}", (page.isHidden ? "checked='true'": ""));
-							html = html.Replace("{{pagetags}}", page.Tags);
-							html = html.Replace("{{pagetitle}}", page.Title);
-							html = html.Replace("{{navtitle}}", page.NavTitle);
-							html = html.Replace("{{pagehero}}", page.HeroImage);
-							context.Response.Headers["Content-Type"] = "text/html";
-							context.Response.StatusCode = StatusCodes.Status200OK;
-							return html;
+							html = AdminPage.GetPageConfig(page);
+							break;
 
 						default:
 							string contentformPath = $"{_webRootPath}\\designs\\{design}\\contentform.htm";
@@ -362,11 +317,11 @@ namespace dabrelCMS.code
 							html = html.Replace("{{pageid}}", page.PageId.ToString());
 							html = html.Replace("{{pagetitle}}", page.Title);
 							html = html.Replace("{{content}}", page.Summary);
-
-							context.Response.Headers["Content-Type"] = "text/html";
-							context.Response.StatusCode = StatusCodes.Status200OK;
-							return html;
+							break;
 					}
+					context.Response.Headers["Content-Type"] = "text/html";
+					context.Response.StatusCode = StatusCodes.Status200OK;
+					return html;
 				}
 			}
 			else

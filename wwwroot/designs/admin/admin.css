@@ -205,3 +205,7 @@ progress#progress {
 	color: #00a;
 	margin-right: 10px;
 }
+
+.buttonright.hide {
+	display: none;
+}

@@ -13,7 +13,6 @@
 	--navitemhlcolor: #fff;
 }
 
-
 @media (prefers-color-scheme: dark) {
 	* {
 		--bgcolor: #000 url(/designs/superbee/images/tile.png) repeat top center;
@@ -24,6 +23,6 @@
 		--navitembg: transparent;
 		--navitemhlbg: #000;
 		--navitemcolor: #fff;
-		--navitemhlcolor: #fff;
+		--navitemhlcolor: #ffcc33;
 	}
 }

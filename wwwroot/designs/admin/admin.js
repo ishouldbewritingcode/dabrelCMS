@@ -12,7 +12,7 @@ function SetupEvents() {
 function LetsEdit() {
 	console.log('let edit');
 	$('#content').trumbowyg();
-	$('#savecontent').show();
+	$('.buttonright.hide').show();
 }
 
 //document.getElementById('cmsdialogclose').addEventListener('click', function () {
