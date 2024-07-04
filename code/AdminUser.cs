@@ -1,4 +1,6 @@
-﻿namespace dabrelCMS.code
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace dabrelCMS.code
 {
 	public static class AdminUser
 	{
@@ -15,6 +17,37 @@
 			html = html.Replace("{{roles}}", authUser.Roles.ToString());
 			return html;
 		}
+
+		public static string SaveUserForm(CMSDbContext dbcontext, HttpContext context, int userid)
+		{
+			CMSUser tempUser = dbcontext.CMSUsers.Where(u => u.UserId == userid).FirstOrDefault();
+			tempUser.Email = context.Request.Form["email"].ToString();
+			tempUser.FirstName = context.Request.Form["firstname"].ToString();
+			tempUser.LastName = context.Request.Form["lastname"].ToString();
+			tempUser.Mobile = context.Request.Form["mobile"].ToString();
+
+			if (context.Request.Form["password"].ToString().Length > 0)
+			{
+				if (context.Request.Form["password"].ToString() == context.Request.Form["vpassword"].ToString())
+				{
+					int salt = GetRandomSalt();
+					tempUser.Salt = salt;
+					tempUser.Password = PWHash.ComputePasswordHash(context.Request.Form["password"].ToString(), salt);
+				}
+			}
+
+			dbcontext.SaveChanges();
+			context.Response.Headers["Content-Type"] = "text/html";
+			context.Response.StatusCode = StatusCodes.Status200OK;
+			return "<div>User saved successfully.</div>";
+		}
+
+		private static int GetRandomSalt()
+		{
+			Random rand = new Random();
+			return rand.Next(10, 99999);
+		}
+
 
 	}
 }

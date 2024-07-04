@@ -232,27 +232,28 @@ namespace dabrelCMS.code
 							break;
 
 						case "saveuserform":
+							return AdminUser.SaveUserForm(dbcontext, context, authUser.UserId);
 							// save user here - this is only for changing the currently logged in user.
-							CMSUser tempUser = dbcontext.CMSUsers.Where(u => u.UserId == authUser.UserId).FirstOrDefault();
-							tempUser.Email = context.Request.Form["email"].ToString();
-							tempUser.FirstName = context.Request.Form["firstname"].ToString();
-							tempUser.LastName = context.Request.Form["lastname"].ToString();
-							tempUser.Mobile = context.Request.Form["mobile"].ToString();
+							//CMSUser tempUser = dbcontext.CMSUsers.Where(u => u.UserId == authUser.UserId).FirstOrDefault();
+							//tempUser.Email = context.Request.Form["email"].ToString();
+							//tempUser.FirstName = context.Request.Form["firstname"].ToString();
+							//tempUser.LastName = context.Request.Form["lastname"].ToString();
+							//tempUser.Mobile = context.Request.Form["mobile"].ToString();
 
-							if (context.Request.Form["password"].ToString().Length > 0)
-							{
-								if (context.Request.Form["password"].ToString() == context.Request.Form["vpassword"].ToString())
-								{
-									int salt = GetRandomSalt();
-									tempUser.Salt = salt;
-									tempUser.Password = PWHash.ComputePasswordHash(context.Request.Form["password"].ToString(), salt);
-								}
-							}
+							//if (context.Request.Form["password"].ToString().Length > 0)
+							//{
+							//	if (context.Request.Form["password"].ToString() == context.Request.Form["vpassword"].ToString())
+							//	{
+							//		int salt = GetRandomSalt();
+							//		tempUser.Salt = salt;
+							//		tempUser.Password = PWHash.ComputePasswordHash(context.Request.Form["password"].ToString(), salt);
+							//	}
+							//}
 
-							dbcontext.SaveChanges();
-							context.Response.Headers["Content-Type"] = "text/html";
-							context.Response.StatusCode = StatusCodes.Status200OK;
-							return "<div>User saved successfully.</div>";
+							//dbcontext.SaveChanges();
+							//context.Response.Headers["Content-Type"] = "text/html";
+							//context.Response.StatusCode = StatusCodes.Status200OK;
+							//return "<div>User saved successfully.</div>";
 							//context.Response.Headers["HX-Redirect"] = $"/admin";
 							break;
 
@@ -292,9 +293,7 @@ namespace dabrelCMS.code
 							break;
 
 						case "getfilesform":
-							string filesformPath = $"{_webRootPath}\\designs\\{design}\\dialogfiles.htm";
-							html = Common.GetFileText(filesformPath);
-							html = html.Replace("{{currentfolder}}", ".");
+							html = AdminFiles.GetFilesForm();
 							break;
 
 						case "getuploads":
@@ -372,6 +371,7 @@ namespace dabrelCMS.code
 			context.Response.Headers["Content-Type"] = "text/html";
 			context.Response.StatusCode = StatusCodes.Status200OK;
 
+			// cleanup any curlies that might be left.
 			Regex r = new Regex(@"\{\{.*\}\}");
 			html = r.Replace(html, String.Empty);
 			return html;
@@ -415,12 +415,6 @@ namespace dabrelCMS.code
 				return true;
 			else
 				return false;
-		}
-
-		private int GetRandomSalt()
-		{
-			Random rand = new Random();
-			return rand.Next(10, 99999);
 		}
 
 		private void TraverseDirectory(DirectoryInfo directoryInfo)
