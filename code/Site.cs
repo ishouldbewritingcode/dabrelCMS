@@ -173,10 +173,10 @@ namespace dabrelCMS.code
 				else { html = html.Replace("{{hero}}", page.HeroImage); }
 				html = html.Replace("{{content}}", page.Summary);
 				html = html.Replace("{{bodybottom}}", site.BodyBottom);
-				html = html.Replace("{{footer1}}", site.Footer1);
-				html = html.Replace("{{footer2}}", site.Footer2);
-				html = html.Replace("{{footer3}}", site.Footer3);
-				html = html.Replace("{{footer4}}", site.Footer4);
+				html = html.Replace("{{footer1}}", site.Footer1.Length > 0 ? $"<div>{site.Footer1}</div>" : "");
+				html = html.Replace("{{footer2}}", site.Footer2.Length > 0 ? $"<div>{site.Footer2}</div>" : "");
+				html = html.Replace("{{footer3}}", site.Footer3.Length > 0 ? $"<div>{site.Footer3}</div>" : "");
+				html = html.Replace("{{footer4}}", site.Footer4.Length > 0 ? $"<div>{site.Footer4}</div>" : "");
 
 				//get navigation
 				List<CMSPage> nav = dbcontext.CMSPages.Where(n => n.SiteId == site.SiteId)

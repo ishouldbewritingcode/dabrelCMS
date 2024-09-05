@@ -2,19 +2,43 @@
 
 * {
 	/* Color scheme */
-	--bgcolor: #ebfc8d;
+	--color: #222;
+	--bgcolor: #ccbb33 url(/designs/superbee/images/itile.png) repeat top center;
 	--textcolor: #333;
 	--highlight: #000;
-	--highlightbg: #ebfc8d;
-	--navbg: #ebfc8d;
+	--highlightbg: #eeb;
+	--navbg: #ccbb33;
 	--navitembg: transparent;
 	--navitemhlbg: #000;
 	--navitemcolor: #061539;
 	--navitemhlcolor: #fff;
 }
+section, #footers, #sitesubtitle {
+	padding: 15px;
+	background: var(--highlightbg);
+	border-radius: 10px;
+}
+#sitesubtitle {
+	padding: 5px 10px;
+	display: inline-block;
+}
+#sitetitle a {
+	font-family: "Comfortaa", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: bold;
+	font-style: normal;
+	display: flex;
+	align-items: center;
+  justify-content: left;
+	gap: 20px;
+}
+#sitetitle a:hover { text-decoration: none; }
+#sitetitle a .titletext { font-size: 6vw; }
+
 
 @media (prefers-color-scheme: dark) {
 	* {
+		--color: #fff;
 		--bgcolor: #000 url(/designs/superbee/images/tile.png) repeat top center;
 		--textcolor: #ffee55;
 		--highlight: #ffcc33;

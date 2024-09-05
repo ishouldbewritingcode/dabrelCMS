@@ -14,12 +14,15 @@
 	<link rel="icon" href="/designs/superbee/images/favicon.png" type="image/png">
 	<link rel="apple-touch-icon" href="/designs/superbee/images/apple-touch-icon.png">
 	<title>{{sitetitle}} {{pagetitle}}</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
 </head>
 <body>
 	{{bodytop}}
 	<header>
 		<div id="topbar">
-			<div id="sitetitle"><a href="/"><img id="titleimage" src="/designs/superbee/images/Bee_transparent_web.png" alt="bee" />{{headersitetitle}}</a></div>
+			<div id="sitetitle"><a href="/"><img id="titleimage" src="/designs/superbee/images/Bee_transparent_web2.png" alt="bee" />{{headersitetitle}}</a></div>
 			<div id="mobilenav">
 				<button id="searchicon" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-magnifying-glass"></i></button>
 				<button id="navicon" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
@@ -46,10 +49,9 @@
 	</main>
 	<footer>
 		<div class="widthcontainer">
-			<div>{{footer1}}</div>
-			<div>{{footer2}}</div>
-			<div>{{footer3}}</div>
-			<div>{{footer4}}</div>
+			<div id="footers">
+				{{footer1}}{{footer2}}{{footer3}}{{footer4}}
+			</div>
 		</div>
 	</footer>
 	{{bodybottom}}
