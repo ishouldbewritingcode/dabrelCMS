@@ -1,3 +1,0 @@
-	"Uploads": {
-		"Path": "~\\source\\repos\\dabrelCMS\\uploads\\"
-	},
