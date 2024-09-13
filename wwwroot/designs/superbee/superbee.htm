@@ -30,7 +30,10 @@
 		</div>
 		<div id="sitesubtitle">{{subtitle}}</div>
 		<div id="searchbox">
-			<input id="search" name="search" type="text" placeholder="search phrase" /><i class="fa-solid fa-magnifying-glass"></i>
+			<form method="post" action="/search">
+				<input id="search" name="searchText" type="text" placeholder="search phrase" aria-label="search field"/>
+				<button type="submit"><i class="fa-solid fa-magnifying-glass" aria-label="search"></i></button>
+			</form>
 		</div>
 		<div id="nav">
 			<nav>{{navigation}}</nav>

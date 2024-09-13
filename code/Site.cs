@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Diagnostics;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualBasic;
 using System;
@@ -121,6 +122,18 @@ namespace dabrelCMS.code
 						}
 						else
 							return Common.GetLoginPage(context, _path, "Please Login");
+					}
+				case "search":
+					{
+						if (!String.IsNullOrEmpty(context.Request.Form["searchText"]))
+						{
+							string searchText = context.Request.Form["searchText"];
+							System.Linq.IQueryable<CMSPage> pages = null;
+							pages = dbcontext.CMSPages.Where(p => p.Shortcut.Contains(searchText) 
+							|| p.Title.Contains(searchText) || p.Tags.Contains(searchText) 
+							|| p.Summary.Contains(searchText) && p.isOn == true);
+						}
+						break;
 					}
 				default:
 					{
