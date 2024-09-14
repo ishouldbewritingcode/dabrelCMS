@@ -42,6 +42,7 @@ namespace dabrelCMS.code
 			var site = dbcontext.CMSSites.Where(s => s.SiteId == url.SiteId).FirstOrDefault();
 			// type: cmsPage
 			var page = new CMSPage(); // we'll load the page in the switch statement
+			System.Linq.IQueryable<CMSPage> searchresults = null;
 
 			// get cookie and user id from jwt
 			code.JwtUtils jwt = new JwtUtils();
@@ -128,8 +129,7 @@ namespace dabrelCMS.code
 						if (!String.IsNullOrEmpty(context.Request.Form["searchText"]))
 						{
 							string searchText = context.Request.Form["searchText"];
-							System.Linq.IQueryable<CMSPage> pages = null;
-							pages = dbcontext.CMSPages.Where(p => p.Shortcut.Contains(searchText) 
+							searchresults = dbcontext.CMSPages.Where(p => p.Shortcut.Contains(searchText) 
 							|| p.Title.Contains(searchText) || p.Tags.Contains(searchText) 
 							|| p.Summary.Contains(searchText) && p.isOn == true);
 						}
@@ -150,12 +150,31 @@ namespace dabrelCMS.code
 
 			if (context.Request.IsHtmx())
 			{
-				StringBuilder sb = new StringBuilder();
-				sb.Append($"<section>");
-				sb.Append($"<h1>{page.Title}</h1>");
-				sb.Append($"<div class=\"body\">{page.Summary}</div>");
-				sb.Append($"</section>");
-				html = sb.ToString();
+				if (searchresults != null)
+				{
+					StringBuilder rs = new StringBuilder();
+					rs.Append($"<section>");
+					rs.Append($"<h1>Search Results</h1>");
+					foreach (CMSPage result in searchresults)
+					{
+						string trunkatedsummary = result.Summary.Length > 250 ? result.Summary.Substring(0, 250) : result.Summary;
+						rs.Append($"<div class=\"searchresult\">");
+						rs.Append($"<h3><a href=\"/{result.Shortcut}\">{result.Title}</a></h3>");
+						rs.Append($"<div class=\"summary\">{trunkatedsummary}</div>");
+						rs.Append($"</div>");
+					}
+					rs.Append($"</section>");
+					html = rs.ToString();
+				}
+				else
+				{
+					StringBuilder sb = new StringBuilder();
+					sb.Append($"<section>");
+					sb.Append($"<h1>{page.Title}</h1>");
+					sb.Append($"<div class=\"body\">{page.Summary}</div>");
+					sb.Append($"</section>");
+					html = sb.ToString();
+				}
 			}
 			else
 			{

@@ -30,7 +30,7 @@
 		</div>
 		<div id="sitesubtitle">{{subtitle}}</div>
 		<div id="searchbox">
-			<form method="post" action="/search">
+			<form hx-post="/search" hx-target="#pagecontent">
 				<input id="search" name="searchText" type="text" placeholder="search phrase" aria-label="search field"/>
 				<button type="submit"><i class="fa-solid fa-magnifying-glass" aria-label="search"></i></button>
 			</form>
