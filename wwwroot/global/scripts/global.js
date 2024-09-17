@@ -5,6 +5,18 @@ Array.from(navitems).forEach(function (item) {
 	item.addEventListener('click', navClicked, false);
 });
 
+document.getElementById('lightdark').addEventListener('click', function () {
+	let thehtml = document.body.parentElement;
+	if (thehtml.classList.contains('dark')) {
+		thehtml.classList.remove('dark');
+		thehtml.classList.add('light');
+	}
+	else { 
+		thehtml.classList.remove('light');
+		thehtml.classList.add('dark');
+	}
+});
+
 // mobile nav
 document.getElementById('navicon').addEventListener('click', function () {
 	if (nav.classList.contains('show'))

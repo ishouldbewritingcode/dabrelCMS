@@ -1,6 +1,6 @@
 ﻿@import url(/global/styles/global.css);
 
-* {
+*, html.light * {
 	/* Color scheme */
 	--color: #222;
 	--bgcolor: #ccbb33 url(/designs/superbee/images/itile.png) repeat top center;
@@ -36,6 +36,18 @@ section, #footers {
 #sitetitle a:hover { text-decoration: none; }
 #sitetitle a .titletext { font-size: 6vw; }
 
+html.dark * {
+	--color: #fff;
+	--bgcolor: #000 url(/designs/superbee/images/tile.png) repeat top center;
+	--textcolor: #ffee55;
+	--highlight: #ffcc33;
+	--highlightbg: #000;
+	--navbg: #000;
+	--navitembg: transparent;
+	--navitemhlbg: #000;
+	--navitemcolor: #fff;
+	--navitemhlcolor: #ffcc33;
+}
 
 @media (prefers-color-scheme: dark) {
 	* {
