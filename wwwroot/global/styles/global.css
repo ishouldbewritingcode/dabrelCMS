@@ -71,7 +71,7 @@ section, #footers {
 .widthcontainer {
 	max-width: 1440px; /* remove this for a full-width layout */
 	margin: 0 auto; /* centers the layout */
-	padding: 15px 50px;
+	padding: 15px;
 }
 
 main.content {
@@ -705,6 +705,10 @@ article time {
 		margin-left: 0;
 		color: var(--highlight);
 	}
+	.widthcontainer {
+		padding: 15px 50px;
+	}
+
 
 	#sitetitle a {
 		font-size: 3rem;
