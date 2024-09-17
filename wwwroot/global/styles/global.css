@@ -58,6 +58,16 @@ header, main, footer {
 	width: 100%;
 }
 
+section, #footers {
+	padding: 15px;
+	background: var(--highlightbg);
+	border-radius: 10px;
+}
+#sitesubtitle {
+	background: var(--navbg);
+	padding: 5px 10px;
+	display: inline-block;
+}
 .widthcontainer {
 	max-width: 1440px; /* remove this for a full-width layout */
 	margin: 0 auto; /* centers the layout */
@@ -634,9 +644,9 @@ article time {
 
 
 /* hamburger nav */
-#searchicon, #navicon  {
-	background: transparent;
-	color: white;									/* todo */
+#mobilenav > button  {
+	background: transparent;;
+	color: var(--textcolor);									/* todo */
 	border: none;
 	font-size: 1.3rem;
 	position: relative;
@@ -646,8 +656,6 @@ article time {
 	padding: 2px 5px;
 }
 
-/*.navbutton:hover icon:before { top: -1rem; }*/
-/*.navbutton:hover icon::after { top: 1rem; }*/
 #nav-toggle:checked + .navbutton .navicon {
 	background-color: transparent;
 }

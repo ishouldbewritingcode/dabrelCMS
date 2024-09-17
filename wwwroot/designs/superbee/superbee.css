@@ -13,16 +13,6 @@
 	--navitemcolor: #061539;
 	--navitemhlcolor: #fff;
 }
-section, #footers {
-	padding: 15px;
-	background: var(--highlightbg);
-	border-radius: 10px;
-}
-#sitesubtitle {
-	background: var(--navbg);
-	padding: 5px 10px;
-	display: inline-block;
-}
 #sitetitle a {
 	font-family: "Comfortaa", sans-serif;
 	font-optical-sizing: auto;
