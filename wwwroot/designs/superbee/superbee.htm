@@ -24,8 +24,8 @@
 		<div id="topbar">
 			<div id="sitetitle"><a href="/"><img id="titleimage" src="/designs/superbee/images/Bee_transparent_web2.png" alt="bee" />{{headersitetitle}}</a></div>
 			<div id="mobilenav">
-				<button id="searchicon" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-magnifying-glass"></i></button>
-				<button id="navicon" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+				<button id="searchicon" aria-label="open search" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-magnifying-glass"></i></button>
+				<button id="navicon" aria-label="open nav" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
 			</div>
 			<button id="lightdark" aria-label="light or dark theme"><i class="fa-solid fa-circle-half-stroke"></i></button>
 		</div>
@@ -33,7 +33,7 @@
 		<div id="searchbox">
 			<form hx-post="/search" hx-target="#pagecontent">
 				<input id="search" name="searchText" type="text" placeholder="search phrase" aria-label="search field"/>
-				<button type="submit"><i class="fa-solid fa-magnifying-glass" aria-label="search"></i></button>
+				<button type="submit" class="searchbutton" aria-label="search"><i class="fa-solid fa-magnifying-glass" aria-label="search"></i></button>
 			</form>
 		</div>
 		<div id="nav">

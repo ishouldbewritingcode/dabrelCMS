@@ -242,7 +242,7 @@ namespace dabrelCMS.code
 				c.Append($"</a>");
 				if (gotkids)
 				{
-					c.Append($"<button class=\"sub\"><i class=\"fa-solid fa-plus\"></i></button>");
+					c.Append($"<button class=\"sub\" aria-label=\"open sub nav\"><i class=\"fa-solid fa-plus\"></i></button>");
 				}
 				c.Append(GetNav(nav, page.PageId, currentId));
 				c.Append($"</li>");

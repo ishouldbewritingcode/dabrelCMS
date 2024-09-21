@@ -4,6 +4,7 @@
 *::after {
 	box-sizing: border-box;
 }
+
 * {
 	margin: 0;
 	padding: 0;
@@ -36,9 +37,9 @@
 html {
 	min-height: 100%;
 	/* Prevent font size inflation */
-  -moz-text-size-adjust: none;
-  -webkit-text-size-adjust: none;
-  text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-webkit-text-size-adjust: none;
+	text-size-adjust: none;
 }
 
 body {
@@ -58,7 +59,7 @@ body {
 	which suggests default styling will be removed */
 ul[role='list'],
 ol[role='list'] {
-  list-style: none;
+	list-style: none;
 }
 
 /* Sections */
@@ -80,11 +81,13 @@ section, #footers {
 	background: var(--highlightbg);
 	border-radius: 10px;
 }
+
 #sitesubtitle {
 	background: var(--navbg);
 	padding: 5px 10px;
 	display: inline-block;
 }
+
 .widthcontainer {
 	max-width: 1440px; /* remove this for a full-width layout */
 	margin: 0 auto; /* centers the layout */
@@ -105,16 +108,25 @@ header {
 	color: white;
 	z-index: 10;
 	border-bottom: 2px solid var(--navitemhlbg);
-
+	
 	#sitetitle, a, nav a {
 		font-size: 2rem;
 		white-space: nowrap;
 		color: var(--color);
 	}
 
-	.searchbutton i.fa-solid {
+	.searchbutton {
+		font-size: 1.2rem;
+		color: var(--color);
+		background: transparent;
+		border: none;
+	}
+
+	#lightdark {
+		background: transparent;
+		color: var(--textcolor);
+		border: none;
 		font-size: 1.8rem;
-		color: var(--navitemcolor);
 	}
 }
 
@@ -125,20 +137,25 @@ header {
 	justify-content: space-between;
 }
 
-#sitetitle { 
+#sitetitle {
 	max-width: 50%;
-	a {
-		display: flex;
-		align-items: center;
-		justify-content: flex-start;
-		/*flex-wrap: wrap;*/
-		.titletext {
-			align-self: center;
-			font-size: 5vw;
-			margin-left: 20px;
-			text-shadow: -3px 3px 5px #7d6726;
-		}
-	}
+	a
+
+{
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	/*flex-wrap: wrap;*/
+	.titletext
+
+{
+	align-self: center;
+	font-size: 5vw;
+	margin-left: 20px;
+	text-shadow: -3px 3px 5px #7d6726;
+}
+
+}
 }
 
 #titleimage {
@@ -164,8 +181,14 @@ header {
 	color: var(--color);
 	z-index: 12;
 }
-#nav.show { display: block; }
-#searchbox.show { display: block; }
+
+#nav.show {
+	display: block;
+}
+
+#searchbox.show {
+	display: block;
+}
 
 
 header #searchbox input {
@@ -270,9 +293,17 @@ nav button.sub.open i {
 }
 
 @keyframes growDown {
-	0% { transform: scaleY(0); }
-	80% {	transform: scaleY(1.1);	}
-	100% { transform: scaleY(1); }
+	0% {
+		transform: scaleY(0);
+	}
+
+	80% {
+		transform: scaleY(1.1);
+	}
+
+	100% {
+		transform: scaleY(1);
+	}
 }
 
 .hero {
@@ -295,7 +326,7 @@ a:hover {
 
 h1, h2, h3, h4,
 button, input, label {
-  line-height: 1.1;
+	line-height: 1.1;
 }
 
 section h1 {
@@ -313,8 +344,8 @@ h2, h3, h4 {
 
 /* A elements that don't have a class get default styles */
 a:not([class]) {
-  text-decoration-skip-ink: auto;
-  color: currentColor;
+	text-decoration-skip-ink: auto;
+	color: currentColor;
 }
 
 p, ul, ol, article {
@@ -670,13 +701,11 @@ article time {
 	z-index: 4;
 }
 
-
-
-
 /* hamburger nav */
-#mobilenav > button  {
-	background: transparent;;
-	color: var(--textcolor);									/* todo */
+#mobilenav > button {
+	background: transparent;
+	;
+	color: var(--textcolor); /* todo */
 	border: none;
 	font-size: 1.3rem;
 	position: relative;
@@ -728,26 +757,35 @@ article time {
 		font-size: 1rem;
 		border-bottom: none;
 	}
-	#mobilenav { display: none; }
+
+	#mobilenav {
+		display: none;
+	}
+
 	#sitetitle {
 		font-size: 3rem;
 		padding: 20px 50px 20px 0;
 		margin-left: 0;
 		color: var(--highlight);
 	}
+
 	.widthcontainer {
 		padding: 15px 50px;
 	}
-
 
 	#sitetitle a {
 		font-size: 3rem;
 		display: inline-block;
 		padding: 0;
-		.titletext { margin: 0; }
 	}
 
-	#sitesubtitle {	display: block;	}
+	.titletext {
+		margin: 0;
+	}
+
+	#sitesubtitle {
+		display: block;
+	}
 
 	header #searchbox {
 		display: inline-block;
@@ -820,12 +858,8 @@ article time {
 		display: block;
 	}
 
-	header i.fa-solid {
+	header {
 		font-size: 1rem;
-	}
-
-	.navbutton, .searchbutton {
-		display: none;
 	}
 
 	nav ul li.haschildren button.sub {
