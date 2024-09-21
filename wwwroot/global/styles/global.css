@@ -1,7 +1,12 @@
-﻿* {
+﻿/* Box sizing rules */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+* {
 	margin: 0;
 	padding: 0;
-	box-sizing: border-box;
 	/* Color scheme */
 	--bgcolor: #ace;
 	--textcolor: #061539;
@@ -30,6 +35,10 @@
 
 html {
 	min-height: 100%;
+	/* Prevent font size inflation */
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
 }
 
 body {
@@ -42,6 +51,14 @@ body {
 	height: 100%;
 	max-width: 100%; /* remove this for a full-width layout */
 	margin: 0 auto; /* centers the layout */
+	min-height: 100vh;
+}
+
+/* Remove list styles on ul, ol elements with a list role, 
+	which suggests default styling will be removed */
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
 }
 
 /* Sections */
@@ -276,15 +293,28 @@ a:hover {
 	text-decoration: underline;
 }
 
+h1, h2, h3, h4,
+button, input, label {
+  line-height: 1.1;
+}
+
 section h1 {
 	font-size: 2rem;
 	margin: 0 0 15px 0;
+	text-wrap: balance;
 }
 
 h2, h3, h4 {
 	font-size: 1.5rem;
 	font-weight: 600;
 	margin: 1.6em 0 .6em 0;
+	text-wrap: balance;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+  color: currentColor;
 }
 
 p, ul, ol, article {
