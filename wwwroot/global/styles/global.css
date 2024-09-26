@@ -123,10 +123,17 @@ header {
 	}
 
 	#lightdark {
+		position: fixed;
+		bottom: 30px; right: 30px;
 		background: transparent;
 		color: var(--textcolor);
+		line-height: 1;
 		border: none;
 		font-size: 1.8rem;
+		padding: 5px 7px;
+		border-radius: 50%;
+		background: rgba(188, 188, 188, 0.8);
+		border: 1px solid #ddd;
 	}
 }
 

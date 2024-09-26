@@ -4,16 +4,27 @@ let navitems = nav.querySelectorAll('a');
 Array.from(navitems).forEach(function (item) {
 	item.addEventListener('click', navClicked, false);
 });
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+	// browser in dark mode - add the class unless they've switched
+	if (getCookie('lightdark') == 'light') {
+		document.body.parentElement.classList.add('light');
+	}
+	else {
+		document.body.parentElement.classList.add('dark');
+	}
+}
 
 document.getElementById('lightdark').addEventListener('click', function () {
 	let thehtml = document.body.parentElement;
 	if (thehtml.classList.contains('dark')) {
 		thehtml.classList.remove('dark');
 		thehtml.classList.add('light');
+		setCookie('lightdark', 'light', 1)
 	}
 	else { 
 		thehtml.classList.remove('light');
 		thehtml.classList.add('dark');
+		setCookie('lightdark', 'dark', 1)
 	}
 });
 
@@ -67,4 +78,29 @@ function openChildNav(event) {
 		this.classList.add('open');
 		this.parentNode.classList.add('open');
 	}
+}
+
+
+// cookie functions
+function setCookie(name, value, hours) {
+	var expires = "";
+	if (hours) {
+		var date = new Date();
+		date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
+		expires = "; expires=" + date.toUTCString();
+	}
+	document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+function getCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for (var i = 0; i < ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+	}
+	return null;
+}
+function eraseCookie(name) {
+	document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
