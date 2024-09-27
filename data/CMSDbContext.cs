@@ -9,6 +9,7 @@ namespace dabrelCMS.data
 		public DbSet<CMSSite> CMSSites { get; set; }
 		public DbSet<CMSSiteUrl> CMSSiteUrls { get; set; }
 		public DbSet<CMSPage> CMSPages { get; set; }
+		public DbSet<CMSBlock> CMSBlocks { get; set; }
 		public DbSet<CMSItem> CMSItems { get; set; }
 		public DbSet<CMSFile> CMSFiles { get; set; }
 
@@ -26,13 +27,13 @@ namespace dabrelCMS.data
 				{
 					SiteId = 1,
 					Name = "test",
-					Design = "theblues",
+					Design = "superbee",
 					Title = "title",
 					SubTitle = "subtitle",
 					Footer1 = "footer 1",
-					Footer2 = "footer 2",
-					Footer3 = "footer 3",
-					Footer4 = "footer 4",
+					Footer2 = "",
+					Footer3 = "",
+					Footer4 = "",
 					MetaDescription = "Description",
 					MetaImagePath = "",
 					OnAllPages = "",

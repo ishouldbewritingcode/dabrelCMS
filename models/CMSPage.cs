@@ -20,6 +20,6 @@ namespace dabrelCMS.models
 		public string? Summary { get; set; }
 		public string? HeroImage { get; set; }
 
-		public List<CMSItem>? cmsItems { get; set; }
+		public List<CMSBlock>? cmsBlocks { get; set; }
 	}
 }
