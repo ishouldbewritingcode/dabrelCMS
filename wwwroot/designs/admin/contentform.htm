@@ -1,9 +1,9 @@
 ﻿<section>
 	<div class="buttonright">
-		<!--<button id="admineditpage" hx-post="/admin/getpageform/{{pageid}}" hx-target="#pagecontent"><i class="fa-regular fa-pen-to-square"></i></button>-->
-		<button id="adminpageconfig" title="page settings" hx-get="/admin/getpageconfig/{{pageid}}" hx-target="#cmsdialogform" onclick="document.getElementById('cmsdialog').showModal();"><i class="fa-solid fa-gear"></i></button>
-		<button id="adminaddpagecontrol" hx-post="/admin/getaddpageform/{{pageid}}" hx-target="#pagecontent"><i class="fa-solid fa-plus"></i></button>
-		<button id="admindeletepagecontrol" hx-post="/admin/deletepage/{{pageid}}" hx-confirm="Are you absolutely sure you wish to delete this page?" hx-target="#pagecontent"><i class="fa-solid fa-trash"></i></button>
+		<button id="adminpageconfig" title="page settings" aria-label="page settings" hx-get="/admin/getpageconfig/{{pageid}}" hx-target="#cmsdialogform" onclick="document.getElementById('cmsdialog').showModal();"><i class="fa-solid fa-gear"></i></button>
+		<button id="adminaddpagecontrol" title="add child page" aria-label="add child page" hx-post="/admin/getaddpageform/{{pageid}}" hx-target="#pagecontent"><i class="fa-solid fa-plus"></i></button>
+		<button id="admindeletepagecontrol" title="delete page" aria-label="delete page" hx-post="/admin/deletepage/{{pageid}}" hx-confirm="Are you absolutely sure you wish to delete this page?" hx-target="#pagecontent"><i class="fa-solid fa-trash"></i></button>
+		<button id="adminaddblockcontrol" title="add block of content to this page" aria-label="add block of content to this page" hx-get="/admin/getaddblockform/{{pageid}}" hx-target="#cmsdialogform" onclick="document.getElementById('cmsdialog').showModal();"><i class="fa-regular fa-square-plus"></i></button>
 	</div>
 	<form name="pagecontentform" id="pagecontentform" hx-post="/admin/pagecontentform">
 		<input type="hidden" id="pageid" name="pageid" value="{{pageid}}" />

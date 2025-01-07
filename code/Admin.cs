@@ -178,7 +178,6 @@ namespace dabrelCMS.code
 							context.Response.Headers["HX-Redirect"] = $"/admin/{page.Shortcut}";
 							break;
 
-
 						case "pageconfigform":
 							// save page config here
 							id = 0;
@@ -308,6 +307,11 @@ namespace dabrelCMS.code
 						case "getpageconfig":
 							page = dbcontext.CMSPages.Where(p => p.PageId == int.Parse(pathsegments[2])).FirstOrDefault();
 							html = AdminPage.GetPageConfig(page);
+							break;
+
+						case "getaddblockform":
+							page = dbcontext.CMSPages.Where(p => p.PageId == int.Parse(pathsegments[2])).FirstOrDefault();
+							html = AdminPage.GetAddBlockForm(page);
 							break;
 
 						default:

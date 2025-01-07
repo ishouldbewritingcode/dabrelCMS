@@ -19,5 +19,14 @@
 			html = html.Replace("{{pagehero}}", page.HeroImage);
 			return html;
 		}
+
+		public static string GetAddBlockForm(CMSPage page)
+		{
+			string pageformPath = $"{Common.WebRootPath}\\designs\\admin\\dialogaddblock.htm";
+			string html = Common.GetFileText(pageformPath);
+			html = html.Replace("{{pageid}}", page.PageId.ToString());
+			return html;
+		}
+
 	}
 }

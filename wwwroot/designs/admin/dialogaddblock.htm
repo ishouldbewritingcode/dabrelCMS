@@ -1,0 +1,22 @@
+﻿<form id="addblockform" hx-post="/admin/addblockform" hx-target="#pagecontent">
+	<h2>Add Content Block to Page</h2>
+	<div class="blocktypes">
+		<div blockname="items" note="list of items">Items</div>
+		<div blockname="events" note="list or calendar of events">Events</div>
+		<div blockname="news" note="list of news articles">News</div>
+		<div blockname="entries" note="list or calendar of blog entries">Blog Entries</div>
+		<div blockname="form" note="custom form">Form</div>
+	</div>
+	<div class="blocknotes"></div>
+
+	<input name="pageid"		type="hidden" value="" />
+	<input name="blocktype" type="hidden" value="" />
+	<input name="title"     type="text" value=""/>
+	<input name="subtitle"  type="text" value=""/>
+</form>
+
+<script>
+	$('.blocktypes > div').click(function () {
+		$('.blocknotes').html($(this).attr('note').val();
+	});
+</script>
