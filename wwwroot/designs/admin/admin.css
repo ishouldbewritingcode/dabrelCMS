@@ -209,3 +209,21 @@ progress#progress {
 .buttonright.hide {
 	display: none;
 }
+
+.blocktypes {
+	padding: 20px 10px;
+}
+
+button.blocktype {
+	border: revert-layer;
+	padding: 8px 16px;
+	margin-right: 8px;
+	font-size: 1.1rem;
+}
+
+.blocknotes {
+	padding: 20px 10px;
+	border: 1px solid #ccc;
+	margin-bottom: 20px;
+}
+
