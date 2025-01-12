@@ -10,12 +10,13 @@
 	<div class="blocknotes"></div>
 
 	<input name="pageid"		type="hidden" value="" />
-	<input name="blocktype" type="hidden" value="" />
+	<input id="blocktype" name="blocktype" type="hidden" value="" />
 	<label>Title</label><input name="title" type="text" value="" />
 </form>
 
 <script>
 	$('.blocktype').click(function () {
 		$('.blocknotes').html($(this).attr('note'));
+		$('#blocktype').val($(this).attr('blockname'));
 	});
 </script>

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dabrelCMS.data;
 
@@ -10,9 +11,11 @@ using dabrelCMS.data;
 namespace dabrelCMS.Migrations
 {
     [DbContext(typeof(CMSDbContext))]
-    partial class CMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250112033058_20250111_Fixing_Page_Blocks2")]
+    partial class _20250111_Fixing_Page_Blocks2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -293,7 +296,7 @@ namespace dabrelCMS.Migrations
                             SiteId = 1,
                             BodyBottom = "",
                             BodyTop = "",
-                            Created = new DateTime(2025, 1, 1, 0, 1, 0, 0, DateTimeKind.Unspecified),
+                            Created = new DateTime(2025, 1, 11, 21, 30, 57, 927, DateTimeKind.Local).AddTicks(7208),
                             Design = "superbee",
                             FaviconUrl = "",
                             Footer1 = "footer 1",

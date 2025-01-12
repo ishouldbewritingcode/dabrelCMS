@@ -41,7 +41,7 @@ namespace dabrelCMS.data
 					BodyTop = "",
 					BodyBottom = "",
 					ImageFileName = "",
-					Created = DateTime.Now,
+					Created = DateTime.Parse("1/1/2025 12:01am"),
 					FaviconUrl = ""
 				});
 

@@ -8,5 +8,9 @@ namespace dabrelCMS.models
 		public int PageBlockID { get; set; }
 		public int PageId { get; set; }
 		public int BlockId { get; set; }
+		public int Sort { get; set; }
+		public string? Position { get; set; }
+		public string? AltTitle { get; set; }
+		public string? AltSubtitle { get; set; }
 	}
 }

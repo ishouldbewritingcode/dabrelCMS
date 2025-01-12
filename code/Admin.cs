@@ -57,6 +57,9 @@ namespace dabrelCMS.code
 				{
 					switch (pathsegments[1])
 					{
+						case "submitblockform":
+
+							break;
 						case "savesiteform":
 							if (context.Request.Form["design"] != string.Empty)
 							{
