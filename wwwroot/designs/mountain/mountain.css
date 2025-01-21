@@ -1,0 +1,68 @@
+﻿@import url(/global/styles/global.css);
+
+*, html.light * {
+	/* Color scheme */
+	--color: #222;
+	--bgcolor: #ccc url(/designs/mountain/images/mountain1920.jpg) no-repeat top center;
+	--backgroundattachment: fixed;
+	--backgroundsize: cover;
+	--textcolor: #333;
+	--highlight: #000;
+	--highlightbg: transparent;
+	--boxbackground: rgba(255, 255, 255, 0.55);
+	--backdropfilter: blur(12px) saturate(80%);
+	--navbg: transparent;
+	--navitembg: transparent;
+	--navitemhlbg: #000;
+	--navitemcolor: #061539;
+	--navitemhlcolor: #fff;
+}
+#sitetitle a {
+	font-family: "Coda", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: normal;
+	font-style: normal;
+	display: flex;
+	align-items: center;
+	justify-content: left;
+	gap: 20px;
+}
+#sitetitle a:hover { text-decoration: none; }
+#sitetitle a .titletext { font-size: 3vw; }
+
+html.dark * {
+	--color: #fff;
+	--bgcolor: #000 url(/designs/mountain/images/mountain1920.jpg) no-repeat top center;
+	--backgroundattachment: fixed;
+	--backgroundsize: cover;
+	--textcolor: #ffee55;
+	--highlight: #ffcc33;
+	--highlightbg: #000;
+	--boxbackground: rgba(17, 25, 40, 0.75);
+	--backdropfilter: blur(16px) saturate(180%);
+	--navbg: #000;
+	--navitembg: transparent;
+	--navitemhlbg: #000;
+	--navitemcolor: #fff;
+	--navitemhlcolor: #ffcc33;
+}
+
+
+@media (prefers-color-scheme: dark) {
+	* {
+		--color: #fff;
+		--bgcolor: #000 url(/designs/mountain/images/mountain1920.jpg) no-repeat top center;
+		--backgroundattachment: fixed;
+		--backgroundsize: cover;
+		--textcolor: #ffee55;
+		--highlight: #ffcc33;
+		--highlightbg: #000;
+		--boxbackground: rgba(17, 25, 40, 0.75);
+		--backdropfilter: blur(16px) saturate(180%);
+		--navbg: #000;
+		--navitembg: transparent;
+		--navitemhlbg: #000;
+		--navitemcolor: #fff;
+		--navitemhlcolor: #ffcc33;
+	}
+}

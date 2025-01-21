@@ -48,6 +48,8 @@ body {
 	line-height: 1.4;
 	color: var(--textcolor);
 	background: var(--bgcolor);
+	background-attachment: var(--backgroundattachment, unset);
+	background-size: var(--backgroundsize, unset)
 	position: relative;
 	height: 100%;
 	max-width: 100%; /* remove this for a full-width layout */
@@ -79,6 +81,8 @@ header, main, footer {
 section, #footers {
 	padding: 15px;
 	background: var(--highlightbg);
+	background: var(--boxbackground);
+	backdrop-filter: var(--backdropfilter, inherit);
 	border-radius: 10px;
 }
 
@@ -147,22 +151,18 @@ header {
 #sitetitle {
 	max-width: 50%;
 	a
-
-{
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	/*flex-wrap: wrap;*/
-	.titletext
-
-{
-	align-self: center;
-	font-size: 5vw;
-	margin-left: 20px;
-	text-shadow: -3px 3px 5px #7d6726;
-}
-
-}
+	{
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		/*flex-wrap: wrap;*/
+		.titletext
+		{
+			align-self: center;
+			font-size: 5vw;
+			margin-left: 20px;
+		}
+	}
 }
 
 #titleimage {

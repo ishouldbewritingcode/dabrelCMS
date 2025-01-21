@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<meta name="description" content="{{description}}" />
+	<meta property="og:title" content="{{sitetitle}}" />
+	<meta property="og:description" content="{{description}}" />
+	<link href="/global/fontawesome/css/fontawesome.css" rel="stylesheet">
+	<link href="/global/fontawesome/css/solid.css" rel="stylesheet">
+	<link rel="stylesheet" href="/designs/mountain/mountain.css" />
+	<script src="/global/scripts/htmx.min.js"></script>
+	<script src="/global/scripts/global.js" defer></script>
+	<link rel="icon" href="/designs/mountain/images/favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="/designs/mountain/images/apple-touch-icon.png">
+	<title>{{sitetitle}} {{pagetitle}}</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Coda:wght@400;800&display=swap" rel="stylesheet">
+</head>
+<body>
+	{{bodytop}}
+	<header>
+		<div id="topbar">
+			<div id="sitetitle"><a href="/">{{headersitetitle}}</a></div>
+			<div id="mobilenav">
+				<button id="searchicon" aria-label="open search" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-magnifying-glass"></i></button>
+				<button id="navicon" aria-label="open nav" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+			</div>
+			<button id="lightdark" aria-label="light or dark theme"><i class="fa-solid fa-circle-half-stroke"></i></button>
+		</div>
+		<div id="sitesubtitle">{{subtitle}}</div>
+		<div id="searchbox">
+			<form hx-post="/search" hx-target="#pagecontent">
+				<input id="search" name="searchText" type="text" placeholder="search phrase" aria-label="search field"/>
+				<button type="submit" class="searchbutton" aria-label="search"><i class="fa-solid fa-magnifying-glass" aria-label="search"></i></button>
+			</form>
+		</div>
+		<div id="nav">
+			<nav>{{navigation}}</nav>
+		</div>
+	</header>
+	{{hero}}
+	<main class="content">
+		<div class="widthcontainer">
+			<div id="pagecontent" aria-live="polite">
+				<section>
+					<h1>{{pagetitle}}</h1>
+					<div class="body">{{content}}</div>
+				</section>
+			</div>
+		</div>
+	</main>
+	<footer>
+		<div class="widthcontainer">
+			<div id="footers">
+				{{footer1}}{{footer2}}{{footer3}}{{footer4}}
+			</div>
+		</div>
+	</footer>
+	{{bodybottom}}
+</body>
+</html>

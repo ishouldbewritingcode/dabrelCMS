@@ -1,6 +1,13 @@
 ﻿<form id="addblockform" hx-post="/admin/addblockform" hx-target="#pagecontent">
 	<h2>Add Content Block to Page</h2>
-	<div class="blocktypes">
+
+	<label for="reference">Reference a block that exists elsewhere.</label><br/>
+	<select id="reference" name="reference" placeholder="todo">
+		<option value="none">Select only if not building a new one.</option>
+		<option value="todo">todo - build this out</option>
+	</select>
+
+	<div class="blocktypes"><label>select block type to add</label>
 		<button class="blocktype" type="button" blockname="items" note="list of items">Items</button>
 		<button class="blocktype" type="button" blockname="events" note="list or calendar of events">Events</button>
 		<button class="blocktype" type="button" blockname="news" note="list of news articles">News</button>
@@ -18,5 +25,16 @@
 	$('.blocktype').click(function () {
 		$('.blocknotes').html($(this).attr('note'));
 		$('#blocktype').val($(this).attr('blockname'));
+	});
+	$('#reference').change(function () {
+		if ($(this).val() != 'none') {
+			$('.blocktypes').hide();
+			$('.blocknotes').hide();
+			$('#blocktype').val('');
+		}
+		else {
+			$('.blocktypes').show();
+			$('.blocknotes').show();
+		}
 	});
 </script>

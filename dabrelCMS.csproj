@@ -5,6 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="wwwroot\designs\mountain\mountainbg_blur.jpg" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Htmx" Version="1.8.1" />
     <PackageReference Include="Htmx.TagHelpers" Version="1.8.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
