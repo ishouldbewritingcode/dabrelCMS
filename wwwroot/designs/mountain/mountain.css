@@ -41,38 +41,60 @@
 #sitetitle a .titletext { font-size: 3vw; }
 
 html.dark * {
-	--color: #fff;
-	--bgcolor: #000 url(/designs/mountain/images/mountain1920.jpg) no-repeat top center;
+	/* Color scheme */
+	--color: #eee;
+	--bgcolor: #ccc url(/designs/mountain/images/mountain1920.jpg) no-repeat top center;
 	--backgroundattachment: fixed;
 	--backgroundsize: cover;
-	--textcolor: #ccc;
-	--highlight: #eee;
-	--highlightbg: #000;
-	--boxbackground: rgba(17, 25, 40, 0.75);
-	--backdropfilter: blur(16px) saturate(180%);
-	--navbg: var(--boxbackground);
+
+	--sitetitlecolor: #fff;
+	--sitetitlebg: transparent;
+	--sitesubtitlecolor: #fff;
+	--sitesubtitlebg: transparent;
+
+	--textcolor: #ddd;
+	--highlight: #fff;
+	--highlightbg: transparent;
+
+	--boxbackground: rgba(33, 33, 33, 0.55);
+	--boxbackdropfilter: blur(8px) saturate(80%);
+	--boxborderradius: 10px;
+
+	--navbg: rgba(33, 33, 33, 0.60);
+	--navbackdropfilter: blur(8px) saturate(50%);
 	--navitembg: transparent;
-	--navitemhlbg: #000;
-	--navitemcolor: #ccc;
-	--navitemhlcolor: #eee;
+	--navitemhlbg: transparent;
+	--navitemcolor: #ddd;
+	--navitemhlcolor: #fff;
 }
 
 
 @media (prefers-color-scheme: dark) {
 	* {
-	--color: #fff;
-	--bgcolor: #000 url(/designs/mountain/images/mountain1920.jpg) no-repeat top center;
+	/* Color scheme */
+	--color: #eee;
+	--bgcolor: #ccc url(/designs/mountain/images/mountain1920.jpg) no-repeat top center;
 	--backgroundattachment: fixed;
 	--backgroundsize: cover;
-	--textcolor: #ccc;
-	--highlight: #eee;
-	--highlightbg: #000;
-	--boxbackground: rgba(17, 25, 40, 0.75);
-	--backdropfilter: blur(16px) saturate(180%);
-	--navbg: var(--boxbackground);
+
+	--sitetitlecolor: #fff;
+	--sitetitlebg: transparent;
+	--sitesubtitlecolor: #fff;
+	--sitesubtitlebg: transparent;
+
+	--textcolor: #ddd;
+	--highlight: #fff;
+	--highlightbg: transparent;
+
+	--boxbackground: rgba(33, 33, 33, 0.55);
+	--boxbackdropfilter: blur(8px) saturate(80%);
+	--boxborderradius: 10px;
+
+	--navbg: rgba(33, 33, 33, 0.60);
+	--navbackdropfilter: blur(8px) saturate(50%);
 	--navitembg: transparent;
-	--navitemhlbg: #000;
-	--navitemcolor: #ccc;
-	--navitemhlcolor: #eee;
+	--navitemhlbg: transparent;
+	--navitemcolor: #ddd;
+	--navitemhlcolor: #fff;
 	}
 }
