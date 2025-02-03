@@ -26,15 +26,16 @@
 			<div id="mobilenav">
 				<button id="searchicon" aria-label="open search" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-magnifying-glass"></i></button>
 				<button id="navicon" aria-label="open nav" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+				<button id="lightdarkicon" type="button" aria-label="light or dark theme"><i class="fa-regular fa-sun"></i></button>
 			</div>
-			<button id="lightdark" aria-label="light or dark theme"><i class="fa-solid fa-circle-half-stroke"></i></button>
 		</div>
 		<div id="sitesubtitle">{{subtitle}}</div>
 		<div id="searchbox">
 			<form hx-post="/search" hx-target="#pagecontent">
-				<input id="search" name="searchText" type="text" placeholder="search phrase" aria-label="search field"/>
+				<input id="search" name="searchText" type="text" placeholder="search phrase" aria-label="search field" />
 				<button type="submit" class="searchbutton" aria-label="search"><i class="fa-solid fa-magnifying-glass" aria-label="search"></i></button>
 			</form>
+			<button id="lightdark" type="button" aria-label="light or dark theme"><i class="fa-regular fa-sun"></i></button>
 		</div>
 		<div id="nav">
 			<nav>{{navigation}}</nav>

@@ -120,19 +120,6 @@ header {
 		cursor: pointer;
 	}
 
-	#lightdark {
-		position: fixed;
-		bottom: 30px; right: 30px;
-		background: transparent;
-		color: var(--textcolor);
-		line-height: 1;
-		border: none;
-		font-size: 1.8rem;
-		padding: 5px 7px;
-		border-radius: 50%;
-		background: rgba(188, 188, 188, 0.8);
-		border: 1px solid #ddd;
-	}
 }
 
 #topbar {
@@ -197,9 +184,24 @@ header #searchbox input {
 	padding: 2px 3px;
 }
 
-header #searchbox i {
+header #searchbox button {
 	margin-left: 5px;
 }
+header #searchbox form {
+	display: inline-block;
+}
+
+button#lightdark,
+button#lightdarkicon {
+	background: transparent;
+	color: var(--textcolor);
+	line-height: 1;
+	border: none;
+	font-size: 1.2rem;
+	display: inline-block;
+	cursor: pointer;
+}
+
 
 /* Navigation */
 nav ul {

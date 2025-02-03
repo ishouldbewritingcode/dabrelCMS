@@ -13,20 +13,8 @@ if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').match
 		document.body.parentElement.classList.add('dark');
 	}
 }
-
-document.getElementById('lightdark').addEventListener('click', function () {
-	let thehtml = document.body.parentElement;
-	if (thehtml.classList.contains('dark')) {
-		thehtml.classList.remove('dark');
-		thehtml.classList.add('light');
-		setCookie('lightdark', 'light', 1)
-	}
-	else { 
-		thehtml.classList.remove('light');
-		thehtml.classList.add('dark');
-		setCookie('lightdark', 'dark', 1)
-	}
-});
+document.getElementById('lightdark').addEventListener('click', function () { lightDark(); });
+document.getElementById('lightdarkicon').addEventListener('click', function () { lightDark(); });
 
 // mobile nav
 document.getElementById('navicon').addEventListener('click', function () {
@@ -44,6 +32,11 @@ document.getElementById('searchicon').addEventListener('click', function () {
 		sb.classList.add('show');
 });
 
+let subs = nav.getElementsByClassName('sub');
+Array.from(subs).forEach(function (sub) {
+	sub.addEventListener('click', openChildNav, false);
+});
+
 function navClicked(event) {
 	// turn off all paths / opens
 	let paths = nav.querySelectorAll('.path');
@@ -58,11 +51,6 @@ function navClicked(event) {
 	this.parentNode.classList.add('path');
 	document.getElementById('nav').classList.remove('show');
 }
-
-let subs = nav.getElementsByClassName('sub');
-Array.from(subs).forEach(function (sub) {
-	sub.addEventListener('click', openChildNav, false);
-});
 
 function openChildNav(event) {
 	event.stopPropagation();
@@ -80,6 +68,19 @@ function openChildNav(event) {
 	}
 }
 
+function lightDark() {
+	let thehtml = document.body.parentElement;
+	if (thehtml.classList.contains('dark')) {
+		thehtml.classList.remove('dark');
+		thehtml.classList.add('light');
+		setCookie('lightdark', 'light', 1)
+	}
+	else {
+		thehtml.classList.remove('light');
+		thehtml.classList.add('dark');
+		setCookie('lightdark', 'dark', 1)
+	}
+}
 
 // cookie functions
 function setCookie(name, value, hours) {
@@ -99,7 +100,7 @@ function getCookie(name) {
 		while (c.charAt(0) == ' ') c = c.substring(1, c.length);
 		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
 	}
-	return null;
+	return '';
 }
 function eraseCookie(name) {
 	document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';

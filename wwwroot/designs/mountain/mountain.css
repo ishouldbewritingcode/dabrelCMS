@@ -1,5 +1,18 @@
 ﻿@import url(/global/styles/global.css);
 
+#sitetitle a {
+	font-family: "Coda", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: normal;
+	font-style: normal;
+	display: flex;
+	align-items: center;
+	justify-content: left;
+	gap: 20px;
+}
+#sitetitle a:hover { text-decoration: none; }
+#sitetitle a .titletext { font-size: 3vw; }
+
 *, html.light * {
 	/* Color scheme */
 	--color: #222;
@@ -27,18 +40,6 @@
 	--navitemcolor: #555;
 	--navitemhlcolor: #222;
 }
-#sitetitle a {
-	font-family: "Coda", sans-serif;
-	font-optical-sizing: auto;
-	font-weight: normal;
-	font-style: normal;
-	display: flex;
-	align-items: center;
-	justify-content: left;
-	gap: 20px;
-}
-#sitetitle a:hover { text-decoration: none; }
-#sitetitle a .titletext { font-size: 3vw; }
 
 html.dark * {
 	/* Color scheme */
@@ -66,35 +67,4 @@ html.dark * {
 	--navitemhlbg: transparent;
 	--navitemcolor: #ddd;
 	--navitemhlcolor: #fff;
-}
-
-
-@media (prefers-color-scheme: dark) {
-	* {
-	/* Color scheme */
-	--color: #eee;
-	--bgcolor: #ccc url(/designs/mountain/images/mountain1920.jpg) no-repeat top center;
-	--backgroundattachment: fixed;
-	--backgroundsize: cover;
-
-	--sitetitlecolor: #fff;
-	--sitetitlebg: transparent;
-	--sitesubtitlecolor: #fff;
-	--sitesubtitlebg: transparent;
-
-	--textcolor: #ddd;
-	--highlight: #fff;
-	--highlightbg: transparent;
-
-	--boxbackground: rgba(33, 33, 33, 0.55);
-	--boxbackdropfilter: blur(8px) saturate(80%);
-	--boxborderradius: 10px;
-
-	--navbg: rgba(33, 33, 33, 0.60);
-	--navbackdropfilter: blur(8px) saturate(50%);
-	--navitembg: transparent;
-	--navitemhlbg: transparent;
-	--navitemcolor: #ddd;
-	--navitemhlcolor: #fff;
-	}
 }
