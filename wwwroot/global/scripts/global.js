@@ -1,9 +1,9 @@
 ﻿let nav = document.getElementById('nav');
-let sb = document.getElementById('searchbox');
 let navitems = nav.querySelectorAll('a');
 Array.from(navitems).forEach(function (item) {
 	item.addEventListener('click', navClicked, false);
 });
+
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
 	// browser in dark mode - add the class unless they've switched
 	if (getCookie('lightdark') == 'light') {
@@ -11,10 +11,10 @@ if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').match
 	}
 	else {
 		document.body.parentElement.classList.add('dark');
+		$('.lightdark i').removeClass('fa-sun').addClass('fa-moon');
 	}
 }
 document.getElementById('lightdark').addEventListener('click', function () { lightDark(); });
-document.getElementById('lightdarkicon').addEventListener('click', function () { lightDark(); });
 
 // mobile nav
 document.getElementById('navicon').addEventListener('click', function () {
@@ -26,10 +26,10 @@ document.getElementById('navicon').addEventListener('click', function () {
 
 // mobile search
 document.getElementById('searchicon').addEventListener('click', function () {
-	if (sb.classList.contains('show'))
-		sb.classList.remove('show');
+	if ($('#searchform').hasClass('show'))
+		$('#searchform').removeClass('show');
 	else
-		sb.classList.add('show');
+		$('#searchform').addClass('show');
 });
 
 let subs = nav.getElementsByClassName('sub');
@@ -73,11 +73,13 @@ function lightDark() {
 	if (thehtml.classList.contains('dark')) {
 		thehtml.classList.remove('dark');
 		thehtml.classList.add('light');
+		$('.lightdark i').removeClass('fa-moon').addClass('fa-sun');
 		setCookie('lightdark', 'light', 1)
 	}
 	else {
 		thehtml.classList.remove('light');
 		thehtml.classList.add('dark');
+		$('.lightdark i').removeClass('fa-sun').addClass('fa-moon');
 		setCookie('lightdark', 'dark', 1)
 	}
 }

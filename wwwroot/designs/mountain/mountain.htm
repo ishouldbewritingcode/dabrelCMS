@@ -9,6 +9,7 @@
 	<link href="/global/fontawesome/css/fontawesome.css" rel="stylesheet">
 	<link href="/global/fontawesome/css/solid.css" rel="stylesheet">
 	<link rel="stylesheet" href="/designs/mountain/mountain.css" />
+	<script src="/global/scripts/jquery-3.7.1.min.js"></script>
 	<script src="/global/scripts/htmx.min.js"></script>
 	<script src="/global/scripts/global.js" defer></script>
 	<link rel="icon" href="/designs/mountain/images/favicon.png" type="image/png">
@@ -23,20 +24,15 @@
 	<header>
 		<div id="topbar">
 			<div id="sitetitle"><a href="/">{{headersitetitle}}</a></div>
-			<div id="mobilenav">
-				<button id="searchicon" aria-label="open search" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-magnifying-glass"></i></button>
-				<button id="navicon" aria-label="open nav" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
-				<button id="lightdarkicon" type="button" aria-label="light or dark theme"><i class="fa-regular fa-sun"></i></button>
-			</div>
+			<form id="searchform" hx-post="/search" hx-target="#pagecontent">
+				<input id="search" name="searchText" type="text" placeholder="search phrase" aria-label="search field" />
+				<button id="searchbutton" type="submit" aria-label="search"><i class="fa-solid fa-magnifying-glass" aria-label="search"></i></button>
+			</form>
+			<button id="searchicon" aria-label="open search" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-magnifying-glass"></i></button>
+			<button id="navicon" aria-label="open nav" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+			<button id="lightdark" class="lightdark" type="button" aria-label="light or dark theme"><i class="fa-regular fa-sun"></i></button>
 		</div>
 		<div id="sitesubtitle">{{subtitle}}</div>
-		<div id="searchbox">
-			<form hx-post="/search" hx-target="#pagecontent">
-				<input id="search" name="searchText" type="text" placeholder="search phrase" aria-label="search field" />
-				<button type="submit" class="searchbutton" aria-label="search"><i class="fa-solid fa-magnifying-glass" aria-label="search"></i></button>
-			</form>
-			<button id="lightdark" type="button" aria-label="light or dark theme"><i class="fa-regular fa-sun"></i></button>
-		</div>
 		<div id="nav">
 			<nav>{{navigation}}</nav>
 		</div>

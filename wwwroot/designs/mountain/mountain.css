@@ -9,9 +9,13 @@
 	align-items: center;
 	justify-content: left;
 	gap: 20px;
+	margin-top: 10px;
 }
 #sitetitle a:hover { text-decoration: none; }
-#sitetitle a .titletext { font-size: 3vw; }
+#sitetitle a .titletext { font-size: 11vw; }
+@media (min-width:1000px) {
+	#sitetitle a .titletext { font-size: 3vw; }
+}
 
 *, html.light * {
 	/* Color scheme */
@@ -24,6 +28,7 @@
 	--sitetitlebg: transparent;
 	--sitesubtitlecolor: #fff;
 	--sitesubtitlebg: transparent;
+	--topbaricons: #fff;
 
 	--textcolor: #333;
 	--highlight: #000;
@@ -52,6 +57,7 @@ html.dark * {
 	--sitetitlebg: transparent;
 	--sitesubtitlecolor: #fff;
 	--sitesubtitlebg: transparent;
+	--topbaricons: #fff;
 
 	--textcolor: #ddd;
 	--highlight: #fff;

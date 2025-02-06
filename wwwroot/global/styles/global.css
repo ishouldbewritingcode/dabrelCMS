@@ -111,15 +111,6 @@ header {
 		white-space: nowrap;
 		color: var(--color);
 	}
-	
-	.searchbutton {
-		font-size: 1.2rem;
-		color: var(--sitetitlecolor);
-		background: transparent;
-		border: none;
-		cursor: pointer;
-	}
-
 }
 
 #topbar {
@@ -127,10 +118,11 @@ header {
 	gap: 10px;
 	align-items: center;
 	justify-content: space-between;
+	flex-wrap: nowrap;
 }
 
 #sitetitle {
-	max-width: 50%;
+	flex-grow: 4;
 	a
 	{
 		display: flex;
@@ -160,7 +152,6 @@ header {
 	padding: 5px 10px 5px 0;
 }
 
-#searchbox,
 #nav {
 	display: none;
 	position: absolute;
@@ -175,30 +166,50 @@ header {
 	display: block;
 }
 
-#searchbox.show {
-	display: block;
+#searchform {
+	display: none;
+	border-radius: 10px;
+	padding: 1px 10px;
 }
 
-header #searchbox input {
-	width: calc(100% - 2.5rem);
-	padding: 2px 3px;
-}
-
-header #searchbox button {
-	margin-left: 5px;
-}
-header #searchbox form {
+#searchform.show {
 	display: inline-block;
+	position: absolute;
+	top: 50px;
+	transition: all 2s ease-in-out;
+	width: calc(100% - 30px);
 }
 
+header #searchform input {
+	font-size: 1.5rem;
+	width: 250px;
+	padding: 2px 3px;
+	border: none;
+}
+
+header #searchform button {
+	margin: 5px 10px;
+}
+header #searchform {
+	display: none;
+	background: #fff;
+}
+header #searchform #searchbutton {
+	color: #333;
+	padding: 5px;
+	font-size: 1.4rem;
+}
+
+button#searchicon,
+button#navicon,
 button#lightdark,
-button#lightdarkicon {
+button#searchbutton
+{
 	background: transparent;
-	color: var(--textcolor);
+	color: var(--topbaricons);
 	line-height: 1;
 	border: none;
-	font-size: 1.2rem;
-	display: inline-block;
+	font-size: 1.8rem;
 	cursor: pointer;
 }
 
@@ -214,8 +225,6 @@ nav ul {
 	backdrop-filter: var(--navbackdropfilter, inherit);
 }
 
-
-
 nav ul li {
 	list-style-type: none;
 	display: block;
@@ -230,7 +239,6 @@ nav ul li ul {
 	padding-left: 10px;
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
-
 }
 
 nav > ul > li {
@@ -717,8 +725,7 @@ article time {
 /* hamburger nav */
 #mobilenav > button {
 	background: transparent;
-	;
-	color: var(--textcolor); /* todo */
+	color: var(--topbaricons);
 	border: none;
 	font-size: 1.3rem;
 	position: relative;
@@ -743,10 +750,6 @@ article time {
 }
 
 #nav-toggle:checked ~ #nav {
-	display: block;
-}
-
-#search-toggle:checked ~ #searchbox {
 	display: block;
 }
 
@@ -800,17 +803,12 @@ article time {
 		display: inline-block;
 	}
 
-	header #searchbox {
+	header #searchform {
 		display: inline-block;
-		position: absolute;
-		top: 25px;
-		right: 50px;
-		left: auto;
-		border-radius: 4px;
 	}
-
-	header #searchbox input {
-		width: auto;
+	header #searchicon,
+	header #navicon {
+		display: none;
 	}
 
 	header #nav {
