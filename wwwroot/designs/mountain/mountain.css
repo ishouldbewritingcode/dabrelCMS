@@ -13,6 +13,7 @@
 }
 #sitetitle a:hover { text-decoration: none; }
 #sitetitle a .titletext { font-size: 11vw; }
+
 @media (min-width:1000px) {
 	#sitetitle a .titletext { font-size: 3vw; }
 }

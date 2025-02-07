@@ -40,6 +40,8 @@ body {
 	cursor: pointer;
 }
 
+#livesite { font-size: 1.2rem; }
+
 .modal {
 	background: white;
 	border-radius: 10px;

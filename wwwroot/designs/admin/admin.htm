@@ -26,19 +26,20 @@
 <header>
 	<div id="topbar">
 		<div id="sitetitle"><a href="/admin">{{titleimage}}{{headersitetitle}}</a></div>
-		<div id="mobilenav">
-			<button id="searchicon" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-magnifying-glass"></i></button>
-			<button id="navicon" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
-		</div>
+		<form id="searchform" hx-post="/search" hx-target="#pagecontent">
+			<input id="search" name="searchText" type="text" placeholder="search phrase" aria-label="search field" />
+			<button id="searchbutton" type="submit" aria-label="search"><i class="fa-solid fa-magnifying-glass" aria-label="search"></i></button>
+		</form>
+		<button id="searchicon" aria-label="open search" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-magnifying-glass"></i></button>
+		<button id="navicon" aria-label="open nav" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+		<button id="lightdark" class="lightdark" type="button" aria-label="light or dark theme"><i class="fa-regular fa-sun"></i></button>
 	</div>
 	<div id="sitesubtitle">{{subtitle}}</div>
 	<div class="buttonright">
 		<button title="site files" id="admineditsitecontrol" hx-get="/admin/getfilesform" hx-target="#cmsdialogform" onclick="document.getElementById('cmsdialog').showModal();"><i class="fa-solid fa-folder"></i></button>
 		<button title="site settings" id="admineditsitecontrol" hx-get="/admin/getsiteform" hx-target="#cmsdialogform" onclick="document.getElementById('cmsdialog').showModal();"><i class="fa-solid fa-gear"></i></button>
 		<button title="site security" id="admineditusercontrol" hx-get="/admin/getuserform" hx-target="#cmsdialogform" onclick="document.getElementById('cmsdialog').showModal();"><i class="fa-solid fa-user"></i></button>
-	</div>
-	<div id="searchbox">
-		<input id="search" name="search" type="text" placeholder="search phrase" /><i class="fa-solid fa-magnifying-glass"></i>
+		<a id="livesite" href="/" target="_live">Live Site</a> 
 	</div>
 	<div id="nav">
 		<nav>{{navigation}}</nav>
