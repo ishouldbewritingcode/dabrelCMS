@@ -12,10 +12,10 @@
 	margin-top: 10px;
 }
 #sitetitle a:hover { text-decoration: none; }
-#sitetitle a .titletext { font-size: 11vw; }
+#sitetitle a .titletext { font-size: 2.8rem; }
 
 @media (min-width:1000px) {
-	#sitetitle a .titletext { font-size: 3vw; }
+	#sitetitle a .titletext { font-size: 3rem; }
 }
 
 *, html.light * {

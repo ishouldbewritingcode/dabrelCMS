@@ -169,7 +169,7 @@ header {
 #searchform {
 	display: none;
 	border-radius: 10px;
-	padding: 1px 10px;
+	padding: 0 10px;
 }
 
 #searchform.show {
@@ -181,7 +181,7 @@ header {
 }
 
 header #searchform input {
-	font-size: 1.5rem;
+	font-size: 1.2rem;
 	width: 250px;
 	padding: 2px 3px;
 	border: none;
@@ -196,8 +196,8 @@ header #searchform {
 }
 header #searchform #searchbutton {
 	color: #333;
-	padding: 5px;
-	font-size: 1.4rem;
+	padding: 1px;
+	font-size: 1.3rem;
 }
 
 button#searchicon,
