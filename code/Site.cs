@@ -157,10 +157,10 @@ namespace dabrelCMS.code
 					rs.Append($"<h1>Search Results</h1>");
 					foreach (CMSPage result in searchresults)
 					{
-						string trunkatedsummary = result.Summary.Length > 250 ? result.Summary.Substring(0, 250) : result.Summary;
+						string truncatedsummary = result.Summary.Length > 250 ? result.Summary.Substring(0, 250) : result.Summary;
 						rs.Append($"<div class=\"searchresult\">");
 						rs.Append($"<h3><a href=\"/{result.Shortcut}\">{result.Title}</a></h3>");
-						rs.Append($"<div class=\"summary\">{trunkatedsummary}</div>");
+						rs.Append($"<div class=\"summary\">{truncatedsummary}</div>");
 						rs.Append($"</div>");
 					}
 					rs.Append($"</section>");
@@ -176,7 +176,7 @@ namespace dabrelCMS.code
 					html = sb.ToString();
 				}
 			}
-			else
+			else // not HTMX
 			{
 				string design = site.Design;
 				string designPath = $"{_webRootPath}\\designs\\{design}\\{design}.htm";

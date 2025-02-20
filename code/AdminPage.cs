@@ -28,5 +28,18 @@
 			return html;
 		}
 
+		public static string GetBlockConfig(CMSBlock block)
+		{
+			string pageformPath = $"{Common.WebRootPath}\\designs\\admin\\dialogblock.htm";
+			string html = Common.GetFileText(pageformPath);
+			html = html.Replace("{{blockid}}", block.BlockId.ToString());
+			html = html.Replace("{{blocktype}}", block.BlockType);
+			html = html.Replace("{{status}}", block.Status);
+			html = html.Replace("{{title1}}", block.Title1);
+			html = html.Replace("{{title2}}", block.Title2);
+			html = html.Replace("{{data}}", block.Data);
+			html = html.Replace("{{tags}}", block.Tags);
+			return html;
+		}
 	}
 }
