@@ -1,9 +1,10 @@
 ﻿<form id="editblockform" hx-post="/admin/editblockform" hx-target="#pagecontent">
 	<h2>Edit Content Block</h2>
 	<input id="blocktype" name="blocktype" type="hidden" value="{{type}}" />
-	<div></div><label for="title">Title</label><input id="title" "name=" title" type="text" value="{{title}}" /></div>
-	<div></div><label for="subtitle">Subtitle</label><input id="subtitle" name="subtitle" type="text" value="{{subtitle}}" /></div>
+	<div><label for="title">Title</label><input id="title" name="title" type="text" value="{{title}}" /></div>
+	<div><label for="subtitle">Subtitle</label><input id="subtitle" name="subtitle" type="text" value="{{subtitle}}" /></div>
 	<div><label for="blockison">Status</label><input type="checkbox" id="blockison" name="blockison" {{blockison}} /></div>
 	<div><label for="data">Data</label><input type="text" id="data" name="data" {{data}} /></div>
 	<div><label for="tags">Tags</label><input type="text" id="tags" name="tags" {{tags}} /></div>
+	<div class="buttonright"><button type="submit" id="admineditblocksave"><i class="fa-regular fa-floppy-disk"></i></button></div>
 </form>

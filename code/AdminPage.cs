@@ -1,4 +1,6 @@
-﻿namespace dabrelCMS.code
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace dabrelCMS.code
 {
 	public static class AdminPage
 	{
@@ -40,6 +42,12 @@
 			html = html.Replace("{{data}}", block.Data);
 			html = html.Replace("{{tags}}", block.Tags);
 			return html;
+		}
+
+		public static string AddNewBlock(HttpContext context, CMSDbContext dbContext, CMSPage page)
+		{
+
+			return "";
 		}
 	}
 }

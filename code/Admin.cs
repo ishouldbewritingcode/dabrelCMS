@@ -57,7 +57,9 @@ namespace dabrelCMS.code
 				{
 					switch (pathsegments[1])
 					{
-						case "submitblockform":
+						case "addblockform":
+							string z = AdminPage.AddNewBlock(context, dbcontext, page);
+							context.Response.Headers["HX-Redirect"] = $"/admin/{page.Shortcut}";
 
 							break;
 						case "savesiteform":
