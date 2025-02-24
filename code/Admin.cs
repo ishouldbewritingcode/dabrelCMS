@@ -26,6 +26,8 @@ namespace dabrelCMS.code
 
 			_webRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
 			Common.WebRootPath = _webRootPath;
+			string design = "admin";
+			Common.AdminDesign = design;
 			_domain = context.Request.Host.ToString().ToLower().Trim();
 			// strip off any port numbers that may be involved
 			_domain = _domain.Substring(0, _domain.IndexOf(":"));
@@ -43,7 +45,6 @@ namespace dabrelCMS.code
 			// type: cmsSite
 			var site = dbcontext.CMSSites.Where(s => s.SiteId == url.SiteId).FirstOrDefault();
 
-			string design = "admin";
 			string designPath = $"{_webRootPath}\\designs\\{design}\\{design}.htm";
 
 			// type: cmsPage
@@ -58,7 +59,7 @@ namespace dabrelCMS.code
 					switch (pathsegments[1])
 					{
 						case "addblockform":
-							string z = AdminPage.AddNewBlock(context, dbcontext, page);
+							string z = AdminBlock.AddNewBlock(context, dbcontext, page);
 							context.Response.Headers["HX-Redirect"] = $"/admin/{page.Shortcut}";
 
 							break;
@@ -88,20 +89,7 @@ namespace dabrelCMS.code
 
 						case "getpageform":
 							page = dbcontext.CMSPages.Where(p => p.PageId == int.Parse(pathsegments[2])).FirstOrDefault();
-							string pageformPath = $"{_webRootPath}\\designs\\{design}\\pageform.htm";
-							html = Common.GetFileText(pageformPath);
-							html = html.Replace("{{pageid}}", page.PageId.ToString());
-							html = html.Replace("{{parentid}}", page.ParentId.ToString());
-							html = html.Replace("{{pageshortcut}}", page.Shortcut);
-							html = html.Replace("{{pagesort}}", page.Sort.ToString());
-							html = html.Replace("{{pageison}}", page.isOn.ToString());
-							html = html.Replace("{{pageisprivate}}", page.isPrivate.ToString());
-							html = html.Replace("{{pageishidden}}", page.isHidden.ToString());
-							html = html.Replace("{{pagetags}}", page.Tags);
-							html = html.Replace("{{pagetitle}}", page.Title);
-							html = html.Replace("{{navtitle}}", page.NavTitle);
-							html = html.Replace("{{content}}", page.Summary);
-							html = html.Replace("{{pagehero}}", page.HeroImage);
+							html = AdminPage.GetPageForm(page);
 							break;
 
 						case "getaddpageform":
@@ -316,7 +304,7 @@ namespace dabrelCMS.code
 
 						case "getaddblockform":
 							page = dbcontext.CMSPages.Where(p => p.PageId == int.Parse(pathsegments[2])).FirstOrDefault();
-							html = AdminPage.GetAddBlockForm(page);
+							html = AdminBlock.GetAddBlockForm(page);
 							break;
 
 						default:
