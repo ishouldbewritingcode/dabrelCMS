@@ -223,6 +223,10 @@ button.blocktype {
 	font-size: 1.1rem;
 }
 
+button.blocktype.selected {
+	background: #8ff6dd;
+}
+
 .blocknotes {
 	padding: 20px 10px;
 	border: 1px solid #ccc;

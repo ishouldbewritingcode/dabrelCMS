@@ -11,14 +11,14 @@ using dabrelCMS.data;
 namespace dabrelCMS.Migrations
 {
     [DbContext(typeof(CMSDbContext))]
-    [Migration("20250112033058_20250111_Fixing_Page_Blocks2")]
-    partial class _20250111_Fixing_Page_Blocks2
+    [Migration("20250327042910_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.2");
 
             modelBuilder.Entity("dabrelCMS.models.CMSBlock", b =>
                 {
@@ -296,7 +296,7 @@ namespace dabrelCMS.Migrations
                             SiteId = 1,
                             BodyBottom = "",
                             BodyTop = "",
-                            Created = new DateTime(2025, 1, 11, 21, 30, 57, 927, DateTimeKind.Local).AddTicks(7208),
+                            Created = new DateTime(2025, 1, 1, 0, 1, 0, 0, DateTimeKind.Unspecified),
                             Design = "superbee",
                             FaviconUrl = "",
                             Footer1 = "footer 1",

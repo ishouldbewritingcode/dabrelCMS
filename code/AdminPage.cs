@@ -24,7 +24,7 @@ namespace dabrelCMS.code
 		}
 		public static string GetPageConfig(CMSPage page)
 		{
-			string pageformPath = $"{Common.WebRootPath}\\designs\\admin\\dialogpage.htm";
+			string pageformPath = $"{Common.WebRootPath}\\designs\\{Common.AdminDesign}\\dialogpage.htm";
 			string html = Common.GetFileText(pageformPath);
 			html = html.Replace("{{pageid}}", page.PageId.ToString());
 			html = html.Replace("{{parentid}}", page.ParentId.ToString());

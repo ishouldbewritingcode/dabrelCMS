@@ -17,7 +17,7 @@
 	</div>
 	<div class="blocknotes"></div>
 
-	<input name="pageid" type="hidden" value="" />
+	<input name="pageid" type="hidden" value="{{pageid}}" />
 	<input id="blocktype" name="blocktype" type="hidden" value="" />
 	<label>Title</label><input name="title" type="text" value="" />
 
@@ -28,6 +28,8 @@
 	$('.blocktype').click(function () {
 		$('.blocknotes').html($(this).attr('note'));
 		$('#blocktype').val($(this).attr('blockname'));
+		$('.blocktype').removeClass("selected");
+		$(this).addClass("selected");
 	});
 	$('#reference').change(function () {
 		if ($(this).val() != 'none') {

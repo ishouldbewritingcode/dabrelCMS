@@ -12,6 +12,41 @@ namespace dabrelCMS.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "CMSFiles",
+                columns: table => new
+                {
+                    FileId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    SiteId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Filename = table.Column<string>(type: "TEXT", nullable: false),
+                    Status = table.Column<string>(type: "TEXT", nullable: true),
+                    Text = table.Column<string>(type: "TEXT", nullable: true),
+                    Tags = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CMSFiles", x => x.FileId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CMSPageBlocks",
+                columns: table => new
+                {
+                    PageBlockID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PageId = table.Column<int>(type: "INTEGER", nullable: false),
+                    BlockId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Sort = table.Column<int>(type: "INTEGER", nullable: false),
+                    Position = table.Column<string>(type: "TEXT", nullable: true),
+                    AltTitle = table.Column<string>(type: "TEXT", nullable: true),
+                    AltSubtitle = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CMSPageBlocks", x => x.PageBlockID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CMSSites",
                 columns: table => new
                 {
@@ -46,12 +81,11 @@ namespace dabrelCMS.Migrations
                     UserId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     SiteId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Provider = table.Column<string>(type: "TEXT", nullable: false),
-                    NameIdentifier = table.Column<string>(type: "TEXT", nullable: false),
-                    UserName = table.Column<string>(type: "TEXT", nullable: false),
-                    Password = table.Column<string>(type: "TEXT", nullable: false),
+                    Provider = table.Column<string>(type: "TEXT", nullable: true),
+                    NameIdentifier = table.Column<string>(type: "TEXT", nullable: true),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
-                    EmailConfirmed = table.Column<string>(type: "TEXT", nullable: false),
+                    Password = table.Column<string>(type: "TEXT", nullable: false),
+                    Salt = table.Column<int>(type: "INTEGER", nullable: false),
                     FirstName = table.Column<string>(type: "TEXT", nullable: false),
                     LastName = table.Column<string>(type: "TEXT", nullable: false),
                     Mobile = table.Column<string>(type: "TEXT", nullable: false),
@@ -114,12 +148,36 @@ namespace dabrelCMS.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CMSBlocks",
+                columns: table => new
+                {
+                    BlockId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    BlockType = table.Column<string>(type: "TEXT", nullable: true),
+                    Status = table.Column<string>(type: "TEXT", nullable: true),
+                    Title1 = table.Column<string>(type: "TEXT", nullable: true),
+                    Title2 = table.Column<string>(type: "TEXT", nullable: true),
+                    Data = table.Column<string>(type: "TEXT", nullable: true),
+                    Tags = table.Column<string>(type: "TEXT", nullable: true),
+                    CMSPagePageId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CMSBlocks", x => x.BlockId);
+                    table.ForeignKey(
+                        name: "FK_CMSBlocks_CMSPages_CMSPagePageId",
+                        column: x => x.CMSPagePageId,
+                        principalTable: "CMSPages",
+                        principalColumn: "PageId");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CMSItems",
                 columns: table => new
                 {
                     ItemId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    PageId = table.Column<int>(type: "INTEGER", nullable: false),
+                    BlockId = table.Column<int>(type: "INTEGER", nullable: false),
                     Sort = table.Column<int>(type: "INTEGER", nullable: false),
                     ItemType = table.Column<string>(type: "TEXT", nullable: true),
                     Status = table.Column<string>(type: "TEXT", nullable: true),
@@ -131,16 +189,16 @@ namespace dabrelCMS.Migrations
                     Title2 = table.Column<string>(type: "TEXT", nullable: true),
                     Data = table.Column<string>(type: "TEXT", nullable: true),
                     Tags = table.Column<string>(type: "TEXT", nullable: true),
-                    CMSPagePageId = table.Column<int>(type: "INTEGER", nullable: true)
+                    CMSBlockBlockId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CMSItems", x => x.ItemId);
                     table.ForeignKey(
-                        name: "FK_CMSItems_CMSPages_CMSPagePageId",
-                        column: x => x.CMSPagePageId,
-                        principalTable: "CMSPages",
-                        principalColumn: "PageId");
+                        name: "FK_CMSItems_CMSBlocks_CMSBlockBlockId",
+                        column: x => x.CMSBlockBlockId,
+                        principalTable: "CMSBlocks",
+                        principalColumn: "BlockId");
                 });
 
             migrationBuilder.InsertData(
@@ -156,17 +214,22 @@ namespace dabrelCMS.Migrations
             migrationBuilder.InsertData(
                 table: "CMSSites",
                 columns: new[] { "SiteId", "BodyBottom", "BodyTop", "Created", "Design", "FaviconUrl", "Footer1", "Footer2", "Footer3", "Footer4", "ImageFileName", "MetaDescription", "MetaImagePath", "Name", "OnAllPages", "SubTitle", "Title" },
-                values: new object[] { 1, "", "", new DateTime(2023, 5, 18, 13, 42, 1, 161, DateTimeKind.Local).AddTicks(6184), "theblues", "", "footer 1", "footer 2", "footer 3", "footer 4", "", "Description", "", "test", "", "subtitle", "title" });
+                values: new object[] { 1, "", "", new DateTime(2025, 1, 1, 0, 1, 0, 0, DateTimeKind.Unspecified), "superbee", "", "footer 1", "", "", "", "", "Description", "", "test", "", "subtitle", "title" });
 
             migrationBuilder.InsertData(
                 table: "CMSUsers",
-                columns: new[] { "UserId", "Email", "EmailConfirmed", "FirstName", "LastName", "Mobile", "NameIdentifier", "Password", "Provider", "Roles", "SiteId", "UserName" },
-                values: new object[] { 1, "test@dabrel.com", "confirmed", "test", "user", "", "", "test", "Cookies", "admin", 1, "test@dabrel.com" });
+                columns: new[] { "UserId", "Email", "FirstName", "LastName", "Mobile", "NameIdentifier", "Password", "Provider", "Roles", "Salt", "SiteId" },
+                values: new object[] { 1, "test@dabrel.com", "test", "user", "", "", "test", "Cookies", "admin", 0, 1 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CMSItems_CMSPagePageId",
-                table: "CMSItems",
+                name: "IX_CMSBlocks_CMSPagePageId",
+                table: "CMSBlocks",
                 column: "CMSPagePageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CMSItems_CMSBlockBlockId",
+                table: "CMSItems",
+                column: "CMSBlockBlockId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CMSPages_CMSSiteSiteId",
@@ -183,13 +246,22 @@ namespace dabrelCMS.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "CMSFiles");
+
+            migrationBuilder.DropTable(
                 name: "CMSItems");
+
+            migrationBuilder.DropTable(
+                name: "CMSPageBlocks");
 
             migrationBuilder.DropTable(
                 name: "CMSSiteUrls");
 
             migrationBuilder.DropTable(
                 name: "CMSUsers");
+
+            migrationBuilder.DropTable(
+                name: "CMSBlocks");
 
             migrationBuilder.DropTable(
                 name: "CMSPages");

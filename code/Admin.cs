@@ -93,7 +93,7 @@ namespace dabrelCMS.code
 							break;
 
 						case "getaddpageform":
-							string addpageformPath = $"{_webRootPath}\\designs\\{design}\\addpageform.htm";
+							string addpageformPath = $"{Common.WebRootPath}\\designs\\{Common.AdminDesign}\\addpageform.htm";
 							html = Common.GetFileText(addpageformPath);
 							if (pathsegments.Length > 2)
 								if (pathsegments[2] != string.Empty)

@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace dabrelCMS.code
 {
@@ -28,8 +31,25 @@ namespace dabrelCMS.code
 
 		public static string AddNewBlock(HttpContext context, CMSDbContext dbContext, CMSPage page)
 		{
+			// build new block here
+			int id = 0;
+			string sid = context.Request.Form["pageid"].ToString().Trim();
+			bool addToPage = int.TryParse(sid, out id);
+			CMSBlock block = new CMSBlock();
 
-			return "";
+			block.BlockType = context.Request.Form["blocktype"].ToString();
+			block.Title1 = context.Request.Form["Title"].ToString();
+			dbContext.SaveChanges();
+			int blockid = block.BlockId;
+			
+			if (addToPage)
+			{
+				CMSPageBlock pageBlock = new CMSPageBlock();
+				pageBlock.BlockId = blockid;
+				pageBlock.PageId = id;
+				dbContext.SaveChanges();
+			}
+			return "success";
 		}
 	}
 }
