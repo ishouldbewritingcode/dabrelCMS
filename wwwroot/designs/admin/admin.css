@@ -233,3 +233,12 @@ button.blocktype.selected {
 	margin-bottom: 20px;
 }
 
+fieldset {
+	padding: 0 20px 20px 20px;
+	margin-top: 40px;
+} 
+
+fieldset legend {
+	padding: 0 10px 4px;
+	border: 1px solid #fff;
+}

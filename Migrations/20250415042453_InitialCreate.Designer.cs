@@ -11,7 +11,7 @@ using dabrelCMS.data;
 namespace dabrelCMS.Migrations
 {
     [DbContext(typeof(CMSDbContext))]
-    [Migration("20250327042910_InitialCreate")]
+    [Migration("20250415042453_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -29,9 +29,6 @@ namespace dabrelCMS.Migrations
                     b.Property<string>("BlockType")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("CMSPagePageId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Data")
                         .HasColumnType("TEXT");
 
@@ -48,8 +45,6 @@ namespace dabrelCMS.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("BlockId");
-
-                    b.HasIndex("CMSPagePageId");
 
                     b.ToTable("CMSBlocks");
                 });
@@ -218,6 +213,9 @@ namespace dabrelCMS.Migrations
                     b.Property<int>("BlockId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("CMSPagePageId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("PageId")
                         .HasColumnType("INTEGER");
 
@@ -228,6 +226,8 @@ namespace dabrelCMS.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("PageBlockID");
+
+                    b.HasIndex("CMSPagePageId");
 
                     b.ToTable("CMSPageBlocks");
                 });
@@ -297,7 +297,7 @@ namespace dabrelCMS.Migrations
                             BodyBottom = "",
                             BodyTop = "",
                             Created = new DateTime(2025, 1, 1, 0, 1, 0, 0, DateTimeKind.Unspecified),
-                            Design = "superbee",
+                            Design = "mountain",
                             FaviconUrl = "",
                             Footer1 = "footer 1",
                             Footer2 = "",
@@ -411,13 +411,6 @@ namespace dabrelCMS.Migrations
                         });
                 });
 
-            modelBuilder.Entity("dabrelCMS.models.CMSBlock", b =>
-                {
-                    b.HasOne("dabrelCMS.models.CMSPage", null)
-                        .WithMany("cmsBlocks")
-                        .HasForeignKey("CMSPagePageId");
-                });
-
             modelBuilder.Entity("dabrelCMS.models.CMSItem", b =>
                 {
                     b.HasOne("dabrelCMS.models.CMSBlock", null)
@@ -430,6 +423,13 @@ namespace dabrelCMS.Migrations
                     b.HasOne("dabrelCMS.models.CMSSite", null)
                         .WithMany("cmsPages")
                         .HasForeignKey("CMSSiteSiteId");
+                });
+
+            modelBuilder.Entity("dabrelCMS.models.CMSPageBlock", b =>
+                {
+                    b.HasOne("dabrelCMS.models.CMSPage", null)
+                        .WithMany("pageBlocks")
+                        .HasForeignKey("CMSPagePageId");
                 });
 
             modelBuilder.Entity("dabrelCMS.models.CMSSiteUrl", b =>
@@ -446,7 +446,7 @@ namespace dabrelCMS.Migrations
 
             modelBuilder.Entity("dabrelCMS.models.CMSPage", b =>
                 {
-                    b.Navigation("cmsBlocks");
+                    b.Navigation("pageBlocks");
                 });
 
             modelBuilder.Entity("dabrelCMS.models.CMSSite", b =>

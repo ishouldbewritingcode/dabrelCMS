@@ -1,0 +1,12 @@
+﻿<fieldset>
+	<legend>{{title}}</legend>
+	{{title2}}
+	<div class="buttonright">
+		<button id="adminblockconfig" title="block settings" aria-label="page settings" hx-get="/admin/getblockconfig/{{blockid}}" hx-target="#cmsdialogform" onclick="document.getElementById('cmsdialog').showModal();"><i class="fa-solid fa-gear"></i></button>
+		<!--<button id="adminadditemcontrol" title="add item" aria-label="add child page" hx-post="/admin/getaddpageform/{{blockid}}" hx-target="#pagecontent"><i class="fa-solid fa-plus"></i></button>-->
+		<button id="admindeleteblockcontrol" title="delete block" aria-label="delete page" hx-post="/admin/deleteblock/{{blockid}}" hx-confirm="Are you absolutely sure you wish to delete this page?" hx-target="#pagecontent"><i class="fa-solid fa-trash"></i></button>
+		<!--<button id="adminaddblockcontrol" title="add block of content to this page" aria-label="add block of content to this page" hx-get="/admin/getaddblockform/{{pageid}}" hx-target="#cmsdialogform" onclick="document.getElementById('cmsdialog').showModal();"><i class="fa-regular fa-square-plus"></i></button>-->
+	</div>
+
+	{{items}}
+</fieldset>

@@ -3,9 +3,11 @@
 
 	<label for="reference">Reference a block that exists elsewhere.</label><br />
 	<select id="reference" name="reference" placeholder="todo">
-		<option value="none">Select only if not building a new one.</option>
-		<option value="todo">todo - build this out</option>
+		<option value="none">Reference previous block.</option>
+		{{previousblocks}}
 	</select>
+
+	-- OR --
 
 	<div class="blocktypes">
 		<label>select block type to add</label>

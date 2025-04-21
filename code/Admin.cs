@@ -59,8 +59,9 @@ namespace dabrelCMS.code
 					switch (pathsegments[1])
 					{
 						case "addblockform":
-							string z = AdminBlock.AddNewBlock(context, dbcontext, page);
-							context.Response.Headers["HX-Redirect"] = $"/admin/{page.Shortcut}";
+							string z = AdminBlock.AddNewBlock(context, dbcontext);
+							if (page != null)
+								context.Response.Headers["HX-Redirect"] = $"/admin/{page.Shortcut}";
 
 							break;
 						case "savesiteform":
@@ -313,6 +314,7 @@ namespace dabrelCMS.code
 							html = html.Replace("{{pageid}}", page.PageId.ToString());
 							html = html.Replace("{{pagetitle}}", page.Title);
 							html = html.Replace("{{content}}", page.Summary);
+							html = html.Replace("{{blocks}}", AdminBlock.GetPageBlocks(page, dbcontext));
 							break;
 					}
 					context.Response.Headers["Content-Type"] = "text/html";
@@ -354,6 +356,7 @@ namespace dabrelCMS.code
 				if (page.HeroImage == null) { html = html.Replace("{{hero}}", ""); }
 				else { html = html.Replace("{{hero}}", page.HeroImage); }
 				html = html.Replace("{{content}}", page.Summary);
+				html = html.Replace("{{blocks}}", AdminBlock.GetPageBlocks(page, dbcontext));
 				html = html.Replace("{{bodybottom}}", site.BodyBottom);
 				html = html.Replace("{{footer1}}", site.Footer1.Length > 0 ? $"<div>{site.Footer1}</div>" : "");
 				html = html.Replace("{{footer2}}", site.Footer2.Length > 0 ? $"<div>{site.Footer2}</div>" : "");

@@ -28,7 +28,7 @@ namespace dabrelCMS.data
 				{
 					SiteId = 1,
 					Name = "test",
-					Design = "superbee",
+					Design = "mountain",
 					Title = "title",
 					SubTitle = "subtitle",
 					Footer1 = "footer 1",

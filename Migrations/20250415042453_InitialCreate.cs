@@ -12,6 +12,24 @@ namespace dabrelCMS.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "CMSBlocks",
+                columns: table => new
+                {
+                    BlockId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    BlockType = table.Column<string>(type: "TEXT", nullable: true),
+                    Status = table.Column<string>(type: "TEXT", nullable: true),
+                    Title1 = table.Column<string>(type: "TEXT", nullable: true),
+                    Title2 = table.Column<string>(type: "TEXT", nullable: true),
+                    Data = table.Column<string>(type: "TEXT", nullable: true),
+                    Tags = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CMSBlocks", x => x.BlockId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CMSFiles",
                 columns: table => new
                 {
@@ -26,24 +44,6 @@ namespace dabrelCMS.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CMSFiles", x => x.FileId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CMSPageBlocks",
-                columns: table => new
-                {
-                    PageBlockID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    PageId = table.Column<int>(type: "INTEGER", nullable: false),
-                    BlockId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Sort = table.Column<int>(type: "INTEGER", nullable: false),
-                    Position = table.Column<string>(type: "TEXT", nullable: true),
-                    AltTitle = table.Column<string>(type: "TEXT", nullable: true),
-                    AltSubtitle = table.Column<string>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CMSPageBlocks", x => x.PageBlockID);
                 });
 
             migrationBuilder.CreateTable(
@@ -94,6 +94,36 @@ namespace dabrelCMS.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CMSUsers", x => x.UserId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CMSItems",
+                columns: table => new
+                {
+                    ItemId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    BlockId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Sort = table.Column<int>(type: "INTEGER", nullable: false),
+                    ItemType = table.Column<string>(type: "TEXT", nullable: true),
+                    Status = table.Column<string>(type: "TEXT", nullable: true),
+                    Position = table.Column<string>(type: "TEXT", nullable: true),
+                    Start = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    End = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Shortcut = table.Column<string>(type: "TEXT", nullable: true),
+                    Title1 = table.Column<string>(type: "TEXT", nullable: true),
+                    Title2 = table.Column<string>(type: "TEXT", nullable: true),
+                    Data = table.Column<string>(type: "TEXT", nullable: true),
+                    Tags = table.Column<string>(type: "TEXT", nullable: true),
+                    CMSBlockBlockId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CMSItems", x => x.ItemId);
+                    table.ForeignKey(
+                        name: "FK_CMSItems_CMSBlocks_CMSBlockBlockId",
+                        column: x => x.CMSBlockBlockId,
+                        principalTable: "CMSBlocks",
+                        principalColumn: "BlockId");
                 });
 
             migrationBuilder.CreateTable(
@@ -148,57 +178,27 @@ namespace dabrelCMS.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CMSBlocks",
+                name: "CMSPageBlocks",
                 columns: table => new
                 {
-                    BlockId = table.Column<int>(type: "INTEGER", nullable: false)
+                    PageBlockID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    BlockType = table.Column<string>(type: "TEXT", nullable: true),
-                    Status = table.Column<string>(type: "TEXT", nullable: true),
-                    Title1 = table.Column<string>(type: "TEXT", nullable: true),
-                    Title2 = table.Column<string>(type: "TEXT", nullable: true),
-                    Data = table.Column<string>(type: "TEXT", nullable: true),
-                    Tags = table.Column<string>(type: "TEXT", nullable: true),
+                    Sort = table.Column<int>(type: "INTEGER", nullable: false),
+                    PageId = table.Column<int>(type: "INTEGER", nullable: false),
+                    BlockId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Position = table.Column<string>(type: "TEXT", nullable: true),
+                    AltTitle = table.Column<string>(type: "TEXT", nullable: true),
+                    AltSubtitle = table.Column<string>(type: "TEXT", nullable: true),
                     CMSPagePageId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CMSBlocks", x => x.BlockId);
+                    table.PrimaryKey("PK_CMSPageBlocks", x => x.PageBlockID);
                     table.ForeignKey(
-                        name: "FK_CMSBlocks_CMSPages_CMSPagePageId",
+                        name: "FK_CMSPageBlocks_CMSPages_CMSPagePageId",
                         column: x => x.CMSPagePageId,
                         principalTable: "CMSPages",
                         principalColumn: "PageId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CMSItems",
-                columns: table => new
-                {
-                    ItemId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    BlockId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Sort = table.Column<int>(type: "INTEGER", nullable: false),
-                    ItemType = table.Column<string>(type: "TEXT", nullable: true),
-                    Status = table.Column<string>(type: "TEXT", nullable: true),
-                    Position = table.Column<string>(type: "TEXT", nullable: true),
-                    Start = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    End = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    Shortcut = table.Column<string>(type: "TEXT", nullable: true),
-                    Title1 = table.Column<string>(type: "TEXT", nullable: true),
-                    Title2 = table.Column<string>(type: "TEXT", nullable: true),
-                    Data = table.Column<string>(type: "TEXT", nullable: true),
-                    Tags = table.Column<string>(type: "TEXT", nullable: true),
-                    CMSBlockBlockId = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CMSItems", x => x.ItemId);
-                    table.ForeignKey(
-                        name: "FK_CMSItems_CMSBlocks_CMSBlockBlockId",
-                        column: x => x.CMSBlockBlockId,
-                        principalTable: "CMSBlocks",
-                        principalColumn: "BlockId");
                 });
 
             migrationBuilder.InsertData(
@@ -214,7 +214,7 @@ namespace dabrelCMS.Migrations
             migrationBuilder.InsertData(
                 table: "CMSSites",
                 columns: new[] { "SiteId", "BodyBottom", "BodyTop", "Created", "Design", "FaviconUrl", "Footer1", "Footer2", "Footer3", "Footer4", "ImageFileName", "MetaDescription", "MetaImagePath", "Name", "OnAllPages", "SubTitle", "Title" },
-                values: new object[] { 1, "", "", new DateTime(2025, 1, 1, 0, 1, 0, 0, DateTimeKind.Unspecified), "superbee", "", "footer 1", "", "", "", "", "Description", "", "test", "", "subtitle", "title" });
+                values: new object[] { 1, "", "", new DateTime(2025, 1, 1, 0, 1, 0, 0, DateTimeKind.Unspecified), "mountain", "", "footer 1", "", "", "", "", "Description", "", "test", "", "subtitle", "title" });
 
             migrationBuilder.InsertData(
                 table: "CMSUsers",
@@ -222,14 +222,14 @@ namespace dabrelCMS.Migrations
                 values: new object[] { 1, "test@dabrel.com", "test", "user", "", "", "test", "Cookies", "admin", 0, 1 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CMSBlocks_CMSPagePageId",
-                table: "CMSBlocks",
-                column: "CMSPagePageId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_CMSItems_CMSBlockBlockId",
                 table: "CMSItems",
                 column: "CMSBlockBlockId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CMSPageBlocks_CMSPagePageId",
+                table: "CMSPageBlocks",
+                column: "CMSPagePageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CMSPages_CMSSiteSiteId",
