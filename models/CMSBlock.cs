@@ -6,7 +6,7 @@ namespace dabrelCMS.models
 	{
 		[Key]
 		public int BlockId { get; set; }
-
+		public int SiteId {  get; set; }
 		public string? BlockType { get; set; }
 		public string? Status { get; set; }
 		public string? Title1 { get; set; }

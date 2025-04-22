@@ -305,7 +305,7 @@ namespace dabrelCMS.code
 
 						case "getaddblockform":
 							page = dbcontext.CMSPages.Where(p => p.PageId == int.Parse(pathsegments[2])).FirstOrDefault();
-							html = AdminBlock.GetAddBlockForm(page);
+							html = AdminBlock.GetAddBlockForm(page, dbcontext);
 							break;
 
 						default:

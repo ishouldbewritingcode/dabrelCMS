@@ -38,11 +38,27 @@ namespace dabrelCMS.code
 			return html;
 		}
 
-		public static string GetAddBlockForm(CMSPage page)
+		public static string GetOtherBlocks(int siteId, CMSDbContext dbContext)
+		{
+			string html = String.Empty;
+			if (siteId > 0)
+			{
+				// get all blocks for the site from the database
+				List<CMSBlock> blocks = dbContext.CMSBlocks.Where(p => p.SiteId == siteId).ToList();
+				foreach (CMSBlock block in blocks)
+				{
+					html += $"<option value=\"{block.BlockId}\">{block.Title1}</option>";
+				}
+			}
+			return html;
+		}
+
+		public static string GetAddBlockForm(CMSPage page, CMSDbContext dbContext)
 		{
 			string pageformPath = $"{Common.WebRootPath}\\designs\\{Common.AdminDesign}\\dialogaddblock.htm";
 			string html = Common.GetFileText(pageformPath);
 			html = html.Replace("{{pageid}}", page.PageId.ToString());
+			html = html.Replace("{{previousblocks}}", GetOtherBlocks(page.SiteId, dbContext));
 			return html;
 		}
 
