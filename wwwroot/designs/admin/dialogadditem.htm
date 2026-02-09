@@ -1,0 +1,51 @@
+<form id="additemform" hx-post="/admin/additemform" hx-target="#pagecontent">
+	<h2>Add Blog Entry</h2>
+
+	<div class="field">
+		<label for="title1">Title</label>
+		<input id="title1" name="title1" type="text" required />
+	</div>
+
+	<div class="field">
+		<label for="title2">Subtitle / Excerpt</label>
+		<input id="title2" name="title2" type="text" />
+	</div>
+
+	<div class="field">
+		<label for="data">Content</label>
+		<textarea id="data" name="data" class="editor"></textarea>
+	</div>
+
+	<div class="field">
+		<label for="tags">Tags</label>
+		<input id="tags" name="tags" type="text" />
+	</div>
+
+	<div class="field">
+		<label for="status">Status</label>
+		<select id="status" name="status">
+			<option value="draft">Draft</option>
+			<option value="published">Published</option>
+		</select>
+	</div>
+
+	<input name="blockid" type="hidden" value="{{blockid}}" />
+	<input name="itemtype" type="hidden" value="blog" />
+
+	<div class="buttonright">
+		<button type="submit"><i class="fa-regular fa-floppy-disk"></i></button>
+	</div>
+</form>
+
+<script>// Initialize editor if using Trumbowyg or similar
+	if (typeof $ !== 'undefined' && $.trumbowyg) {
+		$('#data').trumbowyg({
+			btns: [
+				['formatting'],
+				['strong', 'em', 'underline'],
+				['link'],
+				['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+				['unorderedList', 'orderedList']
+			]
+		});
+	}</script>

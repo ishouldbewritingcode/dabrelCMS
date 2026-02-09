@@ -1,0 +1,55 @@
+<form id="edititemform" hx-post="/admin/saveitemform" hx-target="#pagecontent">
+	<h2>Edit Blog Entry</h2>
+
+	<div class="field">
+		<label for="title1">Title</label>
+		<input id="title1" name="title1" type="text" value="{{title1}}" required />
+	</div>
+
+	<div class="field">
+		<label for="title2">Subtitle / Excerpt</label>
+		<input id="title2" name="title2" type="text" value="{{title2}}" />
+	</div>
+
+	<div class="field">
+		<label for="data">Content</label>
+		<textarea id="data" name="data" class="editor">{{data}}</textarea>
+	</div>
+
+	<div class="field">
+		<label for="tags">Tags</label>
+		<input id="tags" name="tags" type="text" value="{{tags}}" />
+	</div>
+
+	<div class="field">
+		<label for="status">Status</label>
+		<select id="status" name="status">
+			<option value="draft" {{statusdraft}}>Draft</option>
+			<option value="published" {{statuspublished}}>Published</option>
+		</select>
+	</div>
+
+	<div class="field">
+		<label for="sort">Sort Order</label>
+		<input id="sort" name="sort" type="number" value="{{sort}}" />
+	</div>
+
+	<input name="itemid" type="hidden" value="{{itemid}}" />
+	<input name="blockid" type="hidden" value="{{blockid}}" />
+
+	<div class="buttonright">
+		<button type="submit"><i class="fa-regular fa-floppy-disk"></i></button>
+	</div>
+</form>
+
+<script>if (typeof $ !== 'undefined' && $.trumbowyg) {
+		$('#data').trumbowyg({
+			btns: [
+				['formatting'],
+				['strong', 'em', 'underline'],
+				['link'],
+				['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+				['unorderedList', 'orderedList']
+			]
+		});
+	}</script>

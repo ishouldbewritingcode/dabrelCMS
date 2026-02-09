@@ -15,27 +15,44 @@ namespace dabrelCMS.code
 			{
 				string templatePath = $"{Common.WebRootPath}\\designs\\{Common.AdminDesign}\\pageblockadmin.htm";
 				string pageblockhtml = Common.GetFileText(templatePath);
-				List<CMSPageBlock> pageBlocks = dbContext.CMSPageBlocks.Where(p => p.PageId == page.PageId).ToList();
+				List<CMSPageBlock> pageBlocks = dbContext.CMSPageBlocks.Where(p => p.PageId == page.PageId).OrderBy(p => p.Sort).ToList();
 				foreach (CMSPageBlock pblock in pageBlocks)
 				{
 					CMSBlock block = dbContext.CMSBlocks.FirstOrDefault(p => p.BlockId == pblock.BlockId);
 					if (block != null)
 					{
-						html += pageblockhtml;
+						string blockHtml = pageblockhtml;
+						blockHtml = blockHtml.Replace("{{blockid}}", block.BlockId.ToString());
+						
 						if (pblock.AltTitle != null)
-							html = html.Replace("{{title}}", pblock.AltTitle);
+							blockHtml = blockHtml.Replace("{{title}}", pblock.AltTitle);
 						else
-							html = html.Replace("{{title}}", block.Title1);
+							blockHtml = blockHtml.Replace("{{title}}", block.Title1);
+						
 						if (pblock.AltSubtitle != null)
-							html = html.Replace("{{title2}}", pblock.AltSubtitle);
+							blockHtml = blockHtml.Replace("{{title2}}", pblock.AltSubtitle);
 						else
-							html = html.Replace("{{title2}}", block.Title2);
+							blockHtml = blockHtml.Replace("{{title2}}", block.Title2);
 
+						// Render block items based on block type
+						string itemsHtml = RenderBlockItems(block, dbContext);
+						blockHtml = blockHtml.Replace("{{items}}", itemsHtml);
+
+						html += blockHtml;
 					}
 				}
-
 			}
 			return html;
+		}
+
+		private static string RenderBlockItems(CMSBlock block, CMSDbContext dbContext)
+		{
+			if (block.BlockType == "entries" || block.BlockType == "blog")
+			{
+				return AdminItem.GetBlockItems(block.BlockId, dbContext);
+			}
+			// Add other block type renderers here
+			return string.Empty;
 		}
 
 		public static string GetOtherBlocks(int siteId, CMSDbContext dbContext)
@@ -85,7 +102,7 @@ namespace dabrelCMS.code
 			CMSBlock block = new()
 			{
 				BlockType = context.Request.Form["blocktype"].ToString(),
-				Title1 = context.Request.Form["Title"].ToString()
+				Title1 = context.Request.Form["title"].ToString()
 			};
 			dbContext.CMSBlocks.Add(block);
 			dbContext.SaveChanges();

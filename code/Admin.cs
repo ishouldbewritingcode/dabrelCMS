@@ -270,6 +270,29 @@ namespace dabrelCMS.code
 							return "<div>New folder saved successfully.</div>";
 							context.Response.StatusCode = StatusCodes.Status200OK;
 							break;
+
+						case "additemform":
+							AdminItem.AddNewItem(context, dbcontext);
+							page = dbcontext.CMSPages.Where(p => p.PageId == int.Parse(context.Request.Form["pageid"].ToString())).FirstOrDefault();
+							if (page != null)
+								context.Response.Headers["HX-Redirect"] = $"/admin/{page.Shortcut}";
+							return "Item added";
+							break;
+
+						case "saveitemform":
+							AdminItem.SaveItem(context, dbcontext);
+							return "Item saved";
+							break;
+
+						case "deleteitem":
+							if (pathsegments.Length > 2)
+							{
+								int itemId = 0;
+								int.TryParse(pathsegments[2], out itemId);
+								AdminItem.DeleteItem(itemId, dbcontext);
+								context.Response.Headers["HX-Redirect"] = $"/admin/{page.Shortcut}";
+							}
+							break;
 					}
 				}
 				else
@@ -306,6 +329,24 @@ namespace dabrelCMS.code
 						case "getaddblockform":
 							page = dbcontext.CMSPages.Where(p => p.PageId == int.Parse(pathsegments[2])).FirstOrDefault();
 							html = AdminBlock.GetAddBlockForm(page, dbcontext);
+							break;
+
+						case "getitempageform":
+							if (pathsegments.Length > 2)
+							{
+								int blockId = 0;
+								int.TryParse(pathsegments[2], out blockId);
+								html = AdminItem.GetItemPageForm(blockId, dbcontext);
+							}
+							break;
+
+						case "getedititemform":
+							if (pathsegments.Length > 2)
+							{
+								int itemId = 0;
+								int.TryParse(pathsegments[2], out itemId);
+								html = AdminItem.GetItemForm(itemId, dbcontext);
+							}
 							break;
 
 						default:
