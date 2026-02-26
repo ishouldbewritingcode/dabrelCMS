@@ -6,14 +6,14 @@
 	<meta name="description" content="{{description}}" />
 	<meta property="og:title" content="{{sitetitle}}" />
 	<meta property="og:description" content="{{description}}" />
-	<link href="/global/fontawesome/css/fontawesome.css" rel="stylesheet">
-	<link href="/global/fontawesome/css/solid.css" rel="stylesheet">
-	<link rel="stylesheet" href="/designs/mountain/mountain.css" />
+	<link href="/global/fontawesome/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/designs/icanfixit/icanfixit.css" />
 	<script src="/global/scripts/jquery-3.7.1.min.js"></script>
 	<script src="/global/scripts/htmx.min.js"></script>
 	<script src="/global/scripts/global.js" defer></script>
-	<link rel="icon" href="/designs/mountain/images/favicon.png" type="image/png">
-	<link rel="apple-touch-icon" href="/designs/mountain/images/apple-touch-icon.png">
+	<script src="/designs/icanfixit/icanfixit.js"></script>
+	<link rel="icon" href="/designs/icanfixit/images/favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="/designs/icanfixit/images/apple-touch-icon.png">
 	<title>{{sitetitle}} {{pagetitle}}</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,9 +45,7 @@
 					<h1>{{pagetitle}}</h1>
 					<div class="body">{{content}}</div>
 				</section>
-				<section>
-					<div id="blocks" class="body">{{blocks}}</div>
-				</section>
+				<div id="blocks" class="body">{{blocks}}</div>
 			</div>
 		</div>
 	</main>

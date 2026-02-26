@@ -1,0 +1,94 @@
+﻿@import url(/global/styles/global.css);
+
+#sitetitle {
+	a {
+		font-family: "Coda", sans-serif;
+		font-optical-sizing: auto;
+		font-weight: normal;
+		font-style: normal;
+		display: flex;
+		align-items: center;
+		justify-content: left;
+		gap: 20px;
+		margin-top: 10px;
+	}
+	a:hover { text-decoration: none; }
+	a .titletext { font-size: 2.8rem; }
+}
+
+body {
+	position: relative;
+	min-height: 100vh;
+	margin: 0;
+	background: #111;
+	overflow: hidden;
+}
+.bg-icon {
+	position: absolute;
+	color: #555;
+	pointer-events: none;
+	transform: translate(-50%, -50%);
+	z-index: 0;
+}
+
+@media (min-width:1000px) {
+	#sitetitle a .titletext { font-size: 3rem; }
+}
+
+*, html.light * {
+	/* Color scheme */
+	--color: #222;
+	--bgcolor: #222;
+	--backgroundattachment: fixed;
+	--backgroundsize: cover;
+
+	--sitetitlecolor: #fff;
+	--sitetitlebg: transparent;
+	--sitesubtitlecolor: #fff;
+	--sitesubtitlebg: transparent;
+	--topbaricons: #fff;
+
+	--textcolor: #333;
+	--highlight: #000;
+	--highlightbg: transparent;
+
+	--boxbackground: rgba(255, 255, 255, 0.55);
+	--boxbackdropfilter: blur(8px) saturate(80%);
+	--boxborderradius: 10px;
+
+	--navbg: rgba(255, 255, 255, 0.80);
+	--navbackdropfilter: blur(8px) saturate(50%);
+	--navitembg: transparent;
+	--navitemhlbg: transparent;
+	--navitemcolor: #555;
+	--navitemhlcolor: #222;
+}
+
+html.dark * {
+	/* Color scheme */
+	--color: #eee;
+	--bgcolor: #111;
+	--backgroundattachment: fixed;
+	--backgroundsize: cover;
+
+	--sitetitlecolor: #fff;
+	--sitetitlebg: transparent;
+	--sitesubtitlecolor: #fff;
+	--sitesubtitlebg: transparent;
+	--topbaricons: #fff;
+
+	--textcolor: #ddd;
+	--highlight: #fff;
+	--highlightbg: transparent;
+
+	--boxbackground: rgba(33, 33, 33, 0.55);
+	--boxbackdropfilter: blur(8px) saturate(80%);
+	--boxborderradius: 10px;
+
+	--navbg: rgba(33, 33, 33, 0.60);
+	--navbackdropfilter: blur(8px) saturate(50%);
+	--navitembg: transparent;
+	--navitemhlbg: transparent;
+	--navitemcolor: #ddd;
+	--navitemhlcolor: #fff;
+}

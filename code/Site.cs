@@ -210,6 +210,10 @@ namespace dabrelCMS.code
 				html = html.Replace("{{footer3}}", site.Footer3.Length > 0 ? $"<div>{site.Footer3}</div>" : "");
 				html = html.Replace("{{footer4}}", site.Footer4.Length > 0 ? $"<div>{site.Footer4}</div>" : "");
 
+				// get blocks for this page
+				string blocksHtml = GetPageBlocks(dbcontext, page.PageId);
+				html = html.Replace("{{blocks}}", blocksHtml);
+
 				//get navigation
 				List<CMSPage> nav = dbcontext.CMSPages.Where(n => n.SiteId == site.SiteId)
 					.OrderBy(o => o.ParentId).ThenBy(x => x.Sort).ToList();
@@ -258,6 +262,39 @@ namespace dabrelCMS.code
 				return true;
 			else
 				return false;
+		}
+
+		private string GetPageBlocks(data.CMSDbContext dbcontext, int pageId)
+		{
+			// Get all page blocks sorted by Sort order
+			var pageBlocks = dbcontext.CMSPageBlocks
+				.Where(pb => pb.PageId == pageId)
+				.OrderBy(pb => pb.Sort)
+				.ToList();
+
+			if (pageBlocks.Count == 0)
+				return string.Empty;
+
+			StringBuilder blocksHtml = new StringBuilder();
+			foreach (var pageBlock in pageBlocks)
+			{
+				var block = dbcontext.CMSBlocks
+					.Where(b => b.BlockId == pageBlock.BlockId)
+					.FirstOrDefault();
+
+				if (block != null)
+				{
+					blocksHtml.Append($"<div class=\"block\" data-block-id=\"{block.BlockId}\">");
+					blocksHtml.Append($"<h2>{block.Title1}</h2>");
+					if (!string.IsNullOrEmpty(block.Title2))
+						blocksHtml.Append($"<h3>{block.Title2}</h3>");
+					if (!string.IsNullOrEmpty(block.Data))
+						blocksHtml.Append($"<div class=\"block-content\">{block.Data}</div>");
+					blocksHtml.Append($"</div>");
+				}
+			}
+
+			return blocksHtml.ToString();
 		}
 	}
 }
