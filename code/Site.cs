@@ -308,15 +308,18 @@ namespace dabrelCMS.code
 						blocksHtml.Append("<div class=\"block-items\">");
 						foreach (var item in items)
 						{
-							blocksHtml.Append($"<div class=\"item\">");
-							blocksHtml.Append($"<h4>{item.Title1}</h4>");
-							if (!string.IsNullOrEmpty(item.Title2))
-								blocksHtml.Append($"<p class=\"item-subtitle\">{item.Title2}</p>");
-							if (item.Start.HasValue)
-								blocksHtml.Append($"<p class=\"item-date\">{item.Start:MMM dd, yyyy}</p>");
-							if (!string.IsNullOrEmpty(item.Data))
-								blocksHtml.Append($"<div class=\"item-content\">{item.Data}</div>");
-							blocksHtml.Append($"</div>");
+							if (item.Status == "published")
+							{
+								blocksHtml.Append($"<div class=\"item\">");
+								blocksHtml.Append($"<h4>{item.Title1}</h4>");
+								if (!string.IsNullOrEmpty(item.Title2))
+									blocksHtml.Append($"<p class=\"item-subtitle\">{item.Title2}</p>");
+								if (item.Start.HasValue)
+									blocksHtml.Append($"<p class=\"item-date\">{item.Start:MMM dd, yyyy}</p>");
+								if (!string.IsNullOrEmpty(item.Data))
+									blocksHtml.Append($"<div class=\"item-content\">{item.Data}</div>");
+								blocksHtml.Append($"</div>");
+							}
 						}
 						blocksHtml.Append("</div>");
 					}

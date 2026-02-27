@@ -93,7 +93,7 @@ section, #footers {
 }
 
 main.content {
-	/* min-height: 300px;*/
+	/* min-height: 300px; */
 }
 
 header {
@@ -764,7 +764,7 @@ article time {
 
 fieldset {
 	padding: 0 20px 20px 20px;
-	margin-top: 40px;
+	margin-top: 10px;
 } 
 
 fieldset legend {
