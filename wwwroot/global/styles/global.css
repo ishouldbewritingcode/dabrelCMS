@@ -68,6 +68,7 @@ ol[role='list'] {
 section {
 	padding: 0;
 	display: block;
+	margin-top: 15px;
 }
 
 /* Header */
@@ -92,7 +93,7 @@ section, #footers {
 }
 
 main.content {
-	min-height: 300px;
+	/* min-height: 300px;*/
 }
 
 header {
@@ -761,12 +762,22 @@ article time {
 	cursor: pointer;
 }
 
+fieldset {
+	padding: 0 20px 20px 20px;
+	margin-top: 40px;
+} 
+
+fieldset legend {
+	padding: 0 10px 4px;
+	border: 1px solid #fff;
+}
+
 @media (min-width:1000px) {
 	header {
 		display: block;
 		max-width: 1440px; /* remove this for a full-width layout */
 		margin: 0 auto; /* centers the layout */
-		padding: 15px 50px;
+		padding: 15px 50px 0 50px;
 		z-index: 10;
 		background: transparent;
 		position: relative;

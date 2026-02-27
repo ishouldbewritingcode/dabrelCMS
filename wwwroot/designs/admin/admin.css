@@ -73,7 +73,8 @@ body {
 	margin: 2px 0;
 }
 
-#cmsdialog input {
+#cmsdialog input, 
+#cmsdialog select {
 	color: #333;
 	font-size: 1rem;
 	padding: 2px 3px;
@@ -231,6 +232,14 @@ button.blocktype.selected {
 	padding: 20px 10px;
 	border: 1px solid #ccc;
 	margin-bottom: 20px;
+}
+
+.itemstatus { 
+	display: inline-block; 
+	margin-left: 25px; 
+	padding: 1px 10px;
+	font-size: 80%;
+	background: rgba(255,255,255,.3);
 }
 
 fieldset {

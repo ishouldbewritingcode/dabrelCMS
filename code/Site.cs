@@ -173,6 +173,11 @@ namespace dabrelCMS.code
 					sb.Append($"<h1>{page.Title}</h1>");
 					sb.Append($"<div class=\"body\">{page.Summary}</div>");
 					sb.Append($"</section>");
+
+					// get blocks for this page
+					string blocksHtml = GetPageBlocks(dbcontext, page.PageId);
+					sb.Append(blocksHtml);
+
 					html = sb.ToString();
 				}
 			}
@@ -284,13 +289,39 @@ namespace dabrelCMS.code
 
 				if (block != null)
 				{
-					blocksHtml.Append($"<div class=\"block\" data-block-id=\"{block.BlockId}\">");
-					blocksHtml.Append($"<h2>{block.Title1}</h2>");
+					blocksHtml.Append($"<section><div class=\"block\" data-block-id=\"{block.BlockId}\">");
+					blocksHtml.Append($"<fieldset><legend>{block.Title1}</legend>");
 					if (!string.IsNullOrEmpty(block.Title2))
 						blocksHtml.Append($"<h3>{block.Title2}</h3>");
 					if (!string.IsNullOrEmpty(block.Data))
 						blocksHtml.Append($"<div class=\"block-content\">{block.Data}</div>");
-					blocksHtml.Append($"</div>");
+
+					// Get top 5 items in reverse chronological order
+					var items = dbcontext.CMSItems
+						.Where(i => i.BlockId == block.BlockId)
+						.OrderByDescending(i => i.Start)
+						.Take(5)
+						.ToList();
+
+					if (items.Count > 0)
+					{
+						blocksHtml.Append("<div class=\"block-items\">");
+						foreach (var item in items)
+						{
+							blocksHtml.Append($"<div class=\"item\">");
+							blocksHtml.Append($"<h4>{item.Title1}</h4>");
+							if (!string.IsNullOrEmpty(item.Title2))
+								blocksHtml.Append($"<p class=\"item-subtitle\">{item.Title2}</p>");
+							if (item.Start.HasValue)
+								blocksHtml.Append($"<p class=\"item-date\">{item.Start:MMM dd, yyyy}</p>");
+							if (!string.IsNullOrEmpty(item.Data))
+								blocksHtml.Append($"<div class=\"item-content\">{item.Data}</div>");
+							blocksHtml.Append($"</div>");
+						}
+						blocksHtml.Append("</div>");
+					}
+
+					blocksHtml.Append($"</fieldset></div></section>");
 				}
 			}
 

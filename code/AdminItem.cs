@@ -26,7 +26,10 @@ namespace dabrelCMS.code
 				html = html.Replace("{{title2}}", item.Title2 ?? "");
 				html = html.Replace("{{data}}", item.Data ?? "");
 				html = html.Replace("{{tags}}", item.Tags ?? "");
-				html = html.Replace("{{status}}", item.Status ?? "");
+				if (item.Status == "published")
+					html = html.Replace("{{statuspublished}}", "selected" ?? "");
+				else
+					html = html.Replace("{{statusdraft}}", "selected" ?? "");
 				html = html.Replace("{{sort}}", item.Sort.ToString());
 			}
 			return html;
