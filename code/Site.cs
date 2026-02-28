@@ -29,7 +29,9 @@ namespace dabrelCMS.code
 			string html = string.Empty;
 			_domain = context.Request.Host.ToString().ToLower().Trim();
 			// strip off any port numbers that may be on there
-			_domain = _domain.Substring(0, _domain.IndexOf(":"));
+			int colonIndex = _domain.IndexOf(":");
+			if (colonIndex > 0)
+				_domain = _domain.Substring(0, colonIndex);
 			_path = context.Request.Path.ToString().ToLower().Trim().Replace("/", string.Empty);
 			if (_path.StartsWith("admin"))
 				_path = "admin";

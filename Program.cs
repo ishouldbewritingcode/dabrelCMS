@@ -23,8 +23,21 @@ if (!app.Environment.IsDevelopment())
 	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 	app.UseHsts();
 }
-//app.UseCors();
-//app.UseResponseCaching();
+
+// Add detailed error logging
+var logger = app.Services.GetRequiredService<ILogger<Program>>();
+app.Use(async (context, next) =>
+{
+	try
+	{
+		await next.Invoke();
+	}
+	catch (Exception ex)
+	{
+		logger.LogError(ex, "Unhandled exception");
+		throw;
+	}
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
