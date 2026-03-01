@@ -1,0 +1,183 @@
+2026-02-28 18:06:06.094 -06:00 [INF] Now listening on: https://localhost:7272
+2026-02-28 18:06:06.131 -06:00 [INF] Now listening on: http://localhost:5021
+2026-02-28 18:06:06.140 -06:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2026-02-28 18:06:06.182 -06:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-28 18:06:06.182 -06:00 [INF] Hosting environment: Development
+2026-02-28 18:06:06.182 -06:00 [INF] Content root path: C:\Users\Bryan\source\repos\dabrelCMS
+2026-02-28 18:06:10.425 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/ - null null
+2026-02-28 18:06:12.715 -06:00 [INF] Request /: : 2103.7814
+2026-02-28 18:06:12.728 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/ - 200 null text/html 2311.8767ms
+2026-02-28 18:06:12.732 -06:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7272/, Response status code: 200
+2026-02-28 18:06:12.861 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/fontawesome/css/all.min.css - null null
+2026-02-28 18:06:12.861 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/designs/icanfixit/icanfixit.js - null null
+2026-02-28 18:06:12.861 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/designs/icanfixit/icanfixit.css - null null
+2026-02-28 18:06:12.861 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/scripts/htmx.min.js - null null
+2026-02-28 18:06:12.862 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/scripts/global.js - null null
+2026-02-28 18:06:12.861 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/scripts/jquery-3.7.1.min.js - null null
+2026-02-28 18:06:12.893 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/_vs/browserLink - null null
+2026-02-28 18:06:12.897 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/_framework/aspnetcore-browser-refresh.js - null null
+2026-02-28 18:06:12.980 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/_framework/aspnetcore-browser-refresh.js - 200 16503 application/javascript; charset=utf-8 83.6114ms
+2026-02-28 18:06:12.991 -06:00 [INF] Sending file. Request path: '/designs/icanfixit/icanfixit.css'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\designs\icanfixit\icanfixit.css'
+2026-02-28 18:06:12.991 -06:00 [INF] Sending file. Request path: '/global/scripts/htmx.min.js'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\scripts\htmx.min.js'
+2026-02-28 18:06:12.991 -06:00 [INF] Sending file. Request path: '/designs/icanfixit/icanfixit.js'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\designs\icanfixit\icanfixit.js'
+2026-02-28 18:06:12.992 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/designs/icanfixit/icanfixit.css - 200 2004 text/css 130.6439ms
+2026-02-28 18:06:12.992 -06:00 [INF] Sending file. Request path: '/global/scripts/jquery-3.7.1.min.js'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\scripts\jquery-3.7.1.min.js'
+2026-02-28 18:06:12.992 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/designs/icanfixit/icanfixit.js - 200 2690 text/javascript 130.3765ms
+2026-02-28 18:06:12.992 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/scripts/htmx.min.js - 200 50917 text/javascript 130.6447ms
+2026-02-28 18:06:12.992 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/scripts/jquery-3.7.1.min.js - 200 87533 text/javascript 130.8641ms
+2026-02-28 18:06:12.992 -06:00 [INF] Sending file. Request path: '/global/fontawesome/css/all.min.css'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\fontawesome\css\all.min.css'
+2026-02-28 18:06:12.991 -06:00 [INF] Sending file. Request path: '/global/scripts/global.js'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\scripts\global.js'
+2026-02-28 18:06:12.992 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/fontawesome/css/all.min.css - 200 75736 text/css 131.1027ms
+2026-02-28 18:06:12.992 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/scripts/global.js - 200 3328 text/javascript 130.6791ms
+2026-02-28 18:06:12.999 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/styles/global.css - null null
+2026-02-28 18:06:13.000 -06:00 [INF] Sending file. Request path: '/global/styles/global.css'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\styles\global.css'
+2026-02-28 18:06:13.000 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/styles/global.css - 200 15341 text/css 1.4118ms
+2026-02-28 18:06:13.034 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/_vs/browserLink - 200 null text/javascript; charset=UTF-8 141.3095ms
+2026-02-28 18:06:13.053 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/designs/icanfixit/images/apple-touch-icon.png - null null
+2026-02-28 18:06:13.053 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/designs/icanfixit/images/favicon.png - null null
+2026-02-28 18:06:13.054 -06:00 [INF] Sending file. Request path: '/designs/icanfixit/images/apple-touch-icon.png'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\designs\icanfixit\images\apple-touch-icon.png'
+2026-02-28 18:06:13.054 -06:00 [INF] Sending file. Request path: '/designs/icanfixit/images/favicon.png'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\designs\icanfixit\images\favicon.png'
+2026-02-28 18:06:13.054 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/designs/icanfixit/images/favicon.png - 200 5487 image/png 1.228ms
+2026-02-28 18:06:13.054 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/designs/icanfixit/images/apple-touch-icon.png - 200 5487 image/png 1.3223ms
+2026-02-28 18:06:13.072 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/fontawesome/webfonts/fa-regular-400.woff2 - null null
+2026-02-28 18:06:13.072 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/fontawesome/webfonts/fa-solid-900.woff2 - null null
+2026-02-28 18:06:13.072 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/fontawesome/webfonts/fa-brands-400.woff2 - null null
+2026-02-28 18:06:13.073 -06:00 [INF] Sending file. Request path: '/global/fontawesome/webfonts/fa-regular-400.woff2'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\fontawesome\webfonts\fa-regular-400.woff2'
+2026-02-28 18:06:13.074 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/fontawesome/webfonts/fa-regular-400.woff2 - 200 18924 font/woff2 1.7443ms
+2026-02-28 18:06:13.075 -06:00 [INF] Sending file. Request path: '/global/fontawesome/webfonts/fa-brands-400.woff2'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\fontawesome\webfonts\fa-brands-400.woff2'
+2026-02-28 18:06:13.076 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/fontawesome/webfonts/fa-brands-400.woff2 - 200 110088 font/woff2 3.7193ms
+2026-02-28 18:06:13.076 -06:00 [INF] Sending file. Request path: '/global/fontawesome/webfonts/fa-solid-900.woff2'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\fontawesome\webfonts\fa-solid-900.woff2'
+2026-02-28 18:06:13.076 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/fontawesome/webfonts/fa-solid-900.woff2 - 200 114740 font/woff2 4.2326ms
+2026-02-28 18:06:15.469 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/software - null null
+2026-02-28 18:06:15.504 -06:00 [INF] Request /software: : 34.6065
+2026-02-28 18:06:15.504 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/software - 200 null text/html 35.6004ms
+2026-02-28 18:06:15.504 -06:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7272/software, Response status code: 200
+2026-02-28 18:06:16.280 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/blog - null null
+2026-02-28 18:06:16.489 -06:00 [INF] Request /blog: : 208.7893
+2026-02-28 18:06:16.490 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/blog - 200 null text/html 209.4477ms
+2026-02-28 18:06:16.490 -06:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7272/blog, Response status code: 200
+2026-02-28 18:06:17.742 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/ - null null
+2026-02-28 18:06:17.769 -06:00 [INF] Request /: : 25.9565
+2026-02-28 18:06:17.769 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/ - 200 null text/html 26.5414ms
+2026-02-28 18:06:17.769 -06:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7272/, Response status code: 200
+2026-02-28 18:06:27.241 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/kjhsdkjhf - null null
+2026-02-28 18:06:27.274 -06:00 [INF] Request /kjhsdkjhf: : 29.6021
+2026-02-28 18:06:27.274 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/kjhsdkjhf - 404 null null 33.0857ms
+2026-02-28 18:06:27.274 -06:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7272/kjhsdkjhf, Response status code: 404
+2026-02-28 18:06:27.343 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/images/code_monkey_web.png - null null
+2026-02-28 18:06:27.361 -06:00 [INF] Sending file. Request path: '/global/images/code_monkey_web.png'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\images\code_monkey_web.png'
+2026-02-28 18:06:27.361 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/images/code_monkey_web.png - 200 750772 image/png 17.9322ms
+2026-02-28 18:06:27.373 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/favicon.ico - null null
+2026-02-28 18:06:27.376 -06:00 [INF] Sending file. Request path: '/favicon.ico'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\favicon.ico'
+2026-02-28 18:06:27.376 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/favicon.ico - 200 109234 image/x-icon 2.919ms
+2026-02-28 18:06:57.484 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/ - null null
+2026-02-28 18:06:57.511 -06:00 [INF] Request /: : 25.7474
+2026-02-28 18:06:57.511 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/ - 200 null text/html 27.5113ms
+2026-02-28 18:06:57.511 -06:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7272/, Response status code: 200
+2026-02-28 18:06:57.558 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/_vs/browserLink - null null
+2026-02-28 18:06:57.562 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/_framework/aspnetcore-browser-refresh.js - null null
+2026-02-28 18:06:57.562 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/_framework/aspnetcore-browser-refresh.js - 200 16503 application/javascript; charset=utf-8 0.6013ms
+2026-02-28 18:06:57.572 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/_vs/browserLink - 200 null text/javascript; charset=UTF-8 14.2ms
+2026-02-28 18:06:59.995 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/blog - null null
+2026-02-28 18:07:00.043 -06:00 [INF] Request /blog: : 48.2231
+2026-02-28 18:07:00.044 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/blog - 200 null text/html 49.0555ms
+2026-02-28 18:07:00.044 -06:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7272/blog, Response status code: 200
+2026-02-28 18:07:00.870 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/software - null null
+2026-02-28 18:07:00.906 -06:00 [INF] Request /software: : 35.6031
+2026-02-28 18:07:00.906 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/software - 200 null text/html 36.1857ms
+2026-02-28 18:07:00.906 -06:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7272/software, Response status code: 200
+2026-02-28 18:07:10.042 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/admin - null null
+2026-02-28 18:07:10.053 -06:00 [INF] Request /admin: : 9.525
+2026-02-28 18:07:10.054 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/admin - 200 null null 11.2901ms
+2026-02-28 18:07:10.054 -06:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7272/admin, Response status code: 200
+2026-02-28 18:07:10.110 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/fontawesome/css/fontawesome.css - null null
+2026-02-28 18:07:10.110 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/fontawesome/css/solid.css - null null
+2026-02-28 18:07:10.111 -06:00 [INF] Sending file. Request path: '/global/fontawesome/css/solid.css'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\fontawesome\css\solid.css'
+2026-02-28 18:07:10.111 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/fontawesome/css/solid.css - 200 806 text/css 1.0977ms
+2026-02-28 18:07:10.112 -06:00 [INF] Sending file. Request path: '/global/fontawesome/css/fontawesome.css'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\fontawesome\css\fontawesome.css'
+2026-02-28 18:07:10.112 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/fontawesome/css/fontawesome.css - 200 87291 text/css 2.3176ms
+2026-02-28 18:07:13.792 -06:00 [INF] Request starting HTTP/2 POST https://localhost:7272/auth - application/x-www-form-urlencoded 69
+2026-02-28 18:07:13.905 -06:00 [INF] Request /auth: : 111.7692
+2026-02-28 18:07:13.906 -06:00 [INF] Request finished HTTP/2 POST https://localhost:7272/auth - 302 null null 113.3338ms
+2026-02-28 18:07:13.906 -06:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST https://localhost:7272/auth, Response status code: 302
+2026-02-28 18:07:13.911 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/admin - null null
+2026-02-28 18:07:14.029 -06:00 [INF] Request /admin: : 116.7131
+2026-02-28 18:07:14.029 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/admin - 200 null text/html 118.0854ms
+2026-02-28 18:07:14.029 -06:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7272/admin, Response status code: 200
+2026-02-28 18:07:14.064 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/trumbowyg/trumbowyg.min.js - null null
+2026-02-28 18:07:14.065 -06:00 [INF] Sending file. Request path: '/global/trumbowyg/trumbowyg.min.js'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\trumbowyg\trumbowyg.min.js'
+2026-02-28 18:07:14.065 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/designs/admin/admin.js - null null
+2026-02-28 18:07:14.065 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/trumbowyg/trumbowyg.min.js - 200 27848 text/javascript 1.1729ms
+2026-02-28 18:07:14.065 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/trumbowyg/ui/trumbowyg.min.css - null null
+2026-02-28 18:07:14.065 -06:00 [INF] Sending file. Request path: '/designs/admin/admin.js'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\designs\admin\admin.js'
+2026-02-28 18:07:14.065 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/designs/admin/admin.css - null null
+2026-02-28 18:07:14.066 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/designs/admin/admin.js - 200 570 text/javascript 0.7884ms
+2026-02-28 18:07:14.070 -06:00 [INF] Sending file. Request path: '/global/trumbowyg/ui/trumbowyg.min.css'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\trumbowyg\ui\trumbowyg.min.css'
+2026-02-28 18:07:14.070 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/trumbowyg/ui/trumbowyg.min.css - 200 19660 text/css 4.8882ms
+2026-02-28 18:07:14.070 -06:00 [INF] Sending file. Request path: '/designs/admin/admin.css'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\designs\admin\admin.css'
+2026-02-28 18:07:14.070 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/_framework/aspnetcore-browser-refresh.js - null null
+2026-02-28 18:07:14.070 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/designs/admin/admin.css - 200 4025 text/css 4.903ms
+2026-02-28 18:07:14.071 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/_framework/aspnetcore-browser-refresh.js - 200 16503 application/javascript; charset=utf-8 0.3103ms
+2026-02-28 18:07:14.071 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/_vs/browserLink - null null
+2026-02-28 18:07:14.079 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/_vs/browserLink - 200 null text/javascript; charset=UTF-8 8.7095ms
+2026-02-28 18:07:14.107 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/designs/admin/images/apple-touch-icon.png - null null
+2026-02-28 18:07:14.108 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/designs/admin/images/favicon.png - null null
+2026-02-28 18:07:14.109 -06:00 [INF] Sending file. Request path: '/designs/admin/images/apple-touch-icon.png'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\designs\admin\images\apple-touch-icon.png'
+2026-02-28 18:07:14.109 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/designs/admin/images/apple-touch-icon.png - 200 24763 image/png 1.805ms
+2026-02-28 18:07:14.110 -06:00 [INF] Sending file. Request path: '/designs/admin/images/favicon.png'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\designs\admin\images\favicon.png'
+2026-02-28 18:07:14.110 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/designs/admin/images/favicon.png - 200 8974 image/png 1.2446ms
+2026-02-28 18:16:49.543 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/admin/software - null null
+2026-02-28 18:16:49.596 -06:00 [INF] Request /admin/software: : 51.9695
+2026-02-28 18:16:49.596 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/admin/software - 200 null text/html 52.4469ms
+2026-02-28 18:16:49.596 -06:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7272/admin/software, Response status code: 200
+2026-02-28 18:24:45.247 -06:00 [INF] ===== APPLICATION STARTED - Serilog is working! =====
+2026-02-28 18:24:45.513 -06:00 [INF] Now listening on: https://localhost:7272
+2026-02-28 18:24:45.515 -06:00 [INF] Now listening on: http://localhost:5021
+2026-02-28 18:24:45.530 -06:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2026-02-28 18:24:45.571 -06:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-28 18:24:45.571 -06:00 [INF] Hosting environment: Development
+2026-02-28 18:24:45.571 -06:00 [INF] Content root path: C:\Users\Bryan\source\repos\dabrelCMS
+2026-02-28 18:24:48.016 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/ - null null
+2026-02-28 18:24:50.194 -06:00 [INF] Request /: : 2037.9084
+2026-02-28 18:24:50.209 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/ - 200 null text/html 2203.9545ms
+2026-02-28 18:24:50.212 -06:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7272/, Response status code: 200
+2026-02-28 18:24:50.366 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/designs/icanfixit/icanfixit.css - null null
+2026-02-28 18:24:50.366 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/scripts/global.js - null null
+2026-02-28 18:24:50.366 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/fontawesome/css/all.min.css - null null
+2026-02-28 18:24:50.366 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/scripts/jquery-3.7.1.min.js - null null
+2026-02-28 18:24:50.366 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/scripts/htmx.min.js - null null
+2026-02-28 18:24:50.369 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/designs/icanfixit/icanfixit.js - null null
+2026-02-28 18:24:50.414 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/_vs/browserLink - null null
+2026-02-28 18:24:50.416 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/_framework/aspnetcore-browser-refresh.js - null null
+2026-02-28 18:24:50.436 -06:00 [INF] Sending file. Request path: '/global/scripts/global.js'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\scripts\global.js'
+2026-02-28 18:24:50.436 -06:00 [INF] Sending file. Request path: '/designs/icanfixit/icanfixit.js'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\designs\icanfixit\icanfixit.js'
+2026-02-28 18:24:50.436 -06:00 [INF] Sending file. Request path: '/designs/icanfixit/icanfixit.css'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\designs\icanfixit\icanfixit.css'
+2026-02-28 18:24:50.437 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/designs/icanfixit/icanfixit.js - 200 2690 text/javascript 67.2863ms
+2026-02-28 18:24:50.437 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/designs/icanfixit/icanfixit.css - 200 2004 text/css 71.3939ms
+2026-02-28 18:24:50.437 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/scripts/global.js - 200 3328 text/javascript 70.9446ms
+2026-02-28 18:24:50.452 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/_framework/aspnetcore-browser-refresh.js - 200 16503 application/javascript; charset=utf-8 36.4999ms
+2026-02-28 18:24:50.453 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/styles/global.css - null null
+2026-02-28 18:24:50.455 -06:00 [INF] Sending file. Request path: '/global/scripts/jquery-3.7.1.min.js'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\scripts\jquery-3.7.1.min.js'
+2026-02-28 18:24:50.455 -06:00 [INF] Sending file. Request path: '/global/fontawesome/css/all.min.css'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\fontawesome\css\all.min.css'
+2026-02-28 18:24:50.455 -06:00 [INF] Sending file. Request path: '/global/styles/global.css'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\styles\global.css'
+2026-02-28 18:24:50.455 -06:00 [INF] Sending file. Request path: '/global/scripts/htmx.min.js'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\scripts\htmx.min.js'
+2026-02-28 18:24:50.455 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/styles/global.css - 200 15341 text/css 2.2281ms
+2026-02-28 18:24:50.455 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/scripts/jquery-3.7.1.min.js - 200 87533 text/javascript 90.0474ms
+2026-02-28 18:24:50.455 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/fontawesome/css/all.min.css - 200 75736 text/css 90.1114ms
+2026-02-28 18:24:50.455 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/scripts/htmx.min.js - 200 50917 text/javascript 89.4451ms
+2026-02-28 18:24:50.497 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/_vs/browserLink - 200 null text/javascript; charset=UTF-8 120.7533ms
+2026-02-28 18:24:50.625 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/designs/icanfixit/images/apple-touch-icon.png - null null
+2026-02-28 18:24:50.625 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/designs/icanfixit/images/favicon.png - null null
+2026-02-28 18:24:50.626 -06:00 [INF] Sending file. Request path: '/designs/icanfixit/images/apple-touch-icon.png'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\designs\icanfixit\images\apple-touch-icon.png'
+2026-02-28 18:24:50.626 -06:00 [INF] Sending file. Request path: '/designs/icanfixit/images/favicon.png'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\designs\icanfixit\images\favicon.png'
+2026-02-28 18:24:50.626 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/designs/icanfixit/images/apple-touch-icon.png - 200 5487 image/png 1.1676ms
+2026-02-28 18:24:50.626 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/designs/icanfixit/images/favicon.png - 200 5487 image/png 1.2233ms
+2026-02-28 18:24:50.644 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/fontawesome/webfonts/fa-regular-400.woff2 - null null
+2026-02-28 18:24:50.644 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/fontawesome/webfonts/fa-solid-900.woff2 - null null
+2026-02-28 18:24:50.644 -06:00 [INF] Request starting HTTP/2 GET https://localhost:7272/global/fontawesome/webfonts/fa-brands-400.woff2 - null null
+2026-02-28 18:24:50.645 -06:00 [INF] Sending file. Request path: '/global/fontawesome/webfonts/fa-regular-400.woff2'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\fontawesome\webfonts\fa-regular-400.woff2'
+2026-02-28 18:24:50.646 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/fontawesome/webfonts/fa-regular-400.woff2 - 200 18924 font/woff2 1.9554ms
+2026-02-28 18:24:50.647 -06:00 [INF] Sending file. Request path: '/global/fontawesome/webfonts/fa-brands-400.woff2'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\fontawesome\webfonts\fa-brands-400.woff2'
+2026-02-28 18:24:50.647 -06:00 [INF] Sending file. Request path: '/global/fontawesome/webfonts/fa-solid-900.woff2'. Physical path: 'C:\Users\Bryan\source\repos\dabrelCMS\wwwroot\global\fontawesome\webfonts\fa-solid-900.woff2'
+2026-02-28 18:24:50.647 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/fontawesome/webfonts/fa-brands-400.woff2 - 200 110088 font/woff2 3.6138ms
+2026-02-28 18:24:50.647 -06:00 [INF] Request finished HTTP/2 GET https://localhost:7272/global/fontawesome/webfonts/fa-solid-900.woff2 - 200 114740 font/woff2 3.8605ms

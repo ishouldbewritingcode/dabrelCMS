@@ -4,10 +4,19 @@ global using dabrelCMS.models;
 global using Microsoft.EntityFrameworkCore;
 global using System;
 using dabrelCMS;
+using Serilog;
 using System.Globalization;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure Serilog
+Log.Logger = new LoggerConfiguration()
+	.ReadFrom.Configuration(builder.Configuration)
+	.Enrich.FromLogContext()
+	.CreateLogger();
+
+builder.Host.UseSerilog();
 
 CMSConfig.ConStr = builder.Configuration.GetConnectionString("DefaultConnection");
 CMSConfig.JwtKey = builder.Configuration["Jwt:Key"];
@@ -24,8 +33,9 @@ if (!app.Environment.IsDevelopment())
 	app.UseHsts();
 }
 
-// Add detailed error logging
+// Get logger for error handling
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
+
 app.Use(async (context, next) =>
 {
 	try
@@ -34,7 +44,7 @@ app.Use(async (context, next) =>
 	}
 	catch (Exception ex)
 	{
-		logger.LogError(ex, "Unhandled exception");
+		logger.LogError(ex, "Unhandled exception in request");
 		throw;
 	}
 });
@@ -45,5 +55,8 @@ app.UseStaticFiles();
 app.UseCMSUploaderMiddleware();
 
 app.UseCMSMiddleware();
+
+var testLogger = app.Services.GetRequiredService<ILogger<Program>>();
+testLogger.LogInformation("===== APPLICATION STARTED - Serilog is working! =====");
 
 app.Run();
