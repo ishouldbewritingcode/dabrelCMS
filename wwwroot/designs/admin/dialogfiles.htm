@@ -1,28 +1,106 @@
-﻿<form id="uploadform" hx-encoding='multipart/form-data' hx-post='/admin/upload' hx-action="filemanager">
-	<progress id="progress" value="0"></progress>
-	<input type="file" id="uploadfiles" name="uploadfiles" multiple="multiple" />
-	<div class="buttonright"><input type="submit" value="Upload" /></div>
+﻿<div id="filemanagertab">
+	<form id="uploadform" hx-encoding='multipart/form-data' hx-post='/admin/upload' hx-action="filemanager">
+		<progress id="progress" value="0"></progress>
+		<input type="file" id="uploadfiles" name="uploadfiles" multiple="multiple" />
+		<input type="hidden" id="targetDirectory" name="targetDirectory" value="" />
+		<div class="buttonright"><input type="submit" value="Upload" /></div>
+		<ul id="selectedfileslist">
+		</ul>
+	</form>	
 
-	<ul id="selectedfileslist">
-	</ul>
-</form>
+	<h2>Uploads Folder</h2>
+	<form id="adminfilesaddfolder" hx-post="/admin/addfolder">
+		<input type="hidden" id="currentFolderInput" name="currentdirectory" value="" />
+		<input type="hidden" id="siteIdInput" name="siteId" value="{{siteid}}" />
+		<label for="newfolder">Add Folder: </label><input type="text" id="newfolder" name="newfolder" placeholder="folder name" />
+		<input type="submit" value="Add Folder" />
+	</form>
 
-<h2>Uploads Folder</h2>
-<form id="adminfilesaddfolder" hx-post="/admin/addfolder">
-	<input type="hidden" id="currentFolder" name="currentFolder" value="{{currentfolder}}" />
-	<label for="newfolder">Add Folder: </label><input type="text" id="newfolder" name="newfolder" placeholder="folder name" />
-	<input type="submit" value="Add Folder" />
-</form>
+	<div class="buttonright">
+		<button hx-get="/admin/getuploads" hx-target=".filemanager">Refresh</button>
+	</div>
 
-<div class="buttonright"><button hxget="/admin/getuploads" hx-target=".filemanager">Refresh</button></div>
-<div class="filemanager" hx-get="/admin/getuploads" hx-trigger="load">
+	<div id="breadcrumb" style="margin-bottom: 10px; padding: 10px; background: #f0f0f0; border-radius: 4px;">
+		<a href="#" onclick="navigateToDirectory('')">Root</a>
+		<span id="breadcrumbPath"></span>
+	</div>
+
+	<div class="filemanager" hx-get="/admin/getuploads" hx-trigger="load">
+	</div>
 </div>
 
 <script>
+	let currentDirectory = '';
+
+	function navigateToDirectory(dirPath) {
+		currentDirectory = dirPath;
+		updateBreadcrumb();
+		updateTargetDirectory();
+		htmx.ajax('GET', '/admin/getuploads?dir=' + encodeURIComponent(dirPath), { target: '.filemanager', swap: 'innerHTML' });
+	}
+
+	function updateBreadcrumb() {
+		const breadcrumbPath = document.getElementById('breadcrumbPath');
+		if (currentDirectory) {
+			const parts = currentDirectory.split('/').filter(p => p);
+			let html = '';
+			let path = '';
+			parts.forEach((part, index) => {
+				path += (path ? '/' : '') + part;
+				html += ` / <a href="#" onclick="navigateToDirectory('${path}'); return false;">${part}</a>`;
+			});
+			breadcrumbPath.innerHTML = html;
+		} else {
+			breadcrumbPath.innerHTML = '';
+		}
+	}
+
+	function updateTargetDirectory() {
+		document.getElementById('targetDirectory').value = currentDirectory;
+		document.getElementById('currentFolderInput').value = currentDirectory;
+	}
+
+	function deleteFile(filename) {
+		if (confirm('Delete file: ' + filename + '?')) {
+			const formData = new FormData();
+			formData.append('filename', filename);
+			formData.append('directory', currentDirectory);
+
+			fetch('/admin/deletefile', {
+				method: 'POST',
+				body: formData
+			})
+			.then(response => response.text())
+			.then(html => {
+				document.querySelector('.filemanager').innerHTML = html;
+			})
+			.catch(error => console.error('Error:', error));
+		}
+	}
+
+	function deleteDirectory(dirname) {
+		if (confirm('Delete folder: ' + dirname + ' and all its contents?')) {
+			const formData = new FormData();
+			formData.append('dirname', dirname);
+			formData.append('directory', currentDirectory);
+
+			fetch('/admin/deletedirectory', {
+				method: 'POST',
+				body: formData
+			})
+			.then(response => response.text())
+			.then(html => {
+				document.querySelector('.filemanager').innerHTML = html;
+			})
+			.catch(error => console.error('Error:', error));
+		}
+	}
+
 	// retrieve important DOM elements
 	const fileUploadElem = document.querySelector("input#uploadfiles");
 	const formElem = document.querySelector("form#uploadform");
 	const selectedFilesList = document.querySelector("ul#selectedfileslist");
+
 	// file input change event - create list item for each selected file
 	fileUploadElem.addEventListener("change", (event) => {
 		Array.from(fileUploadElem.files).forEach((file) => {
@@ -31,11 +109,21 @@
 			selectedFilesList.appendChild(listItem);
 		});
 	});
+
 	htmx.on('#uploadform', 'htmx:xhr:progress', function (evt) {
 		htmx.find('#progress').setAttribute('value', evt.detail.loaded / evt.detail.total * 100)
+	});
+
+	htmx.on('#uploadform', 'htmx:afterSwap', function (evt) {
 		htmx.find('#progress').setAttribute('value', 0);
 		selectedFilesList.querySelectorAll('li').forEach((i) => {
-			selectedFilesList.remove(i);
+			selectedFilesList.removeChild(i);
 		});
+		fileUploadElem.value = '';
+		htmx.ajax('GET', '/admin/getuploads?dir=' + encodeURIComponent(currentDirectory), { target: '.filemanager', swap: 'innerHTML' });
 	});
+
+	// Initialize breadcrumb and target directory on load
+	updateBreadcrumb();
+	updateTargetDirectory();
 </script>

@@ -137,7 +137,8 @@ div.buttonright {
 	color: var(--highlight);
 }
 
-dialog .buttonright i {
+dialog .buttonright i,
+dialog .buttonright button {
 	color: #333;
 }
 
@@ -256,4 +257,86 @@ fieldset {
 fieldset legend {
 	padding: 0 10px 4px;
 	border: 1px solid #fff;
+}
+
+/* File Manager Styles */
+#filemanagertab {
+	padding: 20px 0;
+}
+
+#breadcrumb a {
+	text-decoration: none;
+	cursor: pointer;
+	margin: 0 2px;
+}
+
+#breadcrumb a:hover {
+	text-decoration: underline;
+}
+
+.filemanager ul.folders,
+.filemanager ul.files {
+	padding-left: 20px;
+	list-style: none;
+	list-style-type: none;
+	margin: 5px 0;
+}
+
+.filemanager li {
+	position: relative;
+	padding: 5px 0;
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+.filemanager li div {
+	width: 100%;
+	text-align: left;
+}
+
+
+.filemanager li i {
+	margin-right: 8px;
+	color: #00a;
+}
+
+.filemanager li.folder i {
+	color: #f80;
+}
+
+.filemanager li.folder > a {
+	color: var(--textcolor);
+	text-decoration: none;
+	cursor: pointer;
+	flex: 1;
+}
+
+.filemanager li.folder > a:hover {
+	text-decoration: underline;
+}
+
+.filemanager li .deletebutton {
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 5px 8px;
+	margin-left: 10px;
+	color: #a00;
+	opacity: 0.5;
+	transition: opacity 0.2s;
+}
+
+.filemanager li .deletebutton:hover {
+	opacity: 1;
+	color: #f00;
+}
+
+.error {
+	background: #fee;
+	border: 1px solid #f00;
+	color: #a00;
+	padding: 10px;
+	border-radius: 4px;
+	margin: 10px 0;
 }

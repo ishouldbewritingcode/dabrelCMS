@@ -18,13 +18,27 @@ namespace dabrelCMS.code
 					using CMSDbContext dbcontext = cmsDbContext;
 					string domain = context.Request.Host.ToString().ToLower().Trim();
 					// strip off any port numbers that may be involved
-					domain = domain.Substring(0, domain.IndexOf(":"));
+					int colonIndex = domain.IndexOf(":");
+					if (colonIndex > 0)
+						domain = domain.Substring(0, colonIndex);
+
 					CMSSiteUrl url = dbcontext.CMSSiteUrls.Where(x => x.Url == domain).FirstOrDefault();
 					if (url != null)
 					{
 						int siteid = url.SiteId;
 						string savePath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
 						savePath = Path.Combine(savePath, siteid.ToString());
+
+						// Handle target directory
+						string? targetDir = context.Request.Form["targetDirectory"];
+						if (!string.IsNullOrEmpty(targetDir))
+						{
+							savePath = Path.Combine(savePath, targetDir);
+						}
+
+						// Ensure directory exists
+						if (!Directory.Exists(savePath))
+							Directory.CreateDirectory(savePath);
 
 						List<CMSFile> files = new List<CMSFile>();
 

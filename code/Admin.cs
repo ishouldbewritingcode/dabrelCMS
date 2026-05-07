@@ -30,7 +30,10 @@ namespace dabrelCMS.code
 			Common.AdminDesign = design;
 			_domain = context.Request.Host.ToString().ToLower().Trim();
 			// strip off any port numbers that may be involved
-			_domain = _domain.Substring(0, _domain.IndexOf(":"));
+			int colonIndex = _domain.IndexOf(":");
+			if (colonIndex > 0)
+				_domain = _domain.Substring(0, colonIndex);
+
 			_path = context.Request.Path.ToString().ToLower().Trim().Substring(1) + "/";
 			string[] pathsegments = _path.Split("/");
 			// 0 should always be admin
@@ -329,6 +332,16 @@ namespace dabrelCMS.code
 							return "<div>New folder saved successfully.</div>";
 							context.Response.StatusCode = StatusCodes.Status200OK;
 							break;
+
+						case "deletefile":
+							context.Response.Headers["Content-Type"] = "text/html";
+							context.Response.StatusCode = StatusCodes.Status200OK;
+							return HandleDeleteFile(context, site);
+
+						case "deletedirectory":
+							context.Response.Headers["Content-Type"] = "text/html";
+							context.Response.StatusCode = StatusCodes.Status200OK;
+							return HandleDeleteDirectory(context, site);
 					}
 				}
 				else
@@ -351,10 +364,20 @@ namespace dabrelCMS.code
 						case "getuploads":
 							string savePath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
 							savePath = Path.Combine(savePath, site.SiteId.ToString());
+
+							// Get directory parameter from query string
+							string? dirParam = context.Request.Query["dir"];
+							if (!string.IsNullOrEmpty(dirParam))
+							{
+								savePath = Path.Combine(savePath, dirParam);
+							}
+
 							if (!Directory.Exists(savePath))
 								Directory.CreateDirectory(savePath);
 							DirectoryInfo directoryInfo = new DirectoryInfo(savePath);
+							sbUploadsFolder.Clear();
 							TraverseDirectory(directoryInfo);
+							html = sbUploadsFolder.ToString();
 							break;
 
 						case "getpageconfig":
@@ -500,7 +523,11 @@ namespace dabrelCMS.code
 			sbUploadsFolder.Append("<ul class=\"folders\">");
 			foreach (DirectoryInfo subdirectory in subdirectories)
 			{
-				sbUploadsFolder.Append("<li class=\"folder\"><i class=\"fa-regular fa-folder\"></i>" + subdirectory.Name + "</li>");
+				sbUploadsFolder.Append("<li class=\"folder\">");
+				sbUploadsFolder.Append("<i class=\"fa-regular fa-folder\"></i>");
+				sbUploadsFolder.Append($"<div><button title=\"{subdirectory.Name}\" onclick=\"navigateToDirectory('{GetRelativePath(directoryInfo, subdirectory)}'); return false;\">{subdirectory.Name}</button></div>");
+				sbUploadsFolder.Append($"<button type=\"button\" class=\"deletebutton\" onclick=\"deleteDirectory('{subdirectory.Name}'); return false;\" title=\"Delete folder\"><i class=\"fa-solid fa-trash\"></i></button>");
+				sbUploadsFolder.Append("</li>");
 				TraverseDirectory(subdirectory);
 			}
 			sbUploadsFolder.Append("</ul>");
@@ -509,9 +536,113 @@ namespace dabrelCMS.code
 			sbUploadsFolder.Append("<ul class=\"files\">");
 			foreach (FileInfo file in files)
 			{
-				sbUploadsFolder.Append("<li class=\"file\">" + Common.GetFAIcon(file.Name) + file.Name + "</li>");
+				sbUploadsFolder.Append("<li class=\"file\">");
+				sbUploadsFolder.Append(Common.GetFAIcon(file.Name));
+				sbUploadsFolder.Append($"<div>{file.Name}</div>");
+				sbUploadsFolder.Append($"<button type=\"button\" class=\"deletebutton\" onclick=\"deleteFile('{file.Name}'); return false;\" title=\"Delete file\"><i class=\"fa-solid fa-trash\"></i></button>");
+				sbUploadsFolder.Append("</li>");
 			}
 			sbUploadsFolder.Append("</ul>");
+		}
+
+		private string GetRelativePath(DirectoryInfo baseDir, DirectoryInfo targetDir)
+		{
+			string basePath = baseDir.FullName;
+			string targetPath = targetDir.FullName;
+			if (targetPath.StartsWith(basePath))
+			{
+				string relative = targetPath.Substring(basePath.Length).TrimStart(Path.DirectorySeparatorChar);
+				return relative.Replace(Path.DirectorySeparatorChar, '/');
+			}
+			return targetDir.Name;
+		}
+
+		private string HandleDeleteFile(HttpContext context, CMSSite site)
+		{
+			string basePath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+			basePath = Path.Combine(basePath, site.SiteId.ToString());
+
+			string? filename = context.Request.Form["filename"];
+			string? directory = context.Request.Form["directory"];
+
+			if (string.IsNullOrEmpty(filename))
+				return "<div class=\"error\">No filename provided.</div>";
+
+			try
+			{
+				string filePath = basePath;
+				if (!string.IsNullOrEmpty(directory))
+					filePath = Path.Combine(filePath, directory);
+				filePath = Path.Combine(filePath, filename);
+
+				// Security check: ensure file is within the upload directory
+				string fullBase = Path.GetFullPath(basePath);
+				string fullFile = Path.GetFullPath(filePath);
+				if (!fullFile.StartsWith(fullBase))
+					return "<div class=\"error\">Invalid file path.</div>";
+
+				if (File.Exists(filePath))
+				{
+					File.Delete(filePath);
+					// Refresh directory listing
+					string uploadDir = basePath;
+					if (!string.IsNullOrEmpty(directory))
+						uploadDir = Path.Combine(uploadDir, directory);
+					DirectoryInfo dirInfo = new DirectoryInfo(uploadDir);
+					sbUploadsFolder.Clear();
+					TraverseDirectory(dirInfo);
+					return sbUploadsFolder.ToString();
+				}
+				return "<div class=\"error\">File not found.</div>";
+			}
+			catch (Exception ex)
+			{
+				return $"<div class=\"error\">Error deleting file: {ex.Message}</div>";
+			}
+		}
+
+		private string HandleDeleteDirectory(HttpContext context, CMSSite site)
+		{
+			string basePath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+			basePath = Path.Combine(basePath, site.SiteId.ToString());
+
+			string? dirname = context.Request.Form["dirname"];
+			string? directory = context.Request.Form["directory"];
+
+			if (string.IsNullOrEmpty(dirname))
+				return "<div class=\"error\">No directory name provided.</div>";
+
+			try
+			{
+				string dirPath = basePath;
+				if (!string.IsNullOrEmpty(directory))
+					dirPath = Path.Combine(dirPath, directory);
+				dirPath = Path.Combine(dirPath, dirname);
+
+				// Security check: ensure directory is within the upload directory
+				string fullBase = Path.GetFullPath(basePath);
+				string fullDir = Path.GetFullPath(dirPath);
+				if (!fullDir.StartsWith(fullBase))
+					return "<div class=\"error\">Invalid directory path.</div>";
+
+				if (Directory.Exists(dirPath))
+				{
+					Directory.Delete(dirPath, true); // true = recursive
+					// Refresh directory listing
+					string uploadDir = basePath;
+					if (!string.IsNullOrEmpty(directory))
+						uploadDir = Path.Combine(uploadDir, directory);
+					DirectoryInfo dirInfo = new DirectoryInfo(uploadDir);
+					sbUploadsFolder.Clear();
+					TraverseDirectory(dirInfo);
+					return sbUploadsFolder.ToString();
+				}
+				return "<div class=\"error\">Directory not found.</div>";
+			}
+			catch (Exception ex)
+			{
+				return $"<div class=\"error\">Error deleting directory: {ex.Message}</div>";
+			}
 		}
 	}
 }
