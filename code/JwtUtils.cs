@@ -14,7 +14,7 @@ namespace dabrelCMS.code
 	{
 		public string GenerateToken(CMSUser user, string jwtkey, string url);
 
-		public int? ValidateToken(string token, string jwtkey, string url);
+		public Guid? ValidateToken(string token, string jwtkey, string url);
 	}
 
 	public class JwtUtils : IJwtUtils
@@ -41,7 +41,7 @@ namespace dabrelCMS.code
 			return tokenHandler.WriteToken(token);
 		}
 
-		public int? ValidateToken(string? token, string jwtkey, string url)
+		public Guid? ValidateToken(string? token, string jwtkey, string url)
 		{
 			if (token == null)
 				return null;
@@ -56,18 +56,16 @@ namespace dabrelCMS.code
 					IssuerSigningKey = new SymmetricSecurityKey(key),
 					ValidIssuer = url,
 					ValidAudience = url,
-					ClockSkew = TimeSpan.Zero // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
+					ClockSkew = TimeSpan.Zero
 				}, out SecurityToken validatedToken);
 
 				var jwtToken = (JwtSecurityToken)validatedToken;
-				var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
+				var userId = Guid.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
 
-				// return user id from JWT token if validation successful
 				return userId;
 			}
 			catch
 			{
-				// return null if validation fails
 				return null;
 			}
 		}

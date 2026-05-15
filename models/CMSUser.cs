@@ -5,9 +5,9 @@ namespace dabrelCMS.models
 	public class CMSUser
 	{
 		[Key]
-		public int UserId { get; set; }
+		public Guid UserId { get; set; }
 
-		public int SiteId { get; set; }
+		public Guid SiteId { get; set; }
 		public string? Provider { get; set; }
 		public string? NameIdentifier { get; set; }
 		public string Email { get; set; } = null!;

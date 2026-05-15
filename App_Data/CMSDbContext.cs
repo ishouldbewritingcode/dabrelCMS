@@ -21,12 +21,17 @@ namespace dabrelCMS.data
 		protected override void OnConfiguring(DbContextOptionsBuilder options)
 		=> options.UseSqlite(CMSConfig.ConStr);
 
+		private static readonly Guid _seedSiteId    = new Guid("00000000-0000-7000-8000-000000000001");
+		private static readonly Guid _seedSiteUrlId = new Guid("00000000-0000-7000-8000-000000000002");
+		private static readonly Guid _seedUserId    = new Guid("00000000-0000-7000-8000-000000000003");
+		private static readonly Guid _seedPageId    = new Guid("00000000-0000-7000-8000-000000000004");
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<CMSSite>().HasData(
 				new CMSSite
 				{
-					SiteId = 1,
+					SiteId = _seedSiteId,
 					Name = "test",
 					Design = "mountain",
 					Title = "title",
@@ -48,8 +53,8 @@ namespace dabrelCMS.data
 			modelBuilder.Entity<CMSSiteUrl>().HasData(
 				new CMSSiteUrl
 				{
-					SiteUrlId = 1,
-					SiteId = 1,
+					SiteUrlId = _seedSiteUrlId,
+					SiteId = _seedSiteId,
 					Url = "localhost",
 					Primary = true
 				});
@@ -59,8 +64,8 @@ namespace dabrelCMS.data
 				{
 					Provider = "Cookies",
 					NameIdentifier = "",
-					UserId = 1,
-					SiteId = 1,
+					UserId = _seedUserId,
+					SiteId = _seedSiteId,
 					Email = "test@dabrel.com",
 					Password = "test",
 					FirstName = "test",
@@ -72,10 +77,10 @@ namespace dabrelCMS.data
 			modelBuilder.Entity<CMSPage>().HasData(
 				new CMSPage
 				{
-					PageId = 1,
-					ParentId = 0,
+					PageId = _seedPageId,
+					ParentId = null,
 					Sort = 1,
-					SiteId = 1,
+					SiteId = _seedSiteId,
 					isOn = true,
 					isPrivate = false,
 					isHidden = false,

@@ -5,7 +5,7 @@ namespace dabrelCMS.models
 	public class CMSSite
 	{
 		[Key]
-		public int SiteId { get; set; }
+		public Guid SiteId { get; set; }
 
 		public string? Name { get; set; }
 		public string? Design { get; set; }

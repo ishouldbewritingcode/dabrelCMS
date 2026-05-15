@@ -9,7 +9,7 @@ namespace dabrelCMS.code
 			string pageformPath = $"{Common.WebRootPath}\\designs\\{Common.AdminDesign}\\pageform.htm";
 			string html = Common.GetFileText(pageformPath);
 			html = html.Replace("{{pageid}}", page.PageId.ToString());
-			html = html.Replace("{{parentid}}", page.ParentId.ToString());
+			html = html.Replace("{{parentid}}", page.ParentId?.ToString() ?? "");
 			html = html.Replace("{{pageshortcut}}", page.Shortcut);
 			html = html.Replace("{{pagesort}}", page.Sort.ToString());
 			html = html.Replace("{{pageison}}", page.isOn.ToString());
@@ -27,7 +27,7 @@ namespace dabrelCMS.code
 			string pageformPath = $"{Common.WebRootPath}\\designs\\{Common.AdminDesign}\\dialogpage.htm";
 			string html = Common.GetFileText(pageformPath);
 			html = html.Replace("{{pageid}}", page.PageId.ToString());
-			html = html.Replace("{{parentid}}", page.ParentId.ToString());
+			html = html.Replace("{{parentid}}", page.ParentId?.ToString() ?? "");
 			html = html.Replace("{{pageshortcut}}", page.Shortcut);
 			html = html.Replace("{{pagesort}}", page.Sort.ToString());
 			html = html.Replace("{{pageison}}", (page.isOn ? "checked='true'" : ""));

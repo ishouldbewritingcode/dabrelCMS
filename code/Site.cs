@@ -49,7 +49,7 @@ namespace dabrelCMS.code
 			// get cookie and user id from jwt
 			code.JwtUtils jwt = new JwtUtils();
 			string? token = context.Request.Cookies["token"];
-			int? userId = jwt.ValidateToken(token, CMSConfig.JwtKey, _domain);
+			Guid? userId = jwt.ValidateToken(token, CMSConfig.JwtKey, _domain);
 			CMSUser? authUser = null;
 			if (userId != null)
 			{
@@ -224,14 +224,14 @@ namespace dabrelCMS.code
 				//get navigation
 				List<CMSPage> nav = dbcontext.CMSPages.Where(n => n.SiteId == site.SiteId)
 					.OrderBy(o => o.ParentId).ThenBy(x => x.Sort).ToList();
-				html = html.Replace("{{navigation}}", GetNav(nav, 0, page.PageId));
+				html = html.Replace("{{navigation}}", GetNav(nav, null, page.PageId));
 			}
 			context.Response.Headers["Content-Type"] = "text/html";
 			context.Response.StatusCode = StatusCodes.Status200OK;
 			return html;
 		}
 
-		private string GetNav(List<CMSPage> nav, int pId, int currentId)
+		private string GetNav(List<CMSPage> nav, Guid? pId, Guid currentId)
 		{
 			IEnumerable<CMSPage> parent = nav.Where(y => y.ParentId == pId && y.isOn == true && y.isHidden == false);
 			StringBuilder c = new StringBuilder();
@@ -262,7 +262,7 @@ namespace dabrelCMS.code
 			return c.ToString();
 		}
 
-		private bool HasChildren(List<CMSPage> nav, int pId)
+		private bool HasChildren(List<CMSPage> nav, Guid pId)
 		{
 			IEnumerable<CMSPage> parent = nav.Where(y => y.ParentId == pId && y.isOn == true && y.isHidden == false);
 			if (parent.Count() > 0)
@@ -271,7 +271,7 @@ namespace dabrelCMS.code
 				return false;
 		}
 
-		private string GetPageBlocks(data.CMSDbContext dbcontext, int pageId)
+		private string GetPageBlocks(data.CMSDbContext dbcontext, Guid pageId)
 		{
 			// Get all page blocks sorted by Sort order
 			var pageBlocks = dbcontext.CMSPageBlocks

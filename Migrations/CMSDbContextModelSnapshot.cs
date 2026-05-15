@@ -15,13 +15,13 @@ namespace dabrelCMS.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.2");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.3");
 
             modelBuilder.Entity("dabrelCMS.models.CMSBlock", b =>
                 {
-                    b.Property<int>("BlockId")
+                    b.Property<Guid>("BlockId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("BlockType")
                         .HasColumnType("TEXT");
@@ -29,8 +29,8 @@ namespace dabrelCMS.Migrations
                     b.Property<string>("Data")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("SiteId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("SiteId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Status")
                         .HasColumnType("TEXT");
@@ -51,16 +51,16 @@ namespace dabrelCMS.Migrations
 
             modelBuilder.Entity("dabrelCMS.models.CMSFile", b =>
                 {
-                    b.Property<int>("FileId")
+                    b.Property<Guid>("FileId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Filename")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("SiteId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("SiteId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Status")
                         .HasColumnType("TEXT");
@@ -78,15 +78,15 @@ namespace dabrelCMS.Migrations
 
             modelBuilder.Entity("dabrelCMS.models.CMSItem", b =>
                 {
-                    b.Property<int>("ItemId")
+                    b.Property<Guid>("ItemId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("BlockId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("BlockId")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int?>("CMSBlockBlockId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid?>("CMSBlockBlockId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Data")
                         .HasColumnType("TEXT");
@@ -130,12 +130,12 @@ namespace dabrelCMS.Migrations
 
             modelBuilder.Entity("dabrelCMS.models.CMSPage", b =>
                 {
-                    b.Property<int>("PageId")
+                    b.Property<Guid>("PageId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
-                    b.Property<int?>("CMSSiteSiteId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid?>("CMSSiteSiteId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("HeroImage")
                         .HasColumnType("TEXT");
@@ -143,14 +143,14 @@ namespace dabrelCMS.Migrations
                     b.Property<string>("NavTitle")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("ParentId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid?>("ParentId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Shortcut")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("SiteId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("SiteId")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Sort")
                         .HasColumnType("INTEGER");
@@ -182,12 +182,11 @@ namespace dabrelCMS.Migrations
                     b.HasData(
                         new
                         {
-                            PageId = 1,
+                            PageId = new Guid("00000000-0000-7000-8000-000000000004"),
                             HeroImage = "",
                             NavTitle = "Home",
-                            ParentId = 0,
                             Shortcut = "",
-                            SiteId = 1,
+                            SiteId = new Guid("00000000-0000-7000-8000-000000000001"),
                             Sort = 1,
                             Summary = "Page summary goes here",
                             Tags = "home",
@@ -200,9 +199,9 @@ namespace dabrelCMS.Migrations
 
             modelBuilder.Entity("dabrelCMS.models.CMSPageBlock", b =>
                 {
-                    b.Property<int>("PageBlockID")
+                    b.Property<Guid>("PageBlockID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("AltSubtitle")
                         .HasColumnType("TEXT");
@@ -210,14 +209,14 @@ namespace dabrelCMS.Migrations
                     b.Property<string>("AltTitle")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("BlockId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("BlockId")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int?>("CMSPagePageId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid?>("CMSPagePageId")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("PageId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("PageId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Position")
                         .HasColumnType("TEXT");
@@ -234,9 +233,9 @@ namespace dabrelCMS.Migrations
 
             modelBuilder.Entity("dabrelCMS.models.CMSSite", b =>
                 {
-                    b.Property<int>("SiteId")
+                    b.Property<Guid>("SiteId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("BodyBottom")
                         .HasColumnType("TEXT");
@@ -293,7 +292,7 @@ namespace dabrelCMS.Migrations
                     b.HasData(
                         new
                         {
-                            SiteId = 1,
+                            SiteId = new Guid("00000000-0000-7000-8000-000000000001"),
                             BodyBottom = "",
                             BodyTop = "",
                             Created = new DateTime(2025, 1, 1, 0, 1, 0, 0, DateTimeKind.Unspecified),
@@ -315,18 +314,18 @@ namespace dabrelCMS.Migrations
 
             modelBuilder.Entity("dabrelCMS.models.CMSSiteUrl", b =>
                 {
-                    b.Property<int>("SiteUrlId")
+                    b.Property<Guid>("SiteUrlId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
-                    b.Property<int?>("CMSSiteSiteId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid?>("CMSSiteSiteId")
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("Primary")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("SiteId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("SiteId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Url")
                         .IsRequired()
@@ -341,18 +340,18 @@ namespace dabrelCMS.Migrations
                     b.HasData(
                         new
                         {
-                            SiteUrlId = 1,
+                            SiteUrlId = new Guid("00000000-0000-7000-8000-000000000002"),
                             Primary = true,
-                            SiteId = 1,
+                            SiteId = new Guid("00000000-0000-7000-8000-000000000001"),
                             Url = "localhost"
                         });
                 });
 
             modelBuilder.Entity("dabrelCMS.models.CMSUser", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -387,8 +386,8 @@ namespace dabrelCMS.Migrations
                     b.Property<int>("Salt")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("SiteId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("SiteId")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("UserId");
 
@@ -397,7 +396,7 @@ namespace dabrelCMS.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = 1,
+                            UserId = new Guid("00000000-0000-7000-8000-000000000003"),
                             Email = "test@dabrel.com",
                             FirstName = "test",
                             LastName = "user",
@@ -407,7 +406,7 @@ namespace dabrelCMS.Migrations
                             Provider = "Cookies",
                             Roles = "admin",
                             Salt = 0,
-                            SiteId = 1
+                            SiteId = new Guid("00000000-0000-7000-8000-000000000001")
                         });
                 });
 

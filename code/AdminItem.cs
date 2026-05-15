@@ -5,7 +5,7 @@ namespace dabrelCMS.code
 {
 	public static class AdminItem
 	{
-		public static string GetItemPageForm(int blockId, CMSDbContext dbContext)
+		public static string GetItemPageForm(Guid blockId, CMSDbContext dbContext)
 		{
 			string itemformPath = $"{Common.WebRootPath}\\designs\\{Common.AdminDesign}\\dialogadditem.htm";
 			string html = Common.GetFileText(itemformPath);
@@ -13,7 +13,7 @@ namespace dabrelCMS.code
 			return html;
 		}
 
-		public static string GetItemForm(int itemId, CMSDbContext dbContext)
+		public static string GetItemForm(Guid itemId, CMSDbContext dbContext)
 		{
 			string itemformPath = $"{Common.WebRootPath}\\designs\\{Common.AdminDesign}\\dialogedititem.htm";
 			string html = Common.GetFileText(itemformPath);
@@ -37,13 +37,14 @@ namespace dabrelCMS.code
 
 		public static string AddNewItem(HttpContext context, CMSDbContext dbContext)
 		{
-			int blockId = int.Parse(context.Request.Form["blockid"].ToString());
-			
+			Guid blockId = Guid.Parse(context.Request.Form["blockid"].ToString());
+
 			// Get the highest sort order for this block
 			int maxSort = dbContext.CMSItems.Where(i => i.BlockId == blockId).Max(i => (int?)i.Sort) ?? 0;
 
 			CMSItem item = new()
 			{
+				ItemId = Guid.CreateVersion7(),
 				BlockId = blockId,
 				Title1 = context.Request.Form["title1"].ToString(),
 				Title2 = context.Request.Form["title2"].ToString(),
@@ -63,7 +64,7 @@ namespace dabrelCMS.code
 
 		public static string SaveItem(HttpContext context, CMSDbContext dbContext)
 		{
-			int itemId = int.Parse(context.Request.Form["itemid"].ToString());
+			Guid itemId = Guid.Parse(context.Request.Form["itemid"].ToString());
 			CMSItem item = dbContext.CMSItems.Where(i => i.ItemId == itemId).FirstOrDefault();
 
 			if (item != null)
@@ -80,7 +81,7 @@ namespace dabrelCMS.code
 			return "error: item not found";
 		}
 
-		public static string DeleteItem(int itemId, CMSDbContext dbContext)
+		public static string DeleteItem(Guid itemId, CMSDbContext dbContext)
 		{
 			CMSItem item = dbContext.CMSItems.Where(i => i.ItemId == itemId).FirstOrDefault();
 			if (item != null)
@@ -92,7 +93,7 @@ namespace dabrelCMS.code
 			return "error: item not found";
 		}
 
-		public static string GetBlockItems(int blockId, CMSDbContext dbContext)
+		public static string GetBlockItems(Guid blockId, CMSDbContext dbContext)
 		{
 			StringBuilder html = new StringBuilder();
 			List<CMSItem> items = dbContext.CMSItems.Where(i => i.BlockId == blockId).OrderBy(i => i.Sort).ToList();

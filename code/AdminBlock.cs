@@ -55,10 +55,10 @@ namespace dabrelCMS.code
 			return string.Empty;
 		}
 
-		public static string GetOtherBlocks(int siteId, CMSDbContext dbContext)
+		public static string GetOtherBlocks(Guid siteId, CMSDbContext dbContext)
 		{
 			string html = String.Empty;
-			if (siteId > 0)
+			if (siteId != Guid.Empty)
 			{
 				// get all blocks for the site from the database
 				List<CMSBlock> blocks = dbContext.CMSBlocks.Where(p => p.SiteId == siteId).ToList();
@@ -96,21 +96,23 @@ namespace dabrelCMS.code
 		public static string AddNewBlock(HttpContext context, CMSDbContext dbContext)
 		{
 			// build new block here
-			int id = 0;
+			Guid id = Guid.Empty;
 			string sid = context.Request.Form["pageid"].ToString().Trim();
-			bool addToPage = int.TryParse(sid, out id);
+			bool addToPage = Guid.TryParse(sid, out id);
 			CMSBlock block = new()
 			{
+				BlockId = Guid.CreateVersion7(),
 				BlockType = context.Request.Form["blocktype"].ToString(),
 				Title1 = context.Request.Form["title"].ToString()
 			};
 			dbContext.CMSBlocks.Add(block);
 			dbContext.SaveChanges();
-			int blockid = block.BlockId;
-			
+			Guid blockid = block.BlockId;
+
 			if (addToPage)
 			{
 				CMSPageBlock pageBlock = new CMSPageBlock();
+				pageBlock.PageBlockID = Guid.CreateVersion7();
 				pageBlock.BlockId = blockid;
 				pageBlock.PageId = id;
 				dbContext.CMSPageBlocks.Add(pageBlock);

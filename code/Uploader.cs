@@ -25,7 +25,7 @@ namespace dabrelCMS.code
 					CMSSiteUrl url = dbcontext.CMSSiteUrls.Where(x => x.Url == domain).FirstOrDefault();
 					if (url != null)
 					{
-						int siteid = url.SiteId;
+						Guid siteid = url.SiteId;
 						string savePath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
 						savePath = Path.Combine(savePath, siteid.ToString());
 
@@ -49,6 +49,7 @@ namespace dabrelCMS.code
 							await file.CopyToAsync(stream);
 
 							CMSFile thefile = new CMSFile();
+							thefile.FileId = Guid.CreateVersion7();
 							thefile.Filename = file.FileName;
 							thefile.SiteId = siteid;
 							thefile.Temp = tempfile;

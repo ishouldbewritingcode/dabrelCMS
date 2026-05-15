@@ -5,9 +5,9 @@ namespace dabrelCMS.models
 	public class CMSItem
 	{
 		[Key]
-		public int ItemId { get; set; }
+		public Guid ItemId { get; set; }
 
-		public int BlockId { get; set; }
+		public Guid BlockId { get; set; }
 		public int Sort { get; set; }
 		public string? ItemType { get; set; }
 		public string? Status { get; set; }

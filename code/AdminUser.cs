@@ -18,7 +18,7 @@ namespace dabrelCMS.code
 			return html;
 		}
 
-		public static string SaveUserForm(CMSDbContext dbcontext, HttpContext context, int userid)
+		public static string SaveUserForm(CMSDbContext dbcontext, HttpContext context, Guid userid)
 		{
 			CMSUser tempUser = dbcontext.CMSUsers.Where(u => u.UserId == userid).FirstOrDefault();
 			tempUser.Email = context.Request.Form["email"].ToString();

@@ -8,12 +8,9 @@ To generate database
 	https://learn.micros1oft.com/en-us/ef/core/managing-schemas/migrations/?tabs=vs
 	In the Package Manager Console
 		first time
-			Add-Migration InitialCreate   
+			Add-Migration InitialCreate
 			Update-Database
 		changes (date and note)
 			Add-Migration 20250111_UpdatePageBlocks
 			Update-Database
-
-
-
 

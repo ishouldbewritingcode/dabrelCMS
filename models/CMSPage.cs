@@ -5,11 +5,11 @@ namespace dabrelCMS.models
 	public class CMSPage
 	{
 		[Key]
-		public int PageId { get; set; }
+		public Guid PageId { get; set; }
 
-		public int ParentId { get; set; }
+		public Guid? ParentId { get; set; }
 		public int Sort { get; set; }
-		public int SiteId { get; set; }
+		public Guid SiteId { get; set; }
 		public bool isOn { get; set; }
 		public bool isPrivate { get; set; }
 		public bool isHidden { get; set; }

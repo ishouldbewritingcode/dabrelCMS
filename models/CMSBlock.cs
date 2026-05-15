@@ -5,8 +5,8 @@ namespace dabrelCMS.models
 	public class CMSBlock
 	{
 		[Key]
-		public int BlockId { get; set; }
-		public int SiteId {  get; set; }
+		public Guid BlockId { get; set; }
+		public Guid SiteId {  get; set; }
 		public string? BlockType { get; set; }
 		public string? Status { get; set; }
 		public string? Title1 { get; set; }

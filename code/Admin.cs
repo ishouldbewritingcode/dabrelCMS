@@ -92,7 +92,7 @@ namespace dabrelCMS.code
 							break;
 
 						case "getpageform":
-							page = dbcontext.CMSPages.Where(p => p.PageId == int.Parse(pathsegments[2])).FirstOrDefault();
+							page = dbcontext.CMSPages.Where(p => p.PageId == Guid.Parse(pathsegments[2])).FirstOrDefault();
 							html = AdminPage.GetPageForm(page);
 							break;
 
@@ -102,20 +102,22 @@ namespace dabrelCMS.code
 							if (pathsegments.Length > 2)
 								if (pathsegments[2] != string.Empty)
 								{
-									int p = 0;
-									int.TryParse(pathsegments[2], out p);
+									Guid p = Guid.Empty;
+									Guid.TryParse(pathsegments[2], out p);
 									html = html.Replace("{{parentid}}", p.ToString());
 								}
 							break;
 
 						case "addpageform":
 							page = new CMSPage();
+							page.PageId = Guid.CreateVersion7();
 							dbcontext.CMSPages.Add(page);
 							page.Title = context.Request.Form["pagetitle"].ToString();
 							page.SiteId = site.SiteId;
 							page.NavTitle = page.Title;
 							page.Shortcut = HttpUtility.UrlEncode(page.Title.ToLower().Replace(" ", String.Empty));
-							page.ParentId = int.Parse(context.Request.Form["parentid"].ToString());
+							string addParentStr = context.Request.Form["parentid"].ToString().Trim();
+							page.ParentId = Guid.TryParse(addParentStr, out Guid addParentId) ? addParentId : null;
 							page.Sort = 1;
 							page.isOn = true;
 							page.isPrivate = false;
@@ -130,21 +132,22 @@ namespace dabrelCMS.code
 
 						case "pageform":
 							// save page here
-							int id = 0;
+							Guid id = Guid.Empty;
 							string sid = context.Request.Form["pageid"].ToString().Trim();
-							bool isEdit = int.TryParse(sid, out id);
+							bool isEdit = Guid.TryParse(sid, out id);
 							if (isEdit)
 								page = dbcontext.CMSPages.Where(p => p.PageId == id).FirstOrDefault();
 							else
 							{
 								page = new CMSPage();
+								page.PageId = Guid.CreateVersion7();
 								dbcontext.CMSPages.Add(page);
-								// page.PageId = 0;
 							}
 							page.Title = context.Request.Form["pagetitle"].ToString();
 							page.NavTitle = context.Request.Form["navtitle"].ToString();
 							page.Shortcut = context.Request.Form["pageshortcut"].ToString();
-							page.ParentId = int.Parse(context.Request.Form["parentid"].ToString());
+							string pageformParentStr = context.Request.Form["parentid"].ToString().Trim();
+							page.ParentId = Guid.TryParse(pageformParentStr, out Guid pageformParentId) ? pageformParentId : null;
 							page.Sort = int.Parse(context.Request.Form["pagesort"].ToString());
 							page.isOn = bool.Parse(context.Request.Form["pageison"].ToString());
 							page.isPrivate = bool.Parse(context.Request.Form["pageisprivate"].ToString());
@@ -158,16 +161,16 @@ namespace dabrelCMS.code
 
 						case "pagecontentform":
 							// save page content here
-							id = 0;
+							id = Guid.Empty;
 							sid = context.Request.Form["pageid"].ToString().Trim();
-							isEdit = int.TryParse(sid, out id);
+							isEdit = Guid.TryParse(sid, out id);
 							if (isEdit)
 								page = dbcontext.CMSPages.Where(p => p.PageId == id).FirstOrDefault();
 							else
 							{
 								page = new CMSPage();
+								page.PageId = Guid.CreateVersion7();
 								dbcontext.CMSPages.Add(page);
-								// page.PageId = 0;
 							}
 							page.Title = context.Request.Form["pagetitle"].ToString();
 							page.Summary = context.Request.Form["content"].ToString();
@@ -177,21 +180,22 @@ namespace dabrelCMS.code
 
 						case "pageconfigform":
 							// save page config here
-							id = 0;
+							id = Guid.Empty;
 							sid = context.Request.Form["pageid"].ToString().Trim();
-							isEdit = int.TryParse(sid, out id);
+							isEdit = Guid.TryParse(sid, out id);
 							if (isEdit)
 								page = dbcontext.CMSPages.Where(p => p.PageId == id).FirstOrDefault();
 							else
 							{
 								page = new CMSPage();
+								page.PageId = Guid.CreateVersion7();
 								dbcontext.CMSPages.Add(page);
-								// page.PageId = 0;
 							}
 							page.Title = context.Request.Form["pagetitle"].ToString();
 							page.NavTitle = context.Request.Form["navtitle"].ToString();
 							page.Shortcut = context.Request.Form["pageshortcut"].ToString();
-							page.ParentId = int.Parse(context.Request.Form["parentid"].ToString());
+							string configParentStr = context.Request.Form["parentid"].ToString().Trim();
+							page.ParentId = Guid.TryParse(configParentStr, out Guid configParentId) ? configParentId : null;
 							page.Sort = int.Parse(context.Request.Form["pagesort"].ToString());
 							page.isOn = (context.Request.Form["pageison"].ToString().Length > 0 ? true : false);
 							page.isPrivate = (context.Request.Form["pageisprivate"].ToString().Length > 0 ? true : false);
@@ -207,15 +211,15 @@ namespace dabrelCMS.code
 							{
 								if (pathsegments[2] != string.Empty)
 								{
-									int delId = 0;
-									int.TryParse(pathsegments[2], out delId);
+									Guid delId = Guid.Empty;
+									Guid.TryParse(pathsegments[2], out delId);
 									page = dbcontext.CMSPages.Where(p => p.PageId == delId).FirstOrDefault();
 									// don't let them delete the home page.
 									if (page != null && page.Shortcut != string.Empty)
 									{
-										int redirectid = page.ParentId;
+										Guid? redirectid = page.ParentId;
 										CMSPage redirect;
-										if (redirectid == 0)
+										if (redirectid == null)
 											redirect = dbcontext.CMSPages.Where(p => p.Shortcut == string.Empty).FirstOrDefault();
 										else
 											redirect = dbcontext.CMSPages.Where(p => p.PageId == redirectid).FirstOrDefault();
@@ -255,7 +259,7 @@ namespace dabrelCMS.code
 
 						case "additemform":
 							AdminItem.AddNewItem(context, dbcontext);
-							int blockIdForRedirect = int.Parse(context.Request.Form["blockid"].ToString());
+							Guid blockIdForRedirect = Guid.Parse(context.Request.Form["blockid"].ToString());
 							CMSBlock blockForRedirect = dbcontext.CMSBlocks.FirstOrDefault(b => b.BlockId == blockIdForRedirect);
 							if (blockForRedirect != null)
 							{
@@ -272,7 +276,7 @@ namespace dabrelCMS.code
 
 						case "saveitemform":
 							AdminItem.SaveItem(context, dbcontext);
-							int blockIdForSave = int.Parse(context.Request.Form["blockid"].ToString());
+							Guid blockIdForSave = Guid.Parse(context.Request.Form["blockid"].ToString());
 							CMSBlock blockForSave = dbcontext.CMSBlocks.FirstOrDefault(b => b.BlockId == blockIdForSave);
 							if (blockForSave != null)
 							{
@@ -290,12 +294,12 @@ namespace dabrelCMS.code
 						case "deleteitem":
 							if (pathsegments.Length > 2)
 							{
-								int itemId = 0;
-								int.TryParse(pathsegments[2], out itemId);
+								Guid itemId = Guid.Empty;
+								Guid.TryParse(pathsegments[2], out itemId);
 								CMSItem itemToDelete = dbcontext.CMSItems.FirstOrDefault(i => i.ItemId == itemId);
 								if (itemToDelete != null)
 								{
-									int blockIdForDelete = itemToDelete.BlockId;
+									Guid blockIdForDelete = itemToDelete.BlockId;
 									AdminItem.DeleteItem(itemId, dbcontext);
 									CMSBlock blockForDelete = dbcontext.CMSBlocks.FirstOrDefault(b => b.BlockId == blockIdForDelete);
 									if (blockForDelete != null)
@@ -381,20 +385,20 @@ namespace dabrelCMS.code
 							break;
 
 						case "getpageconfig":
-							page = dbcontext.CMSPages.Where(p => p.PageId == int.Parse(pathsegments[2])).FirstOrDefault();
+							page = dbcontext.CMSPages.Where(p => p.PageId == Guid.Parse(pathsegments[2])).FirstOrDefault();
 							html = AdminPage.GetPageConfig(page);
 							break;
 
 						case "getaddblockform":
-							page = dbcontext.CMSPages.Where(p => p.PageId == int.Parse(pathsegments[2])).FirstOrDefault();
+							page = dbcontext.CMSPages.Where(p => p.PageId == Guid.Parse(pathsegments[2])).FirstOrDefault();
 							html = AdminBlock.GetAddBlockForm(page, dbcontext);
 							break;
 
 						case "getitempageform":
 							if (pathsegments.Length > 2)
 							{
-								int blockId = 0;
-								int.TryParse(pathsegments[2], out blockId);
+								Guid blockId = Guid.Empty;
+								Guid.TryParse(pathsegments[2], out blockId);
 								html = AdminItem.GetItemPageForm(blockId, dbcontext);
 							}
 							break;
@@ -402,8 +406,8 @@ namespace dabrelCMS.code
 						case "getedititemform":
 							if (pathsegments.Length > 2)
 							{
-								int itemId = 0;
-								int.TryParse(pathsegments[2], out itemId);
+								Guid itemId = Guid.Empty;
+								Guid.TryParse(pathsegments[2], out itemId);
 								html = AdminItem.GetItemForm(itemId, dbcontext);
 							}
 							break;
@@ -466,7 +470,7 @@ namespace dabrelCMS.code
 				//get navigation
 				List<CMSPage> nav = dbcontext.CMSPages.Where(n => n.SiteId == site.SiteId)
 					.OrderBy(o => o.ParentId).ThenBy(x => x.Sort).ToList();
-				html = html.Replace("{{navigation}}", GetNav(nav, 0, page.PageId));
+				html = html.Replace("{{navigation}}", GetNav(nav, null, page.PageId));
 			}
 			context.Response.Headers["Content-Type"] = "text/html";
 			context.Response.StatusCode = StatusCodes.Status200OK;
@@ -477,7 +481,7 @@ namespace dabrelCMS.code
 			return html;
 		}
 
-		private string GetNav(List<CMSPage> nav, int pId, int currentId)
+		private string GetNav(List<CMSPage> nav, Guid? pId, Guid currentId)
 		{
 			IEnumerable<CMSPage> parent = nav.Where(y => y.ParentId == pId);
 			StringBuilder c = new StringBuilder();
@@ -508,7 +512,7 @@ namespace dabrelCMS.code
 			return c.ToString();
 		}
 
-		private bool HasChildren(List<CMSPage> nav, int pId)
+		private bool HasChildren(List<CMSPage> nav, Guid pId)
 		{
 			IEnumerable<CMSPage> parent = nav.Where(y => y.ParentId == pId);
 			if (parent.Count() > 0)
