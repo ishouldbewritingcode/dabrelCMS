@@ -3,5 +3,25 @@
 	// Hover to view descriptions of existing attributes.
 	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 	"version": "0.2.0",
-	"configurations": []
+	"configurations": [
+		{
+			"name": "Launch dabrelCMS",
+			"type": "coreclr",
+			"request": "launch",
+			"preLaunchTask": "build",
+			"program": "${workspaceFolder}/bin/Debug/net10.0/dabrelCMS.dll",
+			"args": [],
+			"cwd": "${workspaceFolder}",
+			"stopAtEntry": false,
+			"serverReadyAction": {
+				"action": "openExternally",
+				"uriFormat": "http://localhost:5021",
+				"pattern": "Now listening on"
+			},
+			"env": {
+				"ASPNETCORE_ENVIRONMENT": "Development",
+				"ASPNETCORE_URLS": "http://localhost:5021"
+			}
+		}
+	]
 }

@@ -1,0 +1,88 @@
+.siterow {
+	background: var(--highlightbg);
+	border: 1px solid var(--highlight);
+	border-radius: 6px;
+	margin-bottom: 1rem;
+	padding: 1rem;
+}
+
+.siteheader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 0.5rem;
+}
+
+.designlabel {
+	font-size: 0.85rem;
+	opacity: 0.7;
+	margin-left: 0.5rem;
+}
+
+.siteurls {
+	list-style: none;
+	padding: 0;
+	margin: 0.25rem 0 0.75rem 0;
+}
+
+.urlrow {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.2rem 0;
+}
+
+.urltext {
+	font-family: monospace;
+	font-size: 1rem;
+}
+
+.badge {
+	background: var(--highlight);
+	color: #fff;
+	border-radius: 3px;
+	font-size: 0.75rem;
+	padding: 1px 6px;
+}
+
+.addurlform {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin-top: 0.5rem;
+	flex-wrap: wrap;
+}
+
+.addurlform input[name="url"] {
+	flex: 1;
+	min-width: 160px;
+}
+
+.addsiteform {
+	margin-top: 2rem;
+	padding: 1rem;
+	border-top: 2px solid var(--highlight);
+}
+
+#sitemessage:not(:empty) {
+	padding: 0.75rem 1rem;
+	margin-bottom: 1rem;
+	background: #fee;
+	border: 1px solid #c44;
+	border-radius: 4px;
+	color: #c00;
+}
+
+.smbutton {
+	display: inline-block;
+	padding: 0.4rem 0.8rem;
+	border-radius: 4px;
+	background: var(--highlight);
+	color: #fff;
+	text-decoration: none;
+	font-size: 0.9rem;
+}
+
+.smbutton:hover {
+	opacity: 0.85;
+}

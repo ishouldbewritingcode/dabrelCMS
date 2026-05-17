@@ -35,6 +35,8 @@ namespace dabrelCMS.code
 			_path = context.Request.Path.ToString().ToLower().Trim().Replace("/", string.Empty);
 			if (_path.StartsWith("admin"))
 				_path = "admin";
+			if (_path.StartsWith("sitemanager"))
+				_path = "sitemanager";
 
 			using data.CMSDbContext dbcontext = new data.CMSDbContext();
 
@@ -117,11 +119,15 @@ namespace dabrelCMS.code
 						else
 							return Common.GetLoginPage(context, _path, "Please Login");
 					}
-				case "manager":
+				case "sitemanager":
 					{
 						if (authUser != null)
 						{
-							return Common.GetManagerPage(context);
+							// need to check to see if this user has the sitemanager role
+							if (authUser.RoleList.Contains("sitemanager"))
+								return new SiteManager().GetPage(context, authUser);
+							else
+								return Common.GetLoginPage(context, _path, "Please Login");
 						}
 						else
 							return Common.GetLoginPage(context, _path, "Please Login");
@@ -131,8 +137,8 @@ namespace dabrelCMS.code
 						if (!String.IsNullOrEmpty(context.Request.Form["searchText"]))
 						{
 							string searchText = context.Request.Form["searchText"];
-							searchresults = dbcontext.CMSPages.Where(p => p.Shortcut.Contains(searchText) 
-							|| p.Title.Contains(searchText) || p.Tags.Contains(searchText) 
+							searchresults = dbcontext.CMSPages.Where(p => p.Shortcut.Contains(searchText)
+							|| p.Title.Contains(searchText) || p.Tags.Contains(searchText)
 							|| p.Summary.Contains(searchText) && p.isOn == true);
 						}
 						break;

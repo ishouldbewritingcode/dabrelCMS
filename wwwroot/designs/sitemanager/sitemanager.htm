@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<script src="/global/scripts/htmx.min.js"></script>
+	<link href="/global/fontawesome/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/designs/admin/admin.css" />
+	<link rel="stylesheet" href="/designs/sitemanager/sitemanager.css" />
+	<link rel="icon" href="/designs/admin/images/favicon.png" type="image/png">
+	<title>Site Manager</title>
+</head>
+<body>
+	<header>
+		<div id="topbar">
+			<div id="sitetitle"><span class="titletext">Site Manager</span></div>
+			<a href="/admin" class="smbutton"><i class="fa-solid fa-arrow-left"></i> Admin</a>
+		</div>
+	</header>
+	<main class="content">
+		<div class="widthcontainer">
+			<div id="sitemessage"></div>
+			<h2>Websites</h2>
+			{{sitelist}}
+		</div>
+	</main>
+</body>
+</html>
