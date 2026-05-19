@@ -1,7 +1,7 @@
 # Future Upgrades
 ---------------
 
-TOTP Two-Factor Authentication
+## TOTP Two-Factor Authentication
   Add TOTP-based 2FA to the login flow using the Otp.NET NuGet package (no 3rd party service required).
   Steps:
     1. Add NuGet package: Otp.NET
@@ -12,3 +12,17 @@ TOTP Two-Factor Authentication
            var totp = new Totp(Base32Encoding.ToBytes(user.TotpSecret));
            bool valid = totp.VerifyTotp(submittedCode, out _, new VerificationWindow(2, 2));
     5. Track used codes per 30s window to prevent replay attacks
+
+## Use Serilog
+  * log all authentications
+  * log all errors
+  * log file uploads
+  * log sitemanager tasks
+  * should anything else be logged?
+
+## Add some basic caching so we aren't going to the database as often.
+  * Admin changes to the page should expire the cache
+
+## Bug - Search doesn't seem to work for items.
+
+
