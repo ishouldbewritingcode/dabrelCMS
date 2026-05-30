@@ -13,8 +13,9 @@ namespace dabrelCMS.code
 	public interface IJwtUtils
 	{
 		public string GenerateToken(CMSUser user, string jwtkey, string url);
-
 		public Guid? ValidateToken(string token, string jwtkey, string url);
+		public string GeneratePendingTotpToken(Guid userId, string jwtkey, string url);
+		public Guid? ValidatePendingTotpToken(string? token, string jwtkey, string url);
 	}
 
 	public class JwtUtils : IJwtUtils
@@ -60,9 +61,60 @@ namespace dabrelCMS.code
 				}, out SecurityToken validatedToken);
 
 				var jwtToken = (JwtSecurityToken)validatedToken;
+				// reject pending tokens — they must not be accepted as session tokens
+				if (jwtToken.Claims.Any(x => x.Type == "pending"))
+					return null;
 				var userId = Guid.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
 
 				return userId;
+			}
+			catch
+			{
+				return null;
+			}
+		}
+
+		public string GeneratePendingTotpToken(Guid userId, string jwtkey, string url)
+		{
+			var tokenHandler = new JwtSecurityTokenHandler();
+			var key = Encoding.ASCII.GetBytes(jwtkey);
+			var tokenDescriptor = new SecurityTokenDescriptor
+			{
+				Subject = new ClaimsIdentity(new[] {
+					new Claim("id", userId.ToString()),
+					new Claim("pending", "1")
+				}),
+				Expires = DateTime.UtcNow.AddMinutes(5),
+				Issuer = url,
+				Audience = url,
+				SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+			};
+			var token = tokenHandler.CreateToken(tokenDescriptor);
+			return tokenHandler.WriteToken(token);
+		}
+
+		public Guid? ValidatePendingTotpToken(string? token, string jwtkey, string url)
+		{
+			if (token == null)
+				return null;
+
+			var tokenHandler = new JwtSecurityTokenHandler();
+			var key = Encoding.ASCII.GetBytes(jwtkey);
+			try
+			{
+				tokenHandler.ValidateToken(token, new TokenValidationParameters
+				{
+					ValidateIssuerSigningKey = true,
+					IssuerSigningKey = new SymmetricSecurityKey(key),
+					ValidIssuer = url,
+					ValidAudience = url,
+					ClockSkew = TimeSpan.Zero
+				}, out SecurityToken validatedToken);
+
+				var jwtToken = (JwtSecurityToken)validatedToken;
+				if (!jwtToken.Claims.Any(x => x.Type == "pending" && x.Value == "1"))
+					return null;
+				return Guid.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
 			}
 			catch
 			{

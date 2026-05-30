@@ -17,6 +17,7 @@ namespace dabrelCMS.models
 		public string LastName { get; set; }
 		public string Mobile { get; set; }
 		public string Roles { get; set; }
+		public string? TotpSecret { get; set; }
 
 		public List<string> RoleList
 		{

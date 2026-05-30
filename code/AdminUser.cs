@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OtpNet;
 
 namespace dabrelCMS.code
 {
@@ -15,7 +16,65 @@ namespace dabrelCMS.code
 			html = html.Replace("{{lastname}}", authUser.LastName.ToString());
 			html = html.Replace("{{mobile}}", authUser.Mobile.ToString());
 			html = html.Replace("{{roles}}", authUser.Roles.ToString());
+			bool totpEnabled = !string.IsNullOrEmpty(authUser.TotpSecret);
+			html = html.Replace("{{totp_status}}", totpEnabled ? "Enabled" : "Disabled");
+			html = html.Replace("{{totp_button}}", totpEnabled
+				? "<button type=\"button\" hx-post=\"/admin/disabletotp\" hx-target=\"#totp-section\" hx-swap=\"innerHTML\">Disable 2FA</button>"
+				: "<button type=\"button\" hx-post=\"/admin/generatetotp\" hx-target=\"#totp-section\" hx-swap=\"innerHTML\">Set up 2FA</button>");
 			return html;
+		}
+
+		public static string GenerateTotpSetup(CMSUser authUser)
+		{
+			byte[] secretBytes = KeyGeneration.GenerateRandomKey(20);
+			string base32Secret = Base32Encoding.ToString(secretBytes);
+			string issuer = "dabrelCMS";
+			string otpauthUri = $"otpauth://totp/{Uri.EscapeDataString(issuer)}:{Uri.EscapeDataString(authUser.Email)}?secret={base32Secret}&issuer={Uri.EscapeDataString(issuer)}&algorithm=SHA1&digits=6&period=30";
+
+			return $@"<div id=""totp-section"">
+<p><strong>2FA Status:</strong> Pending setup — scan the URI below with your authenticator app, then enter a code to confirm.</p>
+<p style=""word-break:break-all;""><strong>Setup URI:</strong><br/><a href=""{otpauthUri}"">{otpauthUri}</a></p>
+<p><strong>Manual entry key:</strong> {base32Secret}</p>
+<form hx-post=""/admin/confirmtotp"" hx-target=""#totp-section"" hx-swap=""innerHTML"">
+  <input type=""hidden"" name=""totpsecret"" value=""{base32Secret}"" />
+  <input type=""text"" name=""totpcode"" inputmode=""numeric"" autocomplete=""one-time-code"" maxlength=""6"" placeholder=""Enter code to confirm"" style=""width:200px;"" />
+  <button type=""submit"">Confirm &amp; Enable 2FA</button>
+</form>
+</div>";
+		}
+
+		public static string ConfirmTotpSetup(CMSDbContext dbcontext, HttpContext context, Guid userId)
+		{
+			string secret = context.Request.Form["totpsecret"].ToString();
+			string code = context.Request.Form["totpcode"].ToString().Trim();
+
+			if (string.IsNullOrEmpty(secret) || string.IsNullOrEmpty(code))
+				return "<div id=\"totp-section\"><p style=\"color:red;\">Missing secret or code.</p></div>";
+
+			var totp = new Totp(Base32Encoding.ToBytes(secret));
+			long windowUsed;
+			bool valid = totp.VerifyTotp(code, out windowUsed, new VerificationWindow(1, 1));
+			if (!valid)
+				return $"<div id=\"totp-section\"><p style=\"color:red;\">Code was not valid. Please re-scan and try again.</p></div>";
+
+			var user = dbcontext.CMSUsers.Find(userId);
+			if (user == null)
+				return "<div id=\"totp-section\"><p style=\"color:red;\">User not found.</p></div>";
+
+			user.TotpSecret = secret;
+			dbcontext.SaveChanges();
+			return "<div id=\"totp-section\"><p><strong>2FA Status:</strong> Enabled <button type=\"button\" hx-post=\"/admin/disabletotp\" hx-target=\"#totp-section\" hx-swap=\"innerHTML\">Disable 2FA</button></p></div>";
+		}
+
+		public static string DisableTotp(CMSDbContext dbcontext, Guid userId)
+		{
+			var user = dbcontext.CMSUsers.Find(userId);
+			if (user == null)
+				return "<div id=\"totp-section\"><p style=\"color:red;\">User not found.</p></div>";
+
+			user.TotpSecret = null;
+			dbcontext.SaveChanges();
+			return "<div id=\"totp-section\"><p><strong>2FA Status:</strong> Disabled <button type=\"button\" hx-post=\"/admin/generatetotp\" hx-target=\"#totp-section\" hx-swap=\"innerHTML\">Set up 2FA</button></p></div>";
 		}
 
 		public static string SaveUserForm(CMSDbContext dbcontext, HttpContext context, Guid userid)

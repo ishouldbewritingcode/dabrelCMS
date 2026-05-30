@@ -23,12 +23,12 @@ namespace dabrelCMS.code
 					{
 						string blockHtml = pageblockhtml;
 						blockHtml = blockHtml.Replace("{{blockid}}", block.BlockId.ToString());
-						
+
 						if (pblock.AltTitle != null)
 							blockHtml = blockHtml.Replace("{{title}}", pblock.AltTitle);
 						else
 							blockHtml = blockHtml.Replace("{{title}}", block.Title1);
-						
+
 						if (pblock.AltSubtitle != null)
 							blockHtml = blockHtml.Replace("{{title2}}", pblock.AltSubtitle);
 						else

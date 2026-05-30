@@ -233,6 +233,18 @@ namespace dabrelCMS.code
 
 						case "saveuserform":
 							return AdminUser.SaveUserForm(dbcontext, context, authUser.UserId);
+
+						case "generatetotp":
+							context.Response.StatusCode = StatusCodes.Status200OK;
+							return AdminUser.GenerateTotpSetup(authUser);
+
+						case "confirmtotp":
+							context.Response.StatusCode = StatusCodes.Status200OK;
+							return AdminUser.ConfirmTotpSetup(dbcontext, context, authUser.UserId);
+
+						case "disabletotp":
+							context.Response.StatusCode = StatusCodes.Status200OK;
+							return AdminUser.DisableTotp(dbcontext, authUser.UserId);
 							// save user here - this is only for changing the currently logged in user.
 							//CMSUser tempUser = dbcontext.CMSUsers.Where(u => u.UserId == authUser.UserId).FirstOrDefault();
 							//tempUser.Email = context.Request.Form["email"].ToString();

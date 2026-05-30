@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualBasic;
+using OtpNet;
 using System;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
@@ -62,49 +63,96 @@ namespace dabrelCMS.code
 			{
 				case "auth":
 					{
-						if (context.Request.Form["username"].ToString().Length > 0)
+						string step = context.Request.Form["step"].ToString();
+
+						if (step == "totp")
 						{
+							// Step 2: verify TOTP code
+							string? pendingToken = context.Request.Cookies["totp_pending"];
+							Guid? pendingUserId = jwt.ValidatePendingTotpToken(pendingToken, CMSConfig.JwtKey, _domain);
+							if (pendingUserId == null)
+								return Common.GetLoginPage(context, context.Request.Form["redirect"].ToString(), "Session expired. Please login again.");
+
+							authUser = dbcontext.CMSUsers.Where(u => u.UserId == pendingUserId).FirstOrDefault();
+							if (authUser == null || string.IsNullOrEmpty(authUser.TotpSecret))
+								return Common.GetLoginPage(context, "/", "Please Login");
+
+							string submittedCode = context.Request.Form["totpcode"].ToString().Trim();
+							var totp = new Totp(Base32Encoding.ToBytes(authUser.TotpSecret));
+							long windowUsed;
+							bool totpValid = totp.VerifyTotp(submittedCode, out windowUsed, new VerificationWindow(2, 2));
+
+							if (!totpValid || !TotpReplayCache.TryMarkUsed(authUser.UserId, windowUsed))
+								return Common.GetTotpPage(context, context.Request.Form["redirect"].ToString(), "Invalid or already-used code. Please try again.");
+
+							// clear pending cookie, issue session token
+							context.Response.Cookies.Delete("totp_pending");
+							string newtoken = jwt.GenerateToken(authUser, CMSConfig.JwtKey, _domain);
+							context.Response.Cookies.Append("token", newtoken, new CookieOptions
+							{
+								Secure = true,
+								HttpOnly = true,
+								SameSite = SameSiteMode.Strict
+							});
+							string totpRedirect = context.Request.Form["redirect"].ToString();
+							context.Response.StatusCode = StatusCodes.Status200OK;
+							context.Response.Redirect(totpRedirect.Length > 0 ? totpRedirect : "/");
+							return "";
+						}
+						else if (context.Request.Form["username"].ToString().Length > 0)
+						{
+							// Step 1: verify password
 							bool bAuth = false;
 							authUser = dbcontext.CMSUsers.Where(
 								u => u.Email == context.Request.Form["username"].ToString()
 								&& u.SiteId == site.SiteId).FirstOrDefault();
 							if (authUser == null)
 								return Common.GetLoginPage(context, "/", "Please Login");
+
+							int uSalt = authUser.Salt;
+							string uHash = authUser.Password;
+							if (uSalt > 0)
+							{
+								if (PWHash.IsPasswordValid(context.Request.Form["password"].ToString(), uSalt, uHash))
+									bAuth = true;
+							}
 							else
 							{
-								int uSalt = authUser.Salt;
-								string uHash = authUser.Password;
-								if (uSalt > 0)
-								{
-									if (PWHash.IsPasswordValid(context.Request.Form["password"].ToString(), uSalt, uHash))
-										bAuth = true;
-								}
-								else
-								{
-									if (uHash == context.Request.Form["password"].ToString())
-										bAuth = true;
-								}
-								if (bAuth)
-								{
-									string newtoken = jwt.GenerateToken(authUser, CMSConfig.JwtKey, _domain);
-									context.Response.Cookies.Append("token", newtoken, new CookieOptions
-									{
-										Secure = true,
-										HttpOnly = true,
-										SameSite = SameSiteMode.Strict
-									});
+								if (uHash == context.Request.Form["password"].ToString())
+									bAuth = true;
+							}
 
-									if (context.Request.Form["redirect"].ToString().Length > 0)
-									{
-										context.Response.StatusCode = StatusCodes.Status200OK;
-										context.Response.Redirect(context.Request.Form["redirect"].ToString());
-										return "";
-									}
-								}
-								else
+							if (!bAuth)
+								return Common.GetLoginPage(context, "/", "Please Login");
+
+							string redirect = context.Request.Form["redirect"].ToString();
+
+							if (!string.IsNullOrEmpty(authUser.TotpSecret))
+							{
+								// TOTP is enabled — issue pending cookie and show TOTP page
+								string pendingTok = jwt.GeneratePendingTotpToken(authUser.UserId, CMSConfig.JwtKey, _domain);
+								context.Response.Cookies.Append("totp_pending", pendingTok, new CookieOptions
 								{
-									return Common.GetLoginPage(context, "/", "Please Login");
-								}
+									Secure = true,
+									HttpOnly = true,
+									SameSite = SameSiteMode.Strict
+								});
+								return Common.GetTotpPage(context, redirect, "");
+							}
+
+							string newtoken = jwt.GenerateToken(authUser, CMSConfig.JwtKey, _domain);
+							context.Response.Cookies.Append("token", newtoken, new CookieOptions
+							{
+								Secure = true,
+								HttpOnly = true,
+								SameSite = SameSiteMode.Strict
+							});
+
+							if (redirect.Length > 0)
+							{
+								context.Response.StatusCode = StatusCodes.Status200OK;
+								context.Response.Redirect(redirect);
+								return "";
 							}
 						}
 						break;

@@ -16,7 +16,7 @@
 			"serverReadyAction": {
 				"action": "openExternally",
 				"uriFormat": "http://localhost:5021",
-				"pattern": "Now listening on"
+				"pattern": "APPLICATION STARTED"
 			},
 			"env": {
 				"ASPNETCORE_ENVIRONMENT": "Development",

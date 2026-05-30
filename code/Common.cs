@@ -22,6 +22,16 @@ namespace dabrelCMS.code
 			return LoginPage;
 		}
 
+		public static string GetTotpPage(HttpContext context, string redirect, string message)
+		{
+			string webRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+			string page = GetFileText(Path.Combine(webRootPath, "totp.htm"));
+			page = page.Replace("{{redirect}}", redirect);
+			page = page.Replace("{{message}}", message);
+			context.Response.StatusCode = StatusCodes.Status200OK;
+			return page;
+		}
+
 		public static string Send404(HttpContext context)
 		{
 			string webRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");

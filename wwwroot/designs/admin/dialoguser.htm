@@ -14,3 +14,7 @@
 
 	<div class="buttonright"><span><button class="big" type="submit" id="adminusersave" hx-post="/admin/saveuserform" class="overlaysave"><i class="fa-regular fa-floppy-disk"></i></button></span></div>
 </form>
+
+<div id="totp-section" style="margin-top:1em;">
+	<p><strong>2FA Status:</strong> {{totp_status}} &nbsp; {{totp_button}}</p>
+</div>

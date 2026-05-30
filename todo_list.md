@@ -1,17 +1,23 @@
 # Future Upgrades
 ---------------
 
-## TOTP Two-Factor Authentication
-  Add TOTP-based 2FA to the login flow using the Otp.NET NuGet package (no 3rd party service required).
-  Steps:
-    1. Add NuGet package: Otp.NET
-    2. Add TotpSecret (string, nullable) column to CMSUser model + migration
-    3. On 2FA setup: generate secret with KeyGeneration.GenerateRandomKey(20), store Base32-encoded
-       value in CMSUser.TotpSecret, display QR code URI to user for pairing with any authenticator app
-    4. On login: if TotpSecret is set, prompt for 6-digit code and verify with:
-           var totp = new Totp(Base32Encoding.ToBytes(user.TotpSecret));
-           bool valid = totp.VerifyTotp(submittedCode, out _, new VerificationWindow(2, 2));
-    5. Track used codes per 30s window to prevent replay attacks
+## TOTP Two-Factor Authentication [DONE - 2026-05-29]
+  TOTP is optional per user. Users without a TotpSecret log in exactly as before.
+  Files changed:
+    - models/CMSUser.cs          — added TotpSecret (string, nullable)
+    - Migrations/20260530...     — AddTotpSecret migration (applied)
+    - code/JwtUtils.cs           — GeneratePendingTotpToken / ValidatePendingTotpToken
+    - code/TotpReplayCache.cs    — new; in-memory replay protection (ConcurrentDictionary)
+    - code/Site.cs               — two-step auth: password then TOTP if secret is set
+    - code/Common.cs             — GetTotpPage helper
+    - wwwroot/totp.htm           — new TOTP code entry page
+    - code/AdminUser.cs          — GenerateTotpSetup / ConfirmTotpSetup / DisableTotp
+    - wwwroot/designs/admin/dialoguser.htm — TOTP status + enable/disable button
+    - code/Admin.cs              — handlers: generatetotp, confirmtotp, disabletotp
+  Login flow: POST /auth (password) → if TotpSecret set, issues 5-min pending JWT cookie
+              and shows totp.htm → POST /auth (step=totp) → verifies code + replay check → session token.
+  Admin setup: User profile dialog shows 2FA status. "Set up 2FA" generates secret + otpauth:// URI.
+               User confirms with a code. "Disable 2FA" clears the secret.
 
 ## Use Serilog
   * log all authentications
