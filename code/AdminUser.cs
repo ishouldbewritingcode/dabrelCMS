@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OtpNet;
+using QRCoder;
 
 namespace dabrelCMS.code
 {
@@ -31,9 +32,15 @@ namespace dabrelCMS.code
 			string issuer = "dabrelCMS";
 			string otpauthUri = $"otpauth://totp/{Uri.EscapeDataString(issuer)}:{Uri.EscapeDataString(authUser.Email)}?secret={base32Secret}&issuer={Uri.EscapeDataString(issuer)}&algorithm=SHA1&digits=6&period=30";
 
+			var qrGenerator = new QRCodeGenerator();
+			var qrData = qrGenerator.CreateQrCode(otpauthUri, QRCodeGenerator.ECCLevel.Q);
+			var qrCode = new PngByteQRCode(qrData);
+			byte[] qrBytes = qrCode.GetGraphic(6);
+			string qrBase64 = Convert.ToBase64String(qrBytes);
+
 			return $@"<div id=""totp-section"">
-<p><strong>2FA Status:</strong> Pending setup — scan the URI below with your authenticator app, then enter a code to confirm.</p>
-<p style=""word-break:break-all;""><strong>Setup URI:</strong><br/><a href=""{otpauthUri}"">{otpauthUri}</a></p>
+<p><strong>2FA Status:</strong> Pending setup — scan the QR code with your authenticator app, then enter a code to confirm.</p>
+<p><img src=""data:image/png;base64,{qrBase64}"" alt=""TOTP QR Code"" style=""width:200px;height:200px;"" /></p>
 <p><strong>Manual entry key:</strong> {base32Secret}</p>
 <form hx-post=""/admin/confirmtotp"" hx-target=""#totp-section"" hx-swap=""innerHTML"">
   <input type=""hidden"" name=""totpsecret"" value=""{base32Secret}"" />

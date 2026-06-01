@@ -73,7 +73,7 @@ body {
 	margin: 2px 0;
 }
 
-#cmsdialog input, 
+#cmsdialog input,
 #cmsdialog select,
 #cmsdialog .trumbowyg {
 	color: #333;
@@ -142,6 +142,11 @@ dialog .buttonright button {
 	color: #333;
 }
 
+button[type="button"] {
+	border-radius: 4px;
+	padding: 5px 10px;
+}
+
 #adminpageform label,
 #addpageform label {
 	display: inline-block;
@@ -156,8 +161,8 @@ input {
 	max-width: 100%;
 }
 input[type=checkbox],
-input[type=radio]{ 
-	width: auto; 
+input[type=radio]{
+	width: auto;
 }
 
 #adminpageform textarea,
@@ -241,9 +246,9 @@ button.blocktype.selected {
 	margin-bottom: 20px;
 }
 
-.itemstatus { 
-	display: inline-block; 
-	margin-left: 25px; 
+.itemstatus {
+	display: inline-block;
+	margin-left: 25px;
 	padding: 1px 10px;
 	font-size: 80%;
 	background: rgba(255,255,255,.3);
@@ -252,7 +257,7 @@ button.blocktype.selected {
 fieldset {
 	padding: 0 20px 20px 20px;
 	margin-top: 40px;
-} 
+}
 
 fieldset legend {
 	padding: 0 10px 4px;
