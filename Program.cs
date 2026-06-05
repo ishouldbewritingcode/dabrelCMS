@@ -23,6 +23,7 @@ CMSConfig.JwtKey = builder.Configuration["Jwt:Key"];
 
 // Add services to the container
 //builder.Services.AddDbContext<CMSDbContext>(options => options.UseSqlite(CMSConfig.ConStr));
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 

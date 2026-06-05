@@ -15,6 +15,7 @@ namespace dabrelCMS.code
 {
 	public class Admin
 	{
+		private static readonly Serilog.ILogger _log = Serilog.Log.ForContext<Admin>();
 		private StringBuilder sbUploadsFolder = new StringBuilder();
 
 		public string GetPage(HttpContext context, CMSUser authUser)
@@ -63,6 +64,7 @@ namespace dabrelCMS.code
 					{
 						case "addblockform":
 							string z = AdminBlock.AddNewBlock(context, dbcontext);
+							CMSCache.InvalidateSite(_domain);
 							if (page != null)
 								context.Response.Headers["HX-Redirect"] = $"/admin/{page.Shortcut}";
 
@@ -84,6 +86,8 @@ namespace dabrelCMS.code
 								site.Footer3 = context.Request.Form["footer3"].ToString();
 								site.Footer4 = context.Request.Form["footer4"].ToString();
 								dbcontext.SaveChanges();
+								_log.Information("Site settings saved for {SiteId}", site.SiteId);
+								CMSCache.InvalidateSite(_domain);
 								context.Response.Headers["HX-Redirect"] = $"/admin/";
 								return "<h2>Success<h2>";
 							}
@@ -126,6 +130,8 @@ namespace dabrelCMS.code
 							page.HeroImage = string.Empty;
 							page.Summary = context.Request.Form["content"].ToString();
 							dbcontext.SaveChanges();
+							_log.Information("Page created: {PageId} {Shortcut}", page.PageId, page.Shortcut);
+							CMSCache.InvalidateSite(_domain);
 							context.Response.Headers["HX-Redirect"] = $"/admin/{page.Shortcut}";
 							//context.Response.Redirect($"/admin/{page.Shortcut}");
 							break;
@@ -156,6 +162,8 @@ namespace dabrelCMS.code
 							page.HeroImage = context.Request.Form["pagehero"].ToString();
 							page.Summary = context.Request.Form["content"].ToString();
 							dbcontext.SaveChanges();
+							_log.Information("Page saved: {PageId} {Shortcut}", page.PageId, page.Shortcut);
+							CMSCache.InvalidateSite(_domain);
 							context.Response.Headers["HX-Redirect"] = $"/admin/{page.Shortcut}";
 							break;
 
@@ -175,6 +183,8 @@ namespace dabrelCMS.code
 							page.Title = context.Request.Form["pagetitle"].ToString();
 							page.Summary = context.Request.Form["content"].ToString();
 							dbcontext.SaveChanges();
+							_log.Information("Page content saved: {PageId} {Shortcut}", page.PageId, page.Shortcut);
+							CMSCache.InvalidateSite(_domain);
 							context.Response.Headers["HX-Redirect"] = $"/admin/{page.Shortcut}";
 							break;
 
@@ -203,6 +213,8 @@ namespace dabrelCMS.code
 							page.Tags = context.Request.Form["pagetags"].ToString();
 							page.HeroImage = context.Request.Form["pagehero"].ToString();
 							dbcontext.SaveChanges();
+							_log.Information("Page config saved: {PageId} {Shortcut}", page.PageId, page.Shortcut);
+							CMSCache.InvalidateSite(_domain);
 							context.Response.Headers["HX-Redirect"] = $"/admin/{page.Shortcut}";
 							break;
 
@@ -225,6 +237,8 @@ namespace dabrelCMS.code
 											redirect = dbcontext.CMSPages.Where(p => p.PageId == redirectid).FirstOrDefault();
 										dbcontext.CMSPages.Remove(page);
 										dbcontext.SaveChanges();
+										_log.Information("Page deleted: {PageId} {Shortcut}", page.PageId, page.Shortcut);
+										CMSCache.InvalidateSite(_domain);
 										context.Response.Headers["HX-Redirect"] = $"/admin/{redirect.Shortcut}";
 									}
 								}
@@ -271,6 +285,7 @@ namespace dabrelCMS.code
 
 						case "additemform":
 							AdminItem.AddNewItem(context, dbcontext);
+							CMSCache.InvalidateSite(_domain);
 							Guid blockIdForRedirect = Guid.Parse(context.Request.Form["blockid"].ToString());
 							CMSBlock blockForRedirect = dbcontext.CMSBlocks.FirstOrDefault(b => b.BlockId == blockIdForRedirect);
 							if (blockForRedirect != null)
@@ -288,6 +303,7 @@ namespace dabrelCMS.code
 
 						case "saveitemform":
 							AdminItem.SaveItem(context, dbcontext);
+							CMSCache.InvalidateSite(_domain);
 							Guid blockIdForSave = Guid.Parse(context.Request.Form["blockid"].ToString());
 							CMSBlock blockForSave = dbcontext.CMSBlocks.FirstOrDefault(b => b.BlockId == blockIdForSave);
 							if (blockForSave != null)
@@ -313,6 +329,7 @@ namespace dabrelCMS.code
 								{
 									Guid blockIdForDelete = itemToDelete.BlockId;
 									AdminItem.DeleteItem(itemId, dbcontext);
+									CMSCache.InvalidateSite(_domain);
 									CMSBlock blockForDelete = dbcontext.CMSBlocks.FirstOrDefault(b => b.BlockId == blockIdForDelete);
 									if (blockForDelete != null)
 									{
@@ -340,12 +357,15 @@ namespace dabrelCMS.code
 										string newPath = Path.Combine(savePath, context.Request.Form["currentdirectory"].ToString());
 										newPath = Path.Combine(newPath, context.Request.Form["newfolder"].ToString());
 										if (!Directory.Exists(newPath))
+										{
 											Directory.CreateDirectory(newPath);
-									}
+											_log.Information("Folder created: {Path}", newPath);
+										}
 								}
 							}
-							context.Response.Headers["Content-Type"] = "text/html";
-							return "<div>New folder saved successfully.</div>";
+						}
+						context.Response.Headers["Content-Type"] = "text/html";
+						return "<div>New folder saved successfully.</div>";
 							context.Response.StatusCode = StatusCodes.Status200OK;
 							break;
 
@@ -600,6 +620,7 @@ namespace dabrelCMS.code
 				if (File.Exists(filePath))
 				{
 					File.Delete(filePath);
+					_log.Information("File deleted: {Filename} in {Directory} for site {SiteId}", filename, directory, site.SiteId);
 					// Refresh directory listing
 					string uploadDir = basePath;
 					if (!string.IsNullOrEmpty(directory))
@@ -613,6 +634,7 @@ namespace dabrelCMS.code
 			}
 			catch (Exception ex)
 			{
+				_log.Error(ex, "Error deleting file {Filename}", filename);
 				return $"<div class=\"error\">Error deleting file: {ex.Message}</div>";
 			}
 		}
@@ -644,6 +666,7 @@ namespace dabrelCMS.code
 				if (Directory.Exists(dirPath))
 				{
 					Directory.Delete(dirPath, true); // true = recursive
+					_log.Information("Directory deleted: {Dirname} in {Directory} for site {SiteId}", dirname, directory, site.SiteId);
 					// Refresh directory listing
 					string uploadDir = basePath;
 					if (!string.IsNullOrEmpty(directory))
@@ -657,6 +680,7 @@ namespace dabrelCMS.code
 			}
 			catch (Exception ex)
 			{
+				_log.Error(ex, "Error deleting directory {Dirname}", dirname);
 				return $"<div class=\"error\">Error deleting directory: {ex.Message}</div>";
 			}
 		}

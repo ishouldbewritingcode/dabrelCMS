@@ -19,6 +19,8 @@ namespace dabrelCMS.code
 {
 	internal class Site
 	{
+		private static readonly Serilog.ILogger _log = Serilog.Log.ForContext<Site>();
+
 		private string _domain = string.Empty;
 		private string _path = string.Empty;
 		private string _webRootPath = string.Empty;
@@ -71,7 +73,10 @@ namespace dabrelCMS.code
 							string? pendingToken = context.Request.Cookies["totp_pending"];
 							Guid? pendingUserId = jwt.ValidatePendingTotpToken(pendingToken, CMSConfig.JwtKey, _domain);
 							if (pendingUserId == null)
+							{
+								_log.Warning("TOTP session expired or invalid pending token on {Domain}", _domain);
 								return Common.GetLoginPage(context, context.Request.Form["redirect"].ToString(), "Session expired. Please login again.");
+							}
 
 							authUser = dbcontext.CMSUsers.Where(u => u.UserId == pendingUserId).FirstOrDefault();
 							if (authUser == null || string.IsNullOrEmpty(authUser.TotpSecret))
@@ -83,9 +88,13 @@ namespace dabrelCMS.code
 							bool totpValid = totp.VerifyTotp(submittedCode, out windowUsed, new VerificationWindow(2, 2));
 
 							if (!totpValid || !TotpReplayCache.TryMarkUsed(authUser.UserId, windowUsed))
+							{
+								_log.Warning("TOTP verification failed for user {UserId} on {Domain}", authUser.UserId, _domain);
 								return Common.GetTotpPage(context, context.Request.Form["redirect"].ToString(), "Invalid or already-used code. Please try again.");
+							}
 
 							// clear pending cookie, issue session token
+							_log.Information("TOTP verified for user {UserId} on {Domain}", authUser.UserId, _domain);
 							context.Response.Cookies.Delete("totp_pending");
 							string newtoken = jwt.GenerateToken(authUser, CMSConfig.JwtKey, _domain);
 							context.Response.Cookies.Append("token", newtoken, new CookieOptions
@@ -107,7 +116,10 @@ namespace dabrelCMS.code
 								u => u.Email == context.Request.Form["username"].ToString()
 								&& u.SiteId == site.SiteId).FirstOrDefault();
 							if (authUser == null)
+							{
+								_log.Warning("Login attempt for unknown user {Email} on {Domain}", context.Request.Form["username"].ToString(), _domain);
 								return Common.GetLoginPage(context, "/", "Please Login");
+							}
 
 							int uSalt = authUser.Salt;
 							string uHash = authUser.Password;
@@ -123,8 +135,12 @@ namespace dabrelCMS.code
 							}
 
 							if (!bAuth)
+							{
+								_log.Warning("Failed login attempt for {Email} on {Domain}", authUser.Email, _domain);
 								return Common.GetLoginPage(context, "/", "Please Login");
+							}
 
+							_log.Information("Password verified for {Email} on {Domain}", authUser.Email, _domain);
 							string redirect = context.Request.Form["redirect"].ToString();
 
 							if (!string.IsNullOrEmpty(authUser.TotpSecret))
@@ -140,6 +156,7 @@ namespace dabrelCMS.code
 								return Common.GetTotpPage(context, redirect, "");
 							}
 
+							_log.Information("User {Email} logged in on {Domain}", authUser.Email, _domain);
 							string newtoken = jwt.GenerateToken(authUser, CMSConfig.JwtKey, _domain);
 							context.Response.Cookies.Append("token", newtoken, new CookieOptions
 							{
@@ -165,7 +182,10 @@ namespace dabrelCMS.code
 							return a.GetPage(context, authUser);
 						}
 						else
+						{
+							_log.Warning("Unauthenticated access attempt to admin on {Domain}", _domain);
 							return Common.GetLoginPage(context, _path, "Please Login");
+						}
 					}
 				case "sitemanager":
 					{
@@ -175,19 +195,38 @@ namespace dabrelCMS.code
 							if (authUser.RoleList.Contains("sitemanager"))
 								return new SiteManager().GetPage(context, authUser);
 							else
+							{
+								_log.Warning("User {UserId} denied access to sitemanager on {Domain} (missing role)", authUser.UserId, _domain);
 								return Common.GetLoginPage(context, _path, "Please Login");
+							}
 						}
 						else
+						{
+							_log.Warning("Unauthenticated access attempt to sitemanager on {Domain}", _domain);
 							return Common.GetLoginPage(context, _path, "Please Login");
+						}
 					}
 				case "search":
 					{
-						if (!String.IsNullOrEmpty(context.Request.Form["searchText"]))
+						if (!string.IsNullOrEmpty(context.Request.Form["searchText"]))
 						{
-							string searchText = context.Request.Form["searchText"];
-							searchresults = dbcontext.CMSPages.Where(p => p.Shortcut.Contains(searchText)
-							|| p.Title.Contains(searchText) || p.Tags.Contains(searchText)
-							|| p.Summary.Contains(searchText) && p.isOn == true);
+							string searchText = context.Request.Form["searchText"].ToString();
+
+							var pageResults = dbcontext.CMSPages.Where(p => p.isOn == true && (
+								(p.Shortcut != null && p.Shortcut.Contains(searchText))
+								|| (p.Title != null && p.Title.Contains(searchText))
+								|| (p.Tags != null && p.Tags.Contains(searchText))
+								|| (p.Summary != null && p.Summary.Contains(searchText))));
+
+							var pageIdsFromItems = dbcontext.CMSItems
+								.Where(i => (i.Title1 != null && i.Title1.Contains(searchText))
+									|| (i.Title2 != null && i.Title2.Contains(searchText))
+									|| (i.Data != null && i.Data.Contains(searchText)))
+								.Join(dbcontext.CMSPageBlocks, i => i.BlockId, pb => pb.BlockId, (i, pb) => pb.PageId)
+								.Distinct();
+
+							searchresults = pageResults.Union(
+								dbcontext.CMSPages.Where(p => p.isOn == true && pageIdsFromItems.Contains(p.PageId)));
 						}
 						break;
 					}
@@ -195,9 +234,15 @@ namespace dabrelCMS.code
 					{
 						page = dbcontext.CMSPages.Where(p => p.Shortcut == _path && p.isOn == true).FirstOrDefault();
 						if (page == null)
+						{
+							_log.Warning("Page not found: {Path} on {Domain}", _path, _domain);
 							return Common.Send404(context);
+						}
 						if (page.isPrivate == true && authUser == null)
+						{
+							_log.Information("Anonymous user redirected to login for private page {Path} on {Domain}", _path, _domain);
 							return Common.GetLoginPage(context, _path, "Please log in to view content.");
+						}
 
 						break;
 					}

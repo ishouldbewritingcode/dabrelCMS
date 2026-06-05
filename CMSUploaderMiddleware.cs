@@ -17,7 +17,9 @@
 			await _next.Invoke(context); // pass the context
 
 			Uploader uploader = new Uploader();
-			await uploader.UploadFiles(context);
+			var result = await uploader.UploadFiles(context);
+			if (result != "success uploading" && result != "failed")
+				_logger.LogWarning("Upload error: {Result}", result);
 		}
 	}
 

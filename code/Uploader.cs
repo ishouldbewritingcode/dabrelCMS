@@ -5,6 +5,8 @@ namespace dabrelCMS.code
 {
 	public class Uploader
 	{
+		private static readonly Serilog.ILogger _log = Serilog.Log.ForContext<Uploader>();
+
 		public async Task<string> UploadFiles(HttpContext context)
 		{
 			await Task.Yield();
@@ -62,6 +64,7 @@ namespace dabrelCMS.code
 							File.Delete(thefile.Temp);
 							thefile.Temp = null;
 							dbcontext.CMSFiles.Add(thefile);
+							_log.Information("File uploaded: {Filename} to site {SiteId}", thefile.Filename, siteid);
 						}
 					}
 					dbcontext.SaveChanges();
@@ -71,6 +74,7 @@ namespace dabrelCMS.code
 			}
 			catch (Exception e)
 			{
+				_log.Error(e, "Upload failed");
 				return e.Message;
 			}
 		}
