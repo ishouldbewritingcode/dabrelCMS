@@ -70,12 +70,13 @@ body {
 
 #cmsdialog form div.field {
 	display: flex;
-	margin: 2px 0;
+	margin: 5px 0;
 }
 
 #cmsdialog input,
 #cmsdialog select,
-#cmsdialog .trumbowyg {
+#cmsdialog .trumbowyg,
+#cmsdialog form div.field div {
 	color: #333;
 	font-size: 1rem;
 	padding: 2px 3px;
@@ -84,7 +85,7 @@ body {
 }
 
 #cmsdialog label {
-	flex-basis: 25%;
+	flex-basis: 35%;
 	text-align: right;
 }
 

@@ -96,7 +96,9 @@ namespace dabrelCMS.code
 		public static string GetBlockItems(Guid blockId, CMSDbContext dbContext)
 		{
 			StringBuilder html = new StringBuilder();
-			List<CMSItem> items = dbContext.CMSItems.Where(i => i.BlockId == blockId).OrderBy(i => i.Sort).ToList();
+			List<CMSItem> items = dbContext.CMSItems
+				.Where(i => i.BlockId == blockId)
+				.OrderByDescending(i => i.Sort).ToList();
 
 			foreach (CMSItem item in items)
 			{

@@ -1,5 +1,6 @@
 ﻿using dabrelCMS.models;
 using Htmx;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Diagnostics;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -40,6 +41,23 @@ namespace dabrelCMS.code
 				_path = "admin";
 			if (_path.StartsWith("sitemanager"))
 				_path = "sitemanager";
+
+			var cache = context.RequestServices.GetRequiredService<IMemoryCache>();
+			bool isHtmx = context.Request.IsHtmx();
+			bool requestMightBeCacheable = context.Request.Method == "GET"
+				&& _path != "admin"
+				&& _path != "sitemanager"
+				&& _path != "auth"
+				&& _path != "search";
+			string cacheKey = $"page:{_domain}:{_path}:{(isHtmx ? "htmx" : "full")}";
+			if (requestMightBeCacheable && cache.TryGetValue(cacheKey, out string? cachedHtml))
+			{
+				_log.Information("Serving cached page {Path} on {Domain} with key {CacheKey}", _path, _domain, cacheKey);
+				context.Response.Headers["Content-Type"] = "text/html";
+				context.Response.StatusCode = StatusCodes.Status200OK;
+				return cachedHtml!;
+			}
+			bool shouldCache = false;
 
 			using data.CMSDbContext dbcontext = new data.CMSDbContext();
 
@@ -243,13 +261,13 @@ namespace dabrelCMS.code
 							_log.Information("Anonymous user redirected to login for private page {Path} on {Domain}", _path, _domain);
 							return Common.GetLoginPage(context, _path, "Please log in to view content.");
 						}
-
+						shouldCache = requestMightBeCacheable && !page.isPrivate;
 						break;
 					}
 			}
 			//var items = dbcontext.cmsItems.Where(i => i.cmsPageId == page.cmsPageId).ToList<cmsItem>();
 
-			if (context.Request.IsHtmx())
+			if (isHtmx)
 			{
 				if (searchresults != null)
 				{
@@ -324,6 +342,13 @@ namespace dabrelCMS.code
 				List<CMSPage> nav = dbcontext.CMSPages.Where(n => n.SiteId == site.SiteId)
 					.OrderBy(o => o.ParentId).ThenBy(x => x.Sort).ToList();
 				html = html.Replace("{{navigation}}", GetNav(nav, null, page.PageId));
+			}
+			if (shouldCache)
+			{
+				cache.Set(cacheKey, html, new MemoryCacheEntryOptions()
+					.AddExpirationToken(CMSCache.GetSiteToken(_domain))
+					.SetAbsoluteExpiration(TimeSpan.FromMinutes(10)));
+				_log.Information("Cached page {Path} on {Domain} with key {CacheKey}", _path, _domain, cacheKey);
 			}
 			context.Response.Headers["Content-Type"] = "text/html";
 			context.Response.StatusCode = StatusCodes.Status200OK;

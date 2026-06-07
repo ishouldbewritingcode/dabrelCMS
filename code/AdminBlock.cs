@@ -19,6 +19,7 @@ namespace dabrelCMS.code
 				foreach (CMSPageBlock pblock in pageBlocks)
 				{
 					CMSBlock block = dbContext.CMSBlocks.FirstOrDefault(p => p.BlockId == pblock.BlockId);
+
 					if (block != null)
 					{
 						string blockHtml = pageblockhtml;
