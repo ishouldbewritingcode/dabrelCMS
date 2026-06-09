@@ -183,7 +183,7 @@ namespace dabrelCMS.code
 				sb.Append($"<form class=\"addurlform\" hx-post=\"/sitemanager/addsiteurl/{site.SiteId}\" hx-target=\"#sitemessage\">");
 				sb.Append($"<input name=\"url\" type=\"text\" placeholder=\"new-domain.com\" required />");
 				sb.Append($"<label><input type=\"checkbox\" name=\"primary\" /> primary</label>");
-				sb.Append($"<button type=\"submit\" title=\"Add URL\"><i class=\"fa-solid fa-plus\"></i></button>");
+				sb.Append($"<button type=\"submit\" title=\"Add URL\"><i class=\"fa-solid fa-plus\"></i> Add URL</button>");
 				sb.Append($"</form>");
 
 				sb.Append($"</div>");
@@ -195,7 +195,7 @@ namespace dabrelCMS.code
 			sb.Append("<div class=\"field\"><label>Site Name</label><input name=\"sitename\" type=\"text\" placeholder=\"My Site\" required /></div>");
 			sb.Append("<div class=\"field\"><label>Primary URL / Domain</label><input name=\"siteurl\" type=\"text\" placeholder=\"domain.com\" required /></div>");
 			sb.Append("<div class=\"field\"><label>Design</label><input name=\"design\" type=\"text\" placeholder=\"mountain\" /></div>");
-			sb.Append("<div class=\"buttonright\"><button type=\"submit\" class=\"big\"><i class=\"fa-solid fa-plus\"></i></button></div>");
+			sb.Append("<div class=\"buttonright\"><button type=\"submit\" class=\"addsite\"><i class=\"fa-solid fa-plus\"></i> Add Site</button></div>");
 			sb.Append("</form>");
 			sb.Append("</div>");
 
