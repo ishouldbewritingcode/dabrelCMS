@@ -73,7 +73,7 @@ namespace dabrelCMS.code
 			code.JwtUtils jwt = new JwtUtils();
 			string? token = context.Request.Cookies["token"];
 			Guid? userId = jwt.ValidateToken(token, CMSConfig.JwtKey, _domain);
-			CMSUser? authUser = null;
+CMSUser? authUser = null;
 			if (userId != null)
 			{
 				authUser = dbcontext.CMSUsers.Where(u => u.UserId == userId).FirstOrDefault();
@@ -117,7 +117,7 @@ namespace dabrelCMS.code
 							string newtoken = jwt.GenerateToken(authUser, CMSConfig.JwtKey, _domain);
 							context.Response.Cookies.Append("token", newtoken, new CookieOptions
 							{
-								Secure = true,
+								Secure = context.Request.IsHttps,
 								HttpOnly = true,
 								SameSite = SameSiteMode.Strict
 							});
@@ -167,7 +167,7 @@ namespace dabrelCMS.code
 								string pendingTok = jwt.GeneratePendingTotpToken(authUser.UserId, CMSConfig.JwtKey, _domain);
 								context.Response.Cookies.Append("totp_pending", pendingTok, new CookieOptions
 								{
-									Secure = true,
+									Secure = context.Request.IsHttps,
 									HttpOnly = true,
 									SameSite = SameSiteMode.Strict
 								});
@@ -178,17 +178,14 @@ namespace dabrelCMS.code
 							string newtoken = jwt.GenerateToken(authUser, CMSConfig.JwtKey, _domain);
 							context.Response.Cookies.Append("token", newtoken, new CookieOptions
 							{
-								Secure = true,
+								Secure = context.Request.IsHttps,
 								HttpOnly = true,
 								SameSite = SameSiteMode.Strict
 							});
 
-							if (redirect.Length > 0)
-							{
-								context.Response.StatusCode = StatusCodes.Status200OK;
-								context.Response.Redirect(redirect);
-								return "";
-							}
+							context.Response.StatusCode = StatusCodes.Status200OK;
+							context.Response.Redirect(redirect.Length > 0 ? redirect : "/admin");
+							return "";
 						}
 						break;
 					}

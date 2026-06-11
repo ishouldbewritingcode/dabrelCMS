@@ -376,4 +376,4 @@ FodyWeavers.xsd
 App_Logs/
 
 # testing database
-/App_Data/dabrelCMS.db
+App_Data/dabrelCMS.db
