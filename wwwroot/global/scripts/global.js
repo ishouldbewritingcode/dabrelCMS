@@ -11,7 +11,7 @@ if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').match
 	}
 	else {
 		document.body.parentElement.classList.add('dark');
-		$('.lightdark i').removeClass('fa-sun').addClass('fa-moon');
+		$('.lightdark i').removeClass('fa-moon').addClass('fa-sun');
 	}
 }
 document.getElementById('lightdark').addEventListener('click', function () { lightDark(); });
@@ -73,13 +73,13 @@ function lightDark() {
 	if (thehtml.classList.contains('dark')) {
 		thehtml.classList.remove('dark');
 		thehtml.classList.add('light');
-		$('.lightdark i').removeClass('fa-moon').addClass('fa-sun');
+		$('.lightdark i').removeClass('fa-sun').addClass('fa-moon');
 		setCookie('lightdark', 'light', 1)
 	}
 	else {
 		thehtml.classList.remove('light');
 		thehtml.classList.add('dark');
-		$('.lightdark i').removeClass('fa-sun').addClass('fa-moon');
+		$('.lightdark i').removeClass('fa-moon').addClass('fa-sun');
 		setCookie('lightdark', 'dark', 1)
 	}
 }

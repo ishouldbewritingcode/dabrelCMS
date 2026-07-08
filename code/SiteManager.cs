@@ -1,5 +1,6 @@
 using dabrelCMS.models;
 using Htmx;
+using Microsoft.AspNetCore.Authentication;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -80,6 +81,23 @@ namespace dabrelCMS.code
 				SiteId = site.SiteId,
 				Url = url,
 				Primary = true
+			});
+			dbcontext.SaveChanges();
+			dbcontext.CMSPages.Add(new CMSPage
+			{
+				PageId = Guid.CreateVersion7(),
+				ParentId = null,
+				Sort = 0,
+				SiteId = site.SiteId,
+				isOn = true,
+				isPrivate = false,
+				isHidden = false,
+				Shortcut = "",
+				Tags = "home",
+				NavTitle = "Home",
+				Title = "Home",
+				Summary = "<h1>Welcome to your new site!</h1><p>This is the home page. You can edit this page and add more pages in the CMS.</p>",
+				HeroImage = ""
 			});
 			dbcontext.SaveChanges();
 			context.Response.Headers["HX-Redirect"] = "/sitemanager/";

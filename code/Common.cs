@@ -9,8 +9,8 @@ namespace dabrelCMS.code
 {
 	public static class Common
 	{
-		public static string WebRootPath { get; set; }
-		public static string AdminDesign { get; set; }
+		public static string? WebRootPath { get; set; }
+		public static string? AdminDesign { get; set; }
 
 		public static string GetLoginPage(HttpContext context, string path, string message)
 		{

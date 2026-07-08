@@ -73,9 +73,9 @@ body {
 	margin: 5px 0;
 }
 
+/* #cmsdialog .trumbowyg, */
 #cmsdialog input,
 #cmsdialog select,
-#cmsdialog .trumbowyg,
 #cmsdialog form div.field div {
 	color: #333;
 	font-size: 1rem;

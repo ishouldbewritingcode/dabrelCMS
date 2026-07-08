@@ -18,7 +18,7 @@ namespace dabrelCMS.code
 				List<CMSPageBlock> pageBlocks = dbContext.CMSPageBlocks.Where(p => p.PageId == page.PageId).OrderBy(p => p.Sort).ToList();
 				foreach (CMSPageBlock pblock in pageBlocks)
 				{
-					CMSBlock block = dbContext.CMSBlocks.FirstOrDefault(p => p.BlockId == pblock.BlockId);
+					CMSBlock? block = dbContext.CMSBlocks.FirstOrDefault(p => p.BlockId == pblock.BlockId);
 
 					if (block != null)
 					{
@@ -119,6 +119,11 @@ namespace dabrelCMS.code
 				dbContext.CMSPageBlocks.Add(pageBlock);
 				dbContext.SaveChanges();
 			}
+			CMSPage? page = dbContext.CMSPages.FirstOrDefault(p => p.PageId == id);
+
+			if (page != null)
+				context.Response.Headers["HX-Redirect"] = $"/admin/{page.Shortcut}";
+
 			return "success";
 		}
 	}

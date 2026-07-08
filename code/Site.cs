@@ -44,11 +44,15 @@ namespace dabrelCMS.code
 
 			var cache = context.RequestServices.GetRequiredService<IMemoryCache>();
 			bool isHtmx = context.Request.IsHtmx();
+#if DEBUG
+			bool requestMightBeCacheable = false;
+#else
 			bool requestMightBeCacheable = context.Request.Method == "GET"
 				&& _path != "admin"
 				&& _path != "sitemanager"
 				&& _path != "auth"
 				&& _path != "search";
+#endif
 			string cacheKey = $"page:{_domain}:{_path}:{(isHtmx ? "htmx" : "full")}";
 			if (requestMightBeCacheable && cache.TryGetValue(cacheKey, out string? cachedHtml))
 			{
@@ -319,7 +323,7 @@ CMSUser? authUser = null;
 				}
 				html = html.Replace("{{sitetitle}}", site.Title);
 				html = html.Replace("{{pagetitle}}", page.Title);
-				html = html.Replace("{{subtitle}}", site.SubTitle);
+				html = html.Replace("{{subtitle}}", site.SubTitle.Length > 0 ? $"<div id=\"sitesubtitle\">{site.SubTitle}</div>" : "");
 				html = html.Replace("{{description}}", site.MetaDescription);
 				html = html.Replace("{{bodytop}}", site.BodyTop);
 				if (page.HeroImage == null) { html = html.Replace("{{hero}}", ""); }
