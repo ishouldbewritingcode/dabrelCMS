@@ -245,6 +245,26 @@ namespace dabrelCMS.code
 							}
 							break;
 
+						case "deleteblock":
+							if (pathsegments.Length > 2)
+							{
+								if (pathsegments[2] != string.Empty)
+								{
+									Guid blockDelId = Guid.Empty;
+									Guid.TryParse(pathsegments[2], out blockDelId);
+									CMSPageBlock pageBlockForBlockDelete = dbcontext.CMSPageBlocks.FirstOrDefault(pb => pb.BlockId == blockDelId);
+									CMSPage redirectPage = pageBlockForBlockDelete != null
+										? dbcontext.CMSPages.FirstOrDefault(p => p.PageId == pageBlockForBlockDelete.PageId)
+										: null;
+									AdminBlock.DeleteBlock(blockDelId, dbcontext);
+									_log.Information("Block deleted: {BlockId}", blockDelId);
+									CMSCache.InvalidateSite(_domain);
+									if (redirectPage != null)
+										context.Response.Headers["HX-Redirect"] = $"/admin/{redirectPage.Shortcut}";
+								}
+							}
+							break;
+
 						case "saveuserform":
 							return AdminUser.SaveUserForm(dbcontext, context, authUser.UserId);
 
@@ -445,12 +465,21 @@ namespace dabrelCMS.code
 							break;
 
 						default:
-							string contentformPath = $"{_webRootPath}\\designs\\{design}\\contentform.htm";
-							html = Common.GetFileText(contentformPath);
-							html = html.Replace("{{pageid}}", page.PageId.ToString());
-							html = html.Replace("{{pagetitle}}", page.Title);
-							html = html.Replace("{{content}}", page.Summary);
-							html = html.Replace("{{blocks}}", AdminBlock.GetPageBlocks(page, dbcontext));
+							if (page != null)
+							{
+								string contentformPath = $"{_webRootPath}\\designs\\{design}\\contentform.htm";
+								html = Common.GetFileText(contentformPath);
+								html = html.Replace("{{pageid}}", page.PageId.ToString());
+								html = html.Replace("{{pagetitle}}", page.Title);
+								html = html.Replace("{{content}}", page.Summary);
+								html = html.Replace("{{blocks}}", AdminBlock.GetPageBlocks(page, dbcontext));
+							}
+							else
+							{
+								context.Response.Headers["Content-Type"] = "text/html";
+								context.Response.StatusCode = StatusCodes.Status404NotFound;
+								return "<h2>Page not found</h2>";
+							}
 							break;
 					}
 					context.Response.Headers["Content-Type"] = "text/html";

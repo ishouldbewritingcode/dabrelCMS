@@ -76,7 +76,7 @@ body {
 /* #cmsdialog .trumbowyg, */
 #cmsdialog input,
 #cmsdialog select,
-#cmsdialog form div.field div {
+#cmsdialog form div.field > div:not(.trumbowyg-box) {
 	color: #333;
 	font-size: 1rem;
 	padding: 2px 3px;

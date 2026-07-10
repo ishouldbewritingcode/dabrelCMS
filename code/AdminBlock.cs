@@ -94,6 +94,23 @@ namespace dabrelCMS.code
 			return html;
 		}
 
+		public static string DeleteBlock(Guid blockId, CMSDbContext dbContext)
+		{
+			CMSBlock? block = dbContext.CMSBlocks.FirstOrDefault(b => b.BlockId == blockId);
+			if (block == null)
+				return "error: block not found";
+
+			List<CMSItem> items = dbContext.CMSItems.Where(i => i.BlockId == blockId).ToList();
+			dbContext.CMSItems.RemoveRange(items);
+
+			List<CMSPageBlock> pageBlocks = dbContext.CMSPageBlocks.Where(pb => pb.BlockId == blockId).ToList();
+			dbContext.CMSPageBlocks.RemoveRange(pageBlocks);
+
+			dbContext.CMSBlocks.Remove(block);
+			dbContext.SaveChanges();
+			return "success";
+		}
+
 		public static string AddNewBlock(HttpContext context, CMSDbContext dbContext)
 		{
 			// build new block here
