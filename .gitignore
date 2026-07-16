@@ -377,6 +377,3 @@ App_Logs/
 
 # testing database
 App_Data/dabrelCMS.db
-
-# wwwroot/designs/repairshop
-wwwroot/designs/repairshop/
