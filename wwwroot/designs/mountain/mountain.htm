@@ -39,15 +39,15 @@
 	</header>
 	{{hero}}
 	<main class="content">
-		<div class="widthcontainer">
+		<div class="container">
 			<div id="pagecontent" aria-live="polite">
-				<section>
-					<h1>{{pagetitle}}</h1>
-					<div class="body">{{content}}</div>
-				</section>
-				<section>
-					<div id="blocks" class="body">{{blocks}}</div>
-				</section>
+				<div class="intro">
+					<section>
+						<h1>{{pagetitle}}</h1>
+						<div class="content">{{content}}</div>
+					</section>
+				</div>
+				<div id="blocks" class="blocks">{{blocks}}</div>
 			</div>
 		</div>
 	</main>

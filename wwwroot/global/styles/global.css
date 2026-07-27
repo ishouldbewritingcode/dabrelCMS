@@ -86,7 +86,7 @@ section, #footers {
 	border-radius: var(--boxborderradius);
 }
 
-.widthcontainer {
+.intro, .blocks {
 	max-width: 1440px; /* remove this for a full-width layout */
 	margin: 0 auto; /* centers the layout */
 	padding: 15px;
@@ -778,11 +778,15 @@ div.item:not(:first-child) {
 }
 
 @media (min-width:1000px) {
+
+	.intro, .blocks, header, footer {
+		max-width: 1440px; /* remove this for a full-width layout */
+		padding: 15px 50px 0 50px;
+	}
+
 	header {
 		display: block;
-		max-width: 1440px; /* remove this for a full-width layout */
 		margin: 0 auto; /* centers the layout */
-		padding: 15px 50px 0 50px;
 		z-index: 10;
 		background: transparent;
 		position: relative;
@@ -799,10 +803,6 @@ div.item:not(:first-child) {
 		padding: 20px 50px 20px 0;
 		margin-left: 0;
 		color: var(--highlight);
-	}
-
-	.widthcontainer {
-		padding: 15px 50px;
 	}
 
 	#sitetitle a {
