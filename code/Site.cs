@@ -289,10 +289,10 @@ CMSUser? authUser = null;
 				else
 				{
 					StringBuilder sb = new StringBuilder();
-					sb.Append($"<section>");
+					sb.Append($"<section class=\"pagecontent\"><div class=\"body\">");
 					sb.Append($"<h1>{page.Title}</h1>");
 					sb.Append($"<div class=\"body\">{page.Summary}</div>");
-					sb.Append($"</section>");
+					sb.Append($"</div></section>");
 
 					// get blocks for this page
 					string blocksHtml = GetPageBlocks(dbcontext, page.PageId);

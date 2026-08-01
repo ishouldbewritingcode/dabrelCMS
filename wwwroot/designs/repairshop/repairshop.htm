@@ -20,8 +20,8 @@
 </head>
 <body>
 	{{bodytop}}
+	<div class="stripes"><!-- --></div>
 	<header>
-		<div class="stripes"><!-- --></div>
 		<div id="topbar" class="widthcontainer">
 			<img id="logo" src="/designs/repairshop/images/logo.png" alt="logo" />
 			<div id="sitetitle">
@@ -56,17 +56,14 @@
 						<h1>{{pagetitle}}</h1>
 						<div class="content">{{content}}</div>
 					</div>
-					</section>
 				</section>
-				<div id="blocks" class="body">{{blocks}}</div>
+				{{blocks}}
 			</div>
 		</div>
 	</main>
 	<footer>
-		<div class="widthcontainer">
-			<div id="footers">
-				{{footer1}}{{footer2}}{{footer3}}{{footer4}}
-			</div>
+		<div id="footers">
+			{{footer1}}{{footer2}}{{footer3}}{{footer4}}
 		</div>
 	</footer>
 	{{bodybottom}}

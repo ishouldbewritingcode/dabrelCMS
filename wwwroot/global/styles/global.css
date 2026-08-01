@@ -49,7 +49,7 @@ body {
 	color: var(--textcolor);
 	background: var(--bgcolor);
 	background-attachment: var(--backgroundattachment, unset);
-	background-size: var(--backgroundsize, unset)
+	background-size: var(--backgroundsize, unset);
 	position: relative;
 	height: 100%;
 	max-width: 100%; /* remove this for a full-width layout */
@@ -65,10 +65,9 @@ ol[role='list'] {
 }
 
 /* Sections */
-section {
-	padding: 0;
+section, footer {
+	padding: 15px 15px 0 15px;;
 	display: block;
-	margin-top: 15px;
 }
 
 /* Header */
@@ -79,14 +78,16 @@ header, main, footer {
 	width: 100%;
 }
 
-section, #footers {
+footer { margin-bottom: 15px;}
+
+section > div, #footers > div {
 	padding: 15px;
 	background: var(--boxbackground);
 	backdrop-filter: var(--boxbackdropfilter, inherit);
 	border-radius: var(--boxborderradius);
 }
 
-.intro, .blocks {
+section {
 	max-width: 1440px; /* remove this for a full-width layout */
 	margin: 0 auto; /* centers the layout */
 	padding: 15px;
@@ -779,7 +780,7 @@ div.item:not(:first-child) {
 
 @media (min-width:1000px) {
 
-	.intro, .blocks, header, footer {
+	section, header, footer {
 		max-width: 1440px; /* remove this for a full-width layout */
 		padding: 15px 50px 0 50px;
 	}
