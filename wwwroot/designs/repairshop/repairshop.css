@@ -2,6 +2,8 @@
 
 /* header { padding: 0; margin: 0; max-width: none;} */
 
+header { background: var(--bgcolor); }
+
 .stripes {
 	height: 20px;
 	background: linear-gradient(180deg,#296b7a 50%, #4C5B5C 50%);
