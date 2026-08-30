@@ -43,9 +43,9 @@ namespace dabrelCMS.code
 <p><img src=""data:image/png;base64,{qrBase64}"" alt=""TOTP QR Code"" style=""width:200px;height:200px;"" /></p>
 <p><strong>Manual entry key:</strong> {base32Secret}</p>
 <form hx-post=""/admin/confirmtotp"" hx-target=""#totp-section"" hx-swap=""innerHTML"">
-  <input type=""hidden"" name=""totpsecret"" value=""{base32Secret}"" />
-  <input type=""text"" name=""totpcode"" inputmode=""numeric"" autocomplete=""one-time-code"" maxlength=""6"" placeholder=""Enter code to confirm"" style=""width:200px;"" />
-  <button type=""submit"">Confirm &amp; Enable 2FA</button>
+	<input type=""hidden"" name=""totpsecret"" value=""{base32Secret}"" />
+	<input type=""text"" name=""totpcode"" inputmode=""numeric"" autocomplete=""one-time-code"" maxlength=""6"" placeholder=""Enter code to confirm"" style=""width:200px;"" />
+	<button type=""submit"">Confirm &amp; Enable 2FA</button>
 </form>
 </div>";
 		}
