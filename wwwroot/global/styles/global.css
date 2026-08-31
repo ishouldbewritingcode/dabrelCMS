@@ -896,6 +896,38 @@ div.item:not(:first-child) {
 	}
 }
 
+.calendar-grid {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: 1px;
+}
+
+.calendar-day-header {
+	font-weight: bold;
+	text-align: center;
+	padding: 10px;
+	background-color: #f0f0f0;
+}
+
+.calendar-day {
+	padding: 10px;
+	border: 1px solid #ddd;
+	min-height: 80px;
+}
+
+.calendar-day-empty {
+	background-color: #fafafa;
+}
+
+.calendar-day-today {
+	background-color: #ffffcc;
+	font-weight: bold;
+}
+
+.calendar-day-weekend {
+	background-color: #f5f5f5;
+}
+
 /* ------- Smaller screens ------- */
 @media only screen and (max-width: 680px) {
 	body {
