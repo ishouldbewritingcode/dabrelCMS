@@ -34,8 +34,12 @@ namespace dabrelCMS.code
 			_domain = context.Request.Host.ToString().ToLower().Trim();
 			// strip off any port numbers that may be on there
 			int colonIndex = _domain.IndexOf(":");
+			string port = string.Empty;
 			if (colonIndex > 0)
+			{
+				port = _domain.Substring(colonIndex + 1);
 				_domain = _domain.Substring(0, colonIndex);
+			}
 			_path = context.Request.Path.ToString().ToLower().Trim().Replace("/", string.Empty);
 			if (_path.StartsWith("admin"))
 				_path = "admin";
@@ -73,8 +77,10 @@ namespace dabrelCMS.code
 				CMSSiteUrl? primaryUrl = dbcontext.CMSSiteUrls.Where(x => x.SiteId == url.SiteId && x.Primary == true).FirstOrDefault();
 				if (primaryUrl != null)
 				{
-					string redirectUrl = $"https://{primaryUrl.Url}/{_path}";
+					string redirectUrl = (port == "") ? $"https://{primaryUrl.Url}/{_path}" : $"https://{primaryUrl.Url}:{port}/{_path}";
 					context.Response.StatusCode = StatusCodes.Status301MovedPermanently;
+					context.Response.Headers["Content-Type"] = "text/html";
+					return $"<html><head><meta http-equiv=\"refresh\" content=\"0; url={redirectUrl}\" /></head><body>Redirecting to <a href=\"{redirectUrl}\">{redirectUrl}</a></body></html>";
 				}
 			}
 			// type: cmsSite
