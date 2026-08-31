@@ -4,10 +4,6 @@ namespace dabrelCMS.code
 {
 	public class Calendar
 	{
-namespace dabrelCMS.code
-{
-	public class Calendar
-	{
 
 		public string GenerateMonthCalendar(int? month = null, int? year = null, List<CMSItem>? items = null)
 		{
@@ -86,5 +82,3 @@ namespace dabrelCMS.code
 	}
 }	
 
-	}
-}
