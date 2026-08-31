@@ -66,11 +66,21 @@ namespace dabrelCMS.code
 			using data.CMSDbContext dbcontext = new data.CMSDbContext();
 
 			// type: cmsSiteUrl
-			var url = dbcontext.CMSSiteUrls.Where(x => x.Url == _domain).FirstOrDefault();
+			CMSSiteUrl? url = dbcontext.CMSSiteUrls.Where(x => x.Url == _domain).FirstOrDefault();
+			if (url.Primary == false)
+			{
+				_log.Warning("Non-primary domain {Domain} accessed. Redirecting to primary domain.", _domain);
+				CMSSiteUrl? primaryUrl = dbcontext.CMSSiteUrls.Where(x => x.SiteId == url.SiteId && x.Primary == true).FirstOrDefault();
+				if (primaryUrl != null)
+				{
+					string redirectUrl = $"https://{primaryUrl.Url}/{_path}";
+					context.Response.StatusCode = StatusCodes.Status301MovedPermanently;
+				}
+			}
 			// type: cmsSite
-			var site = dbcontext.CMSSites.Where(s => s.SiteId == url.SiteId).FirstOrDefault();
+			CMSSite? site = dbcontext.CMSSites.Where(s => s.SiteId == url.SiteId).FirstOrDefault();
 			// type: cmsPage
-			var page = new CMSPage(); // we'll load the page in the switch statement
+			CMSPage? page = new CMSPage(); // we'll load the page in the switch statement
 			System.Linq.IQueryable<CMSPage> searchresults = null;
 
 			// get cookie and user id from jwt
