@@ -1,0 +1,128 @@
+﻿@import url(/global/styles/global.css);
+
+/* header { padding: 0; margin: 0; max-width: none;} */
+
+header { background: var(--bgcolor); }
+
+#topbar {
+	margin: 0 auto;
+	border: none;
+	background: none;
+	justify-content: space-between;
+	#flex-spacer {
+		flex-grow: 1;
+	}
+}
+
+#logo {
+	flex-grow: 0;
+	width: 100px;
+	height: 100px;
+	border-radius: 999px;
+	margin-right: 20px;
+	display: none;
+}
+
+#sitetitle {
+	flex-grow: 0;
+	a {
+	}
+
+	a:hover { text-decoration: none; }
+	a .titletext {
+		font-size: 2.8rem;
+	}
+}
+
+body {
+	position: relative;
+	min-height: 100vh;
+	margin: 0;
+}
+
+.bg-icon {
+	position: absolute;
+	pointer-events: none;
+	transform: translate(-50%, -50%);
+	z-index: 0;
+}
+
+.widthcontainer, #nav.widthcontainer {
+	border: var(--boxborder);
+	border-radius: var(--boxborderradius);
+	background: var(--boxbackground);
+	margin: 0 auto 15px auto;
+	padding: 15px 20px;
+}
+#nav.widthcontainer { padding: 0; }
+#nav.widthcontainer ul { margin: 0; padding: 0; list-style-type: none; }
+
+/* section:nth-child(odd) { background: darkred; padding-bottom: 15px;} */
+
+@media (min-width:1000px) {
+	#logo { display: block; }
+	#sitetitle {
+	}
+}
+
+*, html.light * {
+	/* Color scheme */
+	--color: #222;
+	--bgcolor: #ddd;
+	--backgroundattachment: fixed;
+	--backgroundsize: cover;
+
+	--sitetitlecolor: rgba(20,20,150,1.0);
+	--sitetitlebg: transparent;
+	--sitesubtitlecolor: #333;
+	--sitesubtitlebg: transparent;
+	--topbaricons: rgba(20,20,150,1.0);
+
+	--textcolor: #333;
+	--highlight: #000;
+	--highlightbg: transparent;
+
+	--boxbackground: rgba(255, 255, 255, 0.55);
+	--boxbackdropfilter: blur(8px) saturate(80%);
+	--boxborderradius: 15px;
+
+	--navbg: rgba(255, 255, 255, 0.80);
+	--navbackdropfilter: blur(8px) saturate(50%);
+	--navitembg: transparent;
+	--navitemhlbg: transparent;
+	--navitemcolor: #555;
+	--navitemhlcolor: #222;
+	--topbaricons: #333;
+	--boxborder: 2px solid #296b7a;
+	--boxbackground: rgba(255, 255, 255, 0.55);
+}
+
+html.dark * {
+	/* Color scheme */
+	--color: #eee;
+	--bgcolor: #333;
+	--backgroundattachment: fixed;
+	--backgroundsize: cover;
+
+	--sitetitlecolor: rgba(80,80,250,1.0);;
+	--sitetitlebg: transparent;
+	--sitesubtitlecolor: #fff;
+	--sitesubtitlebg: transparent;
+	--topbaricons: rgba(80,80,250,1.0);;
+
+	--textcolor: #ddd;
+	--highlight: #fff;
+	--highlightbg: transparent;
+
+	--boxbackground: rgba(33, 33, 33, 0.55);
+	--boxbackdropfilter: blur(8px) saturate(80%);
+
+	--navbg: rgba(33, 33, 33, 0.60);
+	--navbackdropfilter: blur(8px) saturate(50%);
+	--navitembg: transparent;
+	--navitemhlbg: transparent;
+	--navitemcolor: #ddd;
+	--navitemhlcolor: #fff;
+	--boxborder: 2px solid #296b7a;
+
+}

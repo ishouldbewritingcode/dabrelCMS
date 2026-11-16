@@ -4,7 +4,6 @@ namespace dabrelCMS.code
 {
 	public class Calendar
 	{
-
 		public string GenerateMonthCalendar(int? month = null, int? year = null, List<CMSItem>? items = null)
 		{
 			// Use current date if parameters not provided
