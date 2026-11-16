@@ -305,11 +305,13 @@ CMSUser? authUser = null;
 				else
 				{
 					StringBuilder sb = new StringBuilder();
-					sb.Append($"<section class=\"pagecontent\"><div class=\"body\">");
-					sb.Append($"<h1>{page.Title}</h1>");
-					sb.Append($"<div class=\"body\">{page.Summary}</div>");
-					sb.Append($"</div></section>");
-
+					if (page.Title != null && page.Title.Length > 0 && page.Summary != null && page.Summary.Length > 0)
+					{
+						sb.Append($"<section class=\"pagecontent\"><div class=\"body\">");
+						sb.Append($"<h1>{page.Title}</h1>");
+						sb.Append($"<div class=\"body\">{page.Summary}</div>");
+						sb.Append($"</div></section>");
+					}
 					// get blocks for this page
 					string blocksHtml = GetPageBlocks(dbcontext, page.PageId);
 					sb.Append(blocksHtml);
@@ -344,7 +346,17 @@ CMSUser? authUser = null;
 				html = html.Replace("{{bodytop}}", site.BodyTop);
 				if (page.HeroImage == null) { html = html.Replace("{{hero}}", ""); }
 				else { html = html.Replace("{{hero}}", page.HeroImage); }
-				html = html.Replace("{{content}}", page.Summary);
+
+				StringBuilder sb = new StringBuilder();
+				if (page.Title != null && page.Title.Length > 0 && page.Summary != null && page.Summary.Length > 0)
+				{
+					sb.Append($"<section class=\"pagecontent\"><div class=\"body\">");
+					sb.Append($"<h1>{page.Title}</h1>");
+					sb.Append($"<div class=\"body\">{page.Summary}</div>");
+					sb.Append($"</div></section>");
+				}
+
+				html = html.Replace("{{content}}", sb.ToString());
 				html = html.Replace("{{bodybottom}}", site.BodyBottom);
 				html = html.Replace("{{footer1}}", site.Footer1.Length > 0 ? $"<div>{site.Footer1}</div>" : "");
 				html = html.Replace("{{footer2}}", site.Footer2.Length > 0 ? $"<div>{site.Footer2}</div>" : "");

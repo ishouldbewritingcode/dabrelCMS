@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en-us">
+
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -16,8 +17,10 @@
 	<title>{{sitetitle}} {{pagetitle}}</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Coda:wght@400;800&family=Warnes&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Coda:wght@400;800&family=Warnes&display=swap"
+		rel="stylesheet">
 </head>
+
 <body>
 	{{bodytop}}
 	<div class="stripes"><!-- --></div>
@@ -36,11 +39,15 @@
 			<div id="flex-spacer"></div>
 			<form id="searchform" hx-post="/search" hx-target="#pagecontent">
 				<input id="search" name="searchText" type="text" placeholder="search phrase" aria-label="search field" />
-				<button id="searchbutton" type="submit" aria-label="search"><i class="fa-solid fa-magnifying-glass" aria-label="search"></i></button>
+				<button id="searchbutton" type="submit" aria-label="search"><i class="fa-solid fa-magnifying-glass"
+						aria-label="search"></i></button>
 			</form>
-			<button id="searchicon" aria-label="open search" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-magnifying-glass"></i></button>
-			<button id="navicon" aria-label="open nav" aria-controls="generate-slideout-menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
-			<button id="lightdark" class="lightdark" type="button" aria-label="light or dark theme"><i class="fa-regular fa-moon"></i></button>
+			<button id="searchicon" aria-label="open search" aria-controls="generate-slideout-menu" aria-expanded="false"><i
+					class="fa-solid fa-magnifying-glass"></i></button>
+			<button id="navicon" aria-label="open nav" aria-controls="generate-slideout-menu" aria-expanded="false"><i
+					class="fa-solid fa-bars"></i></button>
+			<button id="lightdark" class="lightdark" type="button" aria-label="light or dark theme"><i
+					class="fa-regular fa-moon"></i></button>
 		</div>
 		{{subtitle}}
 		<div id="nav" class="">
@@ -51,12 +58,13 @@
 	<main class="content">
 		<div class="container">
 			<div id="pagecontent" aria-live="polite">
-				<section>
+				<!-- <section>
 					<div class="body">
 						<h1>{{pagetitle}}</h1>
 						<div class="content">{{content}}</div>
 					</div>
-				</section>
+				</section> -->
+				{{content}}
 				{{blocks}}
 			</div>
 		</div>
@@ -68,4 +76,5 @@
 	</footer>
 	{{bodybottom}}
 </body>
+
 </html>

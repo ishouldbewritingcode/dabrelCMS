@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en-us">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -14,15 +15,19 @@
 
     <title>{{sitetitle}} {{pagetitle}}</title>
 </head>
+
 <body>
     {{bodytop}}
     <header>
         <div id="sitetitle"><a href="/">{{titleimage}}{{headersitetitle}}</a></div>
         <div id="sitesubtitle">{{subtitle}}</div>
-        <input type="checkbox" id="search-toggle" /><label for="search-toggle" class="searchbutton"><i class="fa-solid fa-magnifying-glass"></i></label>
-        <input type="checkbox" id="nav-toggle" /><label for="nav-toggle" class="navbutton"><span class="navicon">&nbsp;</span></label>
+        <input type="checkbox" id="search-toggle" /><label for="search-toggle" class="searchbutton"><i
+                class="fa-solid fa-magnifying-glass"></i></label>
+        <input type="checkbox" id="nav-toggle" /><label for="nav-toggle" class="navbutton"><span
+                class="navicon">&nbsp;</span></label>
         <div id="searchbox">
-            <input id="search" name="search" type="text" placeholder="search phrase" /><i class="fa-solid fa-magnifying-glass"></i>
+            <input id="search" name="search" type="text" placeholder="search phrase" /><i
+                class="fa-solid fa-magnifying-glass"></i>
         </div>
         <div id="nav">
             <nav>{{navigation}}</nav>
@@ -32,10 +37,8 @@
     <main class="content">
         <div class="widthcontainer">
             <div id="pagecontent">
-                <section>
-                    <h1>{{pagetitle}}</h1>
-                    <div class="body">{{content}}</div>
-                </section>
+                {{content}}
+                {{blocks}}
             </div>
         </div>
     </main>
@@ -49,4 +52,5 @@
     </footer>
     {{bodybottom}}
 </body>
+
 </html>
