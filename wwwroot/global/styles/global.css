@@ -810,7 +810,7 @@ article time {
 
 fieldset {
 	padding: 0 20px 20px 20px;
-	margin-top: 30px;
+	/* margin-top: 30px; */
 }
 
 fieldset legend {
