@@ -9,6 +9,7 @@
     <link href="/global/fontawesome/css/fontawesome.css" rel="stylesheet">
     <link href="/global/fontawesome/css/solid.css" rel="stylesheet">
     <link rel="stylesheet" href="/designs/theblues/theblues.css" />
+    <meta name="htmx-config" content='{"noSwap": [204, 304, "4xx", "5xx"]}'>
     <script src="/global/scripts/htmx.min.js"></script>
     <script src="/global/scripts/_hyperscript.min.js"></script>
 
@@ -25,7 +26,7 @@
             <input id="search" name="search" type="text" placeholder="search phrase" /><i class="fa-solid fa-magnifying-glass"></i>
         </div>
         <div id="nav">
-            <nav hx-boost="true" hx-target="#pagecontent" _="on click call #nav-toggle.click() ">{{navigation}}</nav>
+            <nav hx-boost:inherited="true" hx-target:inherited="#pagecontent" _="on click call #nav-toggle.click() ">{{navigation}}</nav>
         </div>
     </header>
     {{hero}}

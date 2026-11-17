@@ -1,5 +1,5 @@
 ﻿<div id="filemanagertab">
-	<form id="uploadform" hx-encoding='multipart/form-data' hx-post='/admin/upload' hx-action="filemanager">
+	<form id="uploadform" hx-encoding='multipart/form-data' hx-post='/admin/upload' hx-swap="none" hx-config="timeout:0">
 		<progress id="progress" value="0"></progress>
 		<input type="file" id="uploadfiles" name="uploadfiles" multiple="multiple" />
 		<input type="hidden" id="targetDirectory" name="targetDirectory" value="" />
@@ -30,6 +30,9 @@
 </div>
 
 <script>
+// Wrapped in an IIFE so re-opening the dialog (which re-runs this script) doesn't
+// throw "Identifier has already been declared" for the top-level let/const below.
+(function () {
 	let currentDirectory = '';
 
 	function navigateToDirectory(dirPath) {
@@ -110,12 +113,14 @@
 		});
 	});
 
-	htmx.on('#uploadform', 'htmx:xhr:progress', function (evt) {
-		htmx.find('#progress').setAttribute('value', evt.detail.loaded / evt.detail.total * 100)
+	// htmx 4 uses fetch(), which has no upload progress events, so show an
+	// indeterminate progress bar (no value attribute) while the upload runs.
+	htmx.on('#uploadform', 'htmx:before:request', function (evt) {
+		document.getElementById('progress').removeAttribute('value');
 	});
 
-	htmx.on('#uploadform', 'htmx:afterSwap', function (evt) {
-		htmx.find('#progress').setAttribute('value', 0);
+	htmx.on('#uploadform', 'htmx:after:request', function (evt) {
+		document.getElementById('progress').setAttribute('value', 0);
 		selectedFilesList.querySelectorAll('li').forEach((i) => {
 			selectedFilesList.removeChild(i);
 		});
@@ -126,4 +131,10 @@
 	// Initialize breadcrumb and target directory on load
 	updateBreadcrumb();
 	updateTargetDirectory();
+
+	// expose functions used by inline onclick handlers (here and in /admin/getuploads HTML)
+	window.navigateToDirectory = navigateToDirectory;
+	window.deleteFile = deleteFile;
+	window.deleteDirectory = deleteDirectory;
+})();
 </script>

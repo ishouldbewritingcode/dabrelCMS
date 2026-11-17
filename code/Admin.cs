@@ -55,7 +55,8 @@ namespace dabrelCMS.code
 			var page = new CMSPage(); // we'll load the page in the switch statement
 			page = dbcontext.CMSPages.Where(p => p.Shortcut == pathsegments[1]).FirstOrDefault();
 
-			if (context.Request.IsHtmx())
+			// htmx 4 history restore (back/forward) needs the full page, not a partial
+			if (context.Request.IsHtmx() && !context.Request.IsHtmxHistoryRestoreRequest())
 			{
 				StringBuilder sb = new StringBuilder();
 				if (context.Request.HasFormContentType)

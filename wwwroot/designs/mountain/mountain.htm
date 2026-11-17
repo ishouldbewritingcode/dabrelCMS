@@ -11,6 +11,7 @@
 	<link href="/global/fontawesome/css/solid.css" rel="stylesheet">
 	<link rel="stylesheet" href="/designs/mountain/mountain.css" />
 	<script src="/global/scripts/jquery-3.7.1.min.js"></script>
+	<meta name="htmx-config" content='{"noSwap": [204, 304, "4xx", "5xx"]}'>
 	<script src="/global/scripts/htmx.min.js"></script>
 	<script src="/global/scripts/global.js" defer></script>
 	<link rel="icon" href="/designs/mountain/images/favicon.png" type="image/png">
@@ -47,12 +48,6 @@
 	<main class="content">
 		<div class="container">
 			<div id="pagecontent" aria-live="polite">
-				<!-- <section>
-					<div class="body">
-						<h1>{{pagetitle}}</h1>
-						<div class="content">{{content}}</div>
-					</div>
-				</section> -->
 				{{content}}
 				{{blocks}}
 			</div>

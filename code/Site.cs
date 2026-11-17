@@ -47,7 +47,9 @@ namespace dabrelCMS.code
 				_path = "sitemanager";
 
 			var cache = context.RequestServices.GetRequiredService<IMemoryCache>();
-			bool isHtmx = context.Request.IsHtmx();
+			// htmx 4 restores history (back/forward) by re-fetching the URL with HX-Request set and
+			// swapping it into <body>, so history-restore requests need the full page.
+			bool isHtmx = context.Request.IsHtmx() && !context.Request.IsHtmxHistoryRestoreRequest();
 #if DEBUG
 			bool requestMightBeCacheable = false;
 #else
@@ -93,7 +95,8 @@ namespace dabrelCMS.code
 			code.JwtUtils jwt = new JwtUtils();
 			string? token = context.Request.Cookies["token"];
 			Guid? userId = jwt.ValidateToken(token, CMSConfig.JwtKey, _domain);
-CMSUser? authUser = null;
+
+			CMSUser? authUser = null;
 			if (userId != null)
 			{
 				authUser = dbcontext.CMSUsers.Where(u => u.UserId == userId).FirstOrDefault();
@@ -347,16 +350,16 @@ CMSUser? authUser = null;
 				if (page.HeroImage == null) { html = html.Replace("{{hero}}", ""); }
 				else { html = html.Replace("{{hero}}", page.HeroImage); }
 
-				StringBuilder sb = new StringBuilder();
+				StringBuilder sbc = new StringBuilder();
 				if (page.Title != null && page.Title.Length > 0 && page.Summary != null && page.Summary.Length > 0)
 				{
-					sb.Append($"<section class=\"pagecontent\"><div class=\"body\">");
-					sb.Append($"<h1>{page.Title}</h1>");
-					sb.Append($"<div class=\"body\">{page.Summary}</div>");
-					sb.Append($"</div></section>");
+					sbc.Append($"<section class=\"pagecontent\"><div class=\"body\">");
+					sbc.Append($"<h1>{page.Title}</h1>");
+					sbc.Append($"<div class=\"body\">{page.Summary}</div>");
+					sbc.Append($"</div></section>");
 				}
 
-				html = html.Replace("{{content}}", sb.ToString());
+				html = html.Replace("{{content}}", sbc.ToString());
 				html = html.Replace("{{bodybottom}}", site.BodyBottom);
 				html = html.Replace("{{footer1}}", site.Footer1.Length > 0 ? $"<div>{site.Footer1}</div>" : "");
 				html = html.Replace("{{footer2}}", site.Footer2.Length > 0 ? $"<div>{site.Footer2}</div>" : "");
